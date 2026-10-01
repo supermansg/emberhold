@@ -1,0 +1,9 @@
+# Close combat presentation candidate
+
+2026-09-08. Requested: lower/closer rear camera, larger heroes/enemies, prominent real damage and event labels, extensible identity/content definitions. Last live baseline is commit 4698efa7a0e7083b3ccd89b70219fe37fcec76b5 (living forest). Existing authority covers publication after checks.
+
+Changes: closer lower rear camera (aspect-adaptive composition; not a fixed geometric 45-degree pitch), heroes 1.4x, normal enemies 1.2 vs .88, runners 1.05 vs .78, armor 1.5 vs 1.18, boss 2.1 vs 1.8. Target picking enlarged. Damage sprites are 2.2 world units wide vs .95, higher-resolution text and impact pop. Larger elemental projectiles/impact rings and thicker lightning. BOUNCE reports actual extra targets; POWER x1.5 only on empowered hits; COMBO only on burning-target interaction; HP shows actual repaired amount; shield shows actual new shield. Labels are throttled, limited to four, within 28 text effects; no fake critical hits or hero HP introduced. Canvas fallback also has larger characters and text.
+
+Removed discontinuous extra path slab and extended the shared ground/road through the distance with ground shadow casting disabled. This addresses the strip visible in the user's screenshot; final pixel appearance is not independently verified. Night fill illumination increased.
+
+Content registry and actor/world adapter contract implemented; details in CONTENT-AUTHORING.md. Original combat/economy tests pass unchanged seeded outcomes. Added custom-content and event-feedback tests pass. Three scene tests and visibility rays pass at three aspect ratios. No new browser WebGL/GPU or real-phone performance validation; do not claim rendered visual perfection or measured FPS. Ice/alien maps and persistent expedition unlocks remain separate upcoming work.

@@ -1,0 +1,20 @@
+import assert from 'node:assert/strict';
+import {Game,startingChoices} from './dist/engine.js';
+import {HEROES,registerHero,registerEnemy,registerMap} from './dist/content.js';
+import {registerWorldVisual,createWorldVisual} from './dist/content-renderers.js';
+const custom={...HEROES[1],id:'test-flame',name:'גיבור בדיקה',weapon:'תותח אש',trainingKey:undefined,portrait:'assets/test-hero.webp'};
+assert.throws(()=>registerHero({...custom,id:'invalid',portrait:'https://example.com/a.png'}));
+registerHero(custom);assert.throws(()=>registerHero(custom));const index=HEROES.length-1;
+assert.throws(()=>new Game({hero:index}),/locked/);const owned={fskill:8,collection:{heroes:{'test-flame':{unlocked:true}}}};const g=new Game({hero:index,meta:owned});assert.equal(g.team[0].id,'test-flame');assert.equal(g.team[0].archetype,'fire');assert.equal(g.team[0].burn,5,'custom hero must not inherit another hero personal training');
+g.addHero(1);assert.equal(g.team.length,2);g.random=()=>.5;for(let i=0;i<30;i++){const opts=g.makeOptions();assert.equal(new Set(opts.map(o=>o.id)).size,opts.length);}
+const victim={id:1,x:150,y:200,hp:100,speed:0,burn:0,slow:0};g.enemies=[victim];g.attack(g.team[0],victim);g.updateProjectiles(1);assert(victim.hp<100&&victim.burn>0);
+assert(Array.from({length:10},(_,i)=>startingChoices(()=>(i+.1)/10,owned)).flat().includes(index));
+registerEnemy({id:'test-enemy',name:'אויב בדיקה',hp:99,speed:12,damage:4,color:'#aabbcc',rig:1});
+registerMap({id:'test-map',name:'מפת בדיקה',renderer:'forest',enemyPool:['test-enemy','forest-runner','forest-armored','forest-boss']});
+const customMap=new Game({map:'test-map',random:()=>.9});customMap.wave=1;customMap.spawn();assert.equal(customMap.enemies[0].hp,99);assert.equal(customMap.enemies[0].speed,12);assert.equal(customMap.enemies[0].rig,1);
+assert.throws(()=>registerMap({id:'bad-map',name:'מפה',renderer:'forest',enemyPool:['missing']}));assert.throws(()=>new Game({map:'missing'}));
+let made=false;registerWorldVisual('test-world',()=>({update(){},reset(){},dispose(){},test:true}));assert(createWorldVisual('test-world',null).test);assert.throws(()=>createWorldVisual('missing',null));
+const electric=new Game({hero:2});electric.enemies=[{id:1,x:100,y:200,hp:200},{id:2,x:120,y:200,hp:200}];electric.attack(electric.team[0],electric.enemies[0]);assert(electric.effects.some(f=>f.text==='BOUNCE ×1'));assert.equal(electric.enemies[0].hp,178);assert.equal(electric.enemies[1].hp,178);
+const health=new Game();health.hp=health.maxHp;const wall=(()=>{for(let i=0;i<100;i++){const opt=health.makeOptions().find(o=>o.id==='wall');if(opt)return opt;}throw Error('wall option missing');})();wall.apply();assert.equal(health.hp,750);assert(health.effects.some(f=>f.text==='+100 HP'));
+for(let i=0;i<100;i++)health.callout('event'+i,250,500,'#ffffff','key'+i);assert(health.effects.filter(f=>f.label).length<=4);
+console.log('PASS: fifth hero recruitment/combat, distinct identity/archetype, training isolation, validation, map enemy selection, renderer adapters and truthful bounded feedback.');

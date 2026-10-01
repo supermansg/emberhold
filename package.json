@@ -1,0 +1,12 @@
+{
+  "name": "emberhold",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --config vite.config.mjs",
+    "test": "node verify.mjs && node verify-v3.mjs && node verify-v4.mjs && node verify-environment.mjs && node verify-content.mjs && node verify-mastery.mjs && node verify-fidelity.mjs && node verify-collection.mjs && node verify-audio.mjs"
+  },
+  "devDependencies": {
+    "vite": "8.0.13"
+  }
+}

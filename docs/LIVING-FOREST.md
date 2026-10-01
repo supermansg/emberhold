@@ -1,0 +1,13 @@
+# Living forest release candidate
+
+2026-09-08. User approved the first environment stage, preserving the prior authority to publish checked upgrades. Source begins at planning commit 8f78744; last deployed game baseline d076cda. No combat balance, persistent fields, unlocks or new world selection added in this stage.
+
+Implemented environment.js: continuous extended ground/path, layered distant hills, 90 varied instanced conifers with coherent gusts, drifting clouds/leaves, simulated weather transitioning over seven-minute blocks, rain, lodge smoke, bounded dust and nearby canopy responses to impacts. NOAA fractional-year solar calculation uses fixed 32.0N/34.8E and UTC timestamp; displayed clock uses Asia/Jerusalem with automatic DST. Solar positions are approximate, not personal geolocation. Weather is expressly simulated; it is not a live weather service. Night fill light preserves gameplay readability. Sun disc is physically positioned and may be outside the camera view or below the horizon.
+
+Raised battle camera, reduced lodge scale and moved it back. Removed identical raised torus craters; remaining marks vary orientation/aspect/crack angles and fade over 22 simulation seconds. Static scenery remains batched; moving foliage, rain, leaves, smoke and dust are instanced and bounded. Cosmetic motion consumes no combat RNG. System reduced-motion preference stops canopy/cloud/smoke motion and hides rain/leaves/dust. Simulation time freezes ambient motion during pause; real clock illumination can still update.
+
+Validation: verify.mjs, verify-v3.mjs, verify-v4.mjs and verify-environment.mjs all pass. Existing seeded run outcomes identical (loss wave10 / win wave10 / loss wave10 / loss wave9). New tests cover solar day/night and east/west, continuous weather boundaries, canopy motion/pause/reduced-motion, duplicate impact filtering and bounded lifetime, finite geometry, and no opaque scenery between camera and all four hero centers at three phone/desktop aspect ratios. These are mathematical/Three scene tests, not rendered GPU pixel evidence.
+
+Limits: no new physical-device WebGL render/performance/audio verification. Existing cloud browser lacks WebGL. New living environment applies to the Three renderer; Canvas fallback remains the prior simplified battle presentation. No claim of measured FPS or universal mobile performance. First user screenshot after release should check night readability, hero visibility, horizon framing and frame pacing.
+
+Solar equations source: https://gml.noaa.gov/grad/solcalc/solareqns.PDF . Design/reference observations remain in product-research.md. Ice/alien worlds and persisted expedition unlocking require the next approved stages.

@@ -1,0 +1,15 @@
+{
+  "dist/app.js": "9265f4ba91b540e68980ea3c00c614c1b8970c0fe51d63ae4580b1c57fad34db",
+  "dist/assets/battlefield.webp": "46fdc27c4d0c3050372d6eaba72968505bf0d16a3d5c990eb57d41616fed3ba9",
+  "dist/assets/enemies.webp": "5c743d29444220b67eb63f20e71df2a653a5ba867d88a0f16adb7133c0240aa9",
+  "dist/assets/heroes.webp": "090ed669fe077a02a641cf1496882ff1911a44eab52dcae8369f23285797869c",
+  "dist/audio.js": "c8aed745d7f49ddd579c84e43f5005084afa157406d70a20b05978258f8f8fff",
+  "dist/engine.js": "2d47f9226fb712c294f70de9894c2183b0c8dfdddd3723f32b8cb4bfd7e65b9a",
+  "dist/index.html": "97b43146852c6bdf0031e6adbdf4f0fa2b16b072702c27baf68e40e06b16aea3",
+  "dist/progression.js": "2824f5160c714eaf1abb7d9dc07c7d40897207ad32dbd8c86438a02976d2dded",
+  "dist/render3d.js": "c022dd0f3badd3e42bff206cfd0fac67757679f609406dd4b5697f3d2407170a",
+  "dist/style.css": "3c5f11b6b59659852e7c5f3424ab63bb17ce15a5f28037348729e13bec292c2c",
+  "dist/vendor/THREE-LICENSE.txt": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601",
+  "dist/vendor/three.core.min.js": "61ba0df005b05991361d040d8ff670e1aadfd0ce7aeebd1fdb0725957a8957de",
+  "dist/vendor/three.module.js": "e2b5ee6bccd38fd6d8a2428546b83c5f2426d84b152ef82be8055556e3b40eb6"
+}
