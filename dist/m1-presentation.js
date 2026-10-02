@@ -7,6 +7,7 @@ const surfaces = Object.freeze({
   stone: {roughness: .86, metalness: 0},
   timber: {roughness: .8, metalness: 0},
   cloth: {roughness: .94, metalness: 0},
+  leather: {roughness: .83, metalness: 0},
   skin: {roughness: .72, metalness: 0},
   paintedMetal: {roughness: .43, metalness: .48},
   brass: {roughness: .34, metalness: .7},
@@ -89,6 +90,7 @@ export class BrassEffects {
       ring: new T.RingGeometry(.09, .15, 12),
       debris: new T.BoxGeometry(.055, .055, .16),
       steam: new T.IcosahedronGeometry(.09, 0),
+      contact: new T.CircleGeometry(.2,8),
       casing: new T.CylinderGeometry(.035,.035,.14,5)
     };
     this.steam = new T.InstancedMesh(this.geometry.steam,
@@ -119,7 +121,7 @@ export class BrassEffects {
       } else {
         const ring = new T.Mesh(this.geometry.ring, mat);o.add(ring);
         const sparks = new T.InstancedMesh(this.geometry.debris, mat, 6);
-        sparks.instanceMatrix.setUsage(T.DynamicDrawUsage);sparks.frustumCulled = false;o.add(sparks);
+        sparks.instanceMatrix.setUsage(T.DynamicDrawUsage);sparks.frustumCulled = false;o.add(sparks);const contact=new T.Mesh(this.geometry.contact,mat);o.add(contact);
       }
       if(kind==='muzzle'){const shell=new T.Mesh(this.geometry.casing,mat);o.add(shell);}
       o.userData = {sliceFx: true, kind, material: mat, origin: new T.Vector3(), target: new T.Vector3()};
@@ -144,6 +146,7 @@ export class BrassEffects {
     } else {
       o.position.copy(target);o.children[0].quaternion.copy(camera.quaternion);
       o.children[0].scale.setScalar(1 + k * 2);
+      const contact=o.children[2];contact.visible=k<.3;contact.quaternion.copy(camera.quaternion);contact.scale.set(1.2*(1-k*2),.7*(1-k*2),1);
       const sparks = o.children[1];sparks.count=Math.min(6,this.particleAllowance??6);sparks.visible = !reduced&&sparks.count>0;
       this.direction.copy(target).sub(o.userData.origin).normalize();
       for (let i = 0; i < 6; i++) {

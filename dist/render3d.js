@@ -1,3 +1,4 @@
+import {premiumActor,animatePremium} from './premium-actors.js';
 import {CombatVFX,GroundScars} from './combat-vfx.js';
 import {DamageFeedback,feedbackState} from './damage-feedback.js';
 import {PresentationQuality} from './presentation-quality.js';
@@ -53,7 +54,7 @@ export class BattleView {
   this.scene.traverse(m=>{if(!m.isMesh||[this.crystal,this.shield,this.targetRing,this.battlefield].includes(m))return;const geometry=m.geometry.index?m.geometry.toNonIndexed():m.geometry.clone();geometry.applyMatrix4(m.matrixWorld);if(!groups.has(m.material))groups.set(m.material,[]);groups.get(m.material).push(geometry);remove.push(m);});
   for(const m of remove)m.removeFromParent();for(const[mat,parts]of groups){const g=new T.BufferGeometry();for(const key of ['position','normal']){const length=parts.reduce((sum,p)=>sum+p.attributes[key].array.length,0);const data=new Float32Array(length);let at=0;for(const part of parts){data.set(part.attributes[key].array,at);at+=part.attributes[key].array.length;}g.setAttribute(key,new T.BufferAttribute(data,3));}g.computeBoundingSphere();const mesh=new T.Mesh(g,mat);mesh.castShadow=mat!==material('#243d35')&&mat!==material('#718367')&&mat!==material('#9a957b');mesh.receiveShadow=true;this.scene.add(mesh);parts.forEach(p=>p.dispose());}
  }
- actor(type,hero=false){const root=new T.Group(),body=new T.Group();root.add(body);const colors=hero?['#d9a34d','#ce6048','#4eaaa3','#9387c6']:['#83a952','#c35e4e','#89719e','#555d68'];const c=colors[type],dark=hero?'#253e45':'#37403c';
+ actor(type,hero=false){if(type===0)return premiumActor(hero);const root=new T.Group(),body=new T.Group();root.add(body);const colors=hero?['#d9a34d','#ce6048','#4eaaa3','#9387c6']:['#83a952','#c35e4e','#89719e','#555d68'];const c=colors[type],dark=hero?'#253e45':'#37403c';
   let torso=piece(body,'sphere',hero&&type===0?'#38474c':c,0,1,0,hero&&type===0?.48:.4,.48,.28);piece(body,'box',dark,0,.78,0,.6,.16,.5);const head=piece(body,'sphere',hero?'#dfbb94':c,0,1.65,0,.35,.35,.3);piece(body,'sphere',hero?['#934c28','#b83c2e','#d0c9e5','#b1a5d9'][type]:c,0,1.85,-.03,.39,.23,.32);
   const limbs=[];for(let sign of [-1,1]){const leg=new T.Group();leg.position.set(sign*.2,.65,0);body.add(leg);piece(leg,'box',dark,0,-.26,0,.24,.52,.26);piece(leg,'box',c,0,-.51,.07,.3,.18,.43);limbs.push(leg);piece(body,'sphere',c,sign*.47,1.23,0,.22,.25,.25);const arm=new T.Group();arm.position.set(sign*.47,1.1,0);body.add(arm);piece(arm,'box',dark,0,-.2,.02,.18,.4,.19);piece(arm,'sphere',hero?'#dfbb94':c,0,-.39,.09,.14,.14,.14);limbs.push(arm);}
   if(hero){if(type===0){piece(body,'box','#edd78d',-.2,1.1,-.29,.2,.35,.12);}else{piece(body,'cylinder','#554b45',.55,.9,.18,.05,1.9,.05);piece(body,type===1?'sphere':'cone',['','#ffb46b','#a1ffeb','#dacbff'][type],.55,1.97,.18,.24,.4,.24,true);if(type===2){piece(body,'box','#2e6260',0,1.15,-.35,.5,.6,.27);for(let x of [-.2,.2])piece(body,'cylinder','#95fbe4',x,1.5,-.37,.05,.65,.05,true);}if(type===3){let cape=piece(body,'cone','#675b90',0,.9,-.12,.58,1.15,.4);cape.rotation.x=-.12;}}
@@ -148,7 +149,7 @@ export class BattleView {
  renderHero(index,angle,time){
   if(!this.gallery){this.gallery=new T.Scene();this.gallery.background=new T.Color('#152b32');this.gallery.add(new T.HemisphereLight('#e4faff','#6d4932',2.7));const light=new T.DirectionalLight('#ffe0b0',3);light.position.set(3,5,4);this.gallery.add(light);this.galleryCamera=new T.PerspectiveCamera(38,1,.1,30);this.galleryCamera.position.set(0,1.7,5.7);this.galleryCamera.lookAt(0,1.15,0);piece(this.gallery,'cylinder','#304b50',0,-.12,0,1.2,.2,1.2);}
   if(this.galleryIndex!==index){if(this.galleryActor){this.galleryActor.userData.dispose?.();this.gallery.remove(this.galleryActor);}const def=HEROES[index];this.galleryActor=this.heroModel(def);this.galleryActor.userData.torso.material=material(def.color);this.gallery.add(this.galleryActor);this.galleryIndex=index;}
-  this.galleryActor.rotation.y=angle;animateActorDetails(this.galleryActor,time*.001,0,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);this.galleryCamera.aspect=this.camera.aspect;this.galleryCamera.updateProjectionMatrix();this.renderer.render(this.gallery,this.galleryCamera);
+  this.galleryActor.rotation.y=angle;animatePremium(this.galleryActor,{},time*.001,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);animateActorDetails(this.galleryActor,time*.001,0,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);this.galleryCamera.aspect=this.camera.aspect;this.galleryCamera.updateProjectionMatrix();this.renderer.render(this.gallery,this.galleryCamera);
  }
  heroModel(def){const a=createActorVisual('hero',def,()=>this.actor(def.rig,true));if(def.look){const b=a.userData.body,c=def.color;const crest=new T.Group();b.add(crest);a.userData.identity=crest;
   if(['solar','void'].includes(def.look)){for(const side of [-1,1]){const fin=piece(crest,'cone',c,side*.56,1.43,-.12,.13,.7,.18);fin.rotation.z=-side*.4;}piece(crest,'box',c,.4,1,1.3,.18,.15,.6);}
@@ -178,6 +179,7 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
     a.userData.body.position.z=reduced?0:-recoil*.09;a.userData.body.rotation.x=reduced?0:-prepare*.025-recoil*.06;
     for(const j of [1,3])if(a.userData.limbs[j])a.userData.limbs[j].rotation.x=-.45-prepare*.05-recoil*.12;
    }
+   animatePremium(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
   }
   this.scene.updateMatrixWorld(true);
   for(const f of game?.effects||[])if(f.type==='impact'&&f.hero==='gunner'&&!this.m1Seen.has(f)){
@@ -190,6 +192,7 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
     for(let j=0;j<a.userData.limbs.length;j++)a.userData.limbs[j].rotation.x=e.y<523?Math.sin(phase+(j<2?0:Math.PI))*(j%2===0?.34:.18):Math.sin(t*8+j)*.18;
 
    }
+   animatePremium(a,e,t+e.id,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
    this.m1Source.copy(this.m1ShotOrigins.get(e.id)||world(250,555,2));observeHit(a,e,game.effects,t,this.m1Source);poseEnemy(a,e,t,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
    a.userData.bar.scale.x=Math.max(0,e.hp/e.maxHp)*(e.isBoss?1.7:1);a.userData.bg.scale.x=e.isBoss?1.7:1;a.userData.bar.material.color.set(e.y>=480?'#ff9379':e.isBoss?'#ffd193':'#b3d479');a.userData.bar.quaternion.copy(this.camera.quaternion);a.userData.bg.quaternion.copy(this.camera.quaternion);
   }
