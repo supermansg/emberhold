@@ -51,7 +51,8 @@ export function buildBattlefield(scene, piece) {
     p.setZ(i, z);
     const path = Math.max(0, 1 - Math.abs(x - Math.sin(z * .13) * .8) / 6.2);
     c.copy(moss).lerp(earth, Math.min(1, path * 2)).lerp(worn, path * (.24 + grain * .28));
-    c.multiplyScalar(.9 + grain * .16);c.toArray(colors, i * 3);
+    const rut=Math.exp(-Math.pow((Math.abs(x)-2.5-Math.sin(z*.09)*.35)/.3,2));
+    c.multiplyScalar(.9 + grain * .16-rut*.07);c.toArray(colors, i * 3);
   }
   ground.setAttribute('color', new T.BufferAttribute(colors, 3));ground.computeVertexNormals();
   const floor = new T.Mesh(ground, new T.MeshStandardMaterial({vertexColors: true, roughness: .97, metalness: 0}));
@@ -68,6 +69,7 @@ export function buildBattlefield(scene, piece) {
       const root = piece(scene, 'cylinder', '#6b4c31', side * (7.0 + i * .18), .13, 3 - i * 4.3, .09, 1.5, .09);
       root.rotation.set(.2, i, side * 1.23);
     }
+    for(let i=0;i<4;i++){const rubble=piece(scene,'box',i%2?'#7d8983':'#465a57',side*(7.7+i*.15),.22,-5-i*2.3,.65,.4,.48);rubble.rotation.set(.08,i*.63,side*.15);}
     const log = piece(scene, 'cylinder', '#574838', side * 8.0, .38, -.5, .28, 2.4, .28);
     log.rotation.z = side * 1.18;
     piece(scene, 'box', '#6b4c31', side * 6.8, .23, 6.2, .8, .26, 1.2).rotation.y = side * .3;
@@ -86,14 +88,17 @@ export class BrassEffects {
       trail: new T.ConeGeometry(.07, .9, 5),
       ring: new T.RingGeometry(.09, .15, 12),
       debris: new T.BoxGeometry(.055, .055, .16),
-      steam: new T.IcosahedronGeometry(.09, 0)
+      steam: new T.IcosahedronGeometry(.09, 0),
+      casing: new T.CylinderGeometry(.035,.035,.14,5)
     };
     this.steam = new T.InstancedMesh(this.geometry.steam,
       new T.MeshBasicMaterial({color: '#b7d0c7', transparent: true, opacity: .18, depthWrite: false}), 3);
     this.steam.visible = false;this.steam.frustumCulled = false;scene.add(this.steam);
     this.dummy = new T.Object3D();this.direction = new T.Vector3();
+    for(const [kind,count]of [['shot',24],['muzzle',8],['impact',16]]){const warm=[];for(let i=0;i<count;i++)warm.push(this.acquire(kind));for(const o of warm)this.release(o);}
   }
   get allocated() {return this.slots.length;}
+  get particles(){let n=this.steam.visible?3:0;for(const o of this.slots)if(o.userData.busy){if(o.userData.kind==='muzzle'&&o.children[2]?.visible)n++;if(o.userData.kind==='impact'&&o.children[1]?.visible)n+=o.children[1].count;}return n;}
   get active() {return this.slots.filter(o => o.userData.busy).length;}
   acquire(kind) {
     let o = this.slots.find(o => o.userData.kind === kind && !o.userData.busy);
@@ -116,6 +121,7 @@ export class BrassEffects {
         const sparks = new T.InstancedMesh(this.geometry.debris, mat, 6);
         sparks.instanceMatrix.setUsage(T.DynamicDrawUsage);sparks.frustumCulled = false;o.add(sparks);
       }
+      if(kind==='muzzle'){const shell=new T.Mesh(this.geometry.casing,mat);o.add(shell);}
       o.userData = {sliceFx: true, kind, material: mat, origin: new T.Vector3(), target: new T.Vector3()};
       this.slots.push(o);
     }
@@ -128,7 +134,8 @@ export class BrassEffects {
     o.userData.material.opacity = kind === 'shot' ? 1 : 1 - k;
     if (kind === 'muzzle') {
       o.position.copy(source);o.quaternion.copy(camera.quaternion);
-      o.scale.setScalar((reduced ? .65 : 1.15) * (1 - k * .8));
+      o.scale.setScalar((reduced ? .65 : 1.5) * (1 - k * .8));
+    const shell=o.children[2];shell.visible=!reduced&&(this.particleAllowance??6)>0;shell.position.set(.25+k*.6,-k*k*.5,-.15+k*.2);shell.rotation.set(k*8,k*4,0);
     } else if (kind === 'shot') {
       o.position.copy(o.userData.origin).lerp(target, k);
       this.direction.copy(target).sub(o.userData.origin).normalize();
@@ -137,7 +144,7 @@ export class BrassEffects {
     } else {
       o.position.copy(target);o.children[0].quaternion.copy(camera.quaternion);
       o.children[0].scale.setScalar(1 + k * 2);
-      const sparks = o.children[1];sparks.visible = !reduced;
+      const sparks = o.children[1];sparks.count=Math.min(6,this.particleAllowance??6);sparks.visible = !reduced&&sparks.count>0;
       this.direction.copy(target).sub(o.userData.origin).normalize();
       for (let i = 0; i < 6; i++) {
         const spread = (i - 2.5) * .13, travel = k * (.45 + i * .07);
@@ -160,6 +167,7 @@ export class BrassEffects {
     }
     this.steam.instanceMatrix.needsUpdate = true;
   }
+  dispose(){if(this.disposed)return;this.disposed=true;this.reset();for(const o of this.slots){o.traverse(n=>{if(n.isInstancedMesh)n.dispose();});o.userData.material.dispose();}this.steam.dispose();this.steam.material.dispose();for(const g of Object.values(this.geometry))g.dispose();}
   reset() {for (const o of this.slots) this.release(o);this.steam.visible = false;this.lastShot = -10;}
 }
 const UP = new T.Vector3(0, 1, 0);
