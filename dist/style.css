@@ -56,3 +56,8 @@ body{background:radial-gradient(ellipse at top,#172d40,var(--bg) 65%)}
 @media(max-height:700px){.home-logo{width:170px;margin:0 auto 4px}.home-title>p{font-size:12px}}
 @media(prefers-reduced-motion:reduce){.primary,.choice-wrap{transition:none}}
 @media(max-width:480px){.topbar{padding:0 12px;gap:8px}.brand{font-size:18px;letter-spacing:1px;gap:6px}.brandmark{font-size:25px}.brand small{font-size:9px;letter-spacing:1px}.top-actions{gap:6px}.top-actions .iconbtn{width:44px;height:44px;flex:none}.top-actions .coin{font-size:12px;white-space:nowrap}}
+
+/* M4.1: four powers in one thumb-accessible row; cooldown follows simulation time. */
+.power-slots{grid-template-columns:1fr 1fr 2fr;gap:5px}#supportPowers{gap:5px}
+.shockwave-power{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;min-height:64px;padding:4px;border:1px solid #80cfc6;border-radius:11px;background:#142f3a;color:#d8fff5;font:inherit}.shockwave-power b{font-size:11px}.shockwave-power small{font-size:10px}.shockwave-meter{display:grid;place-items:center;width:25px;height:25px;border-radius:50%;background:conic-gradient(#a7f5de var(--cooldown,100%),#234450 0);color:#17342d;font-size:22px;line-height:1}.shockwave-power:active{transform:scale(.96);background:#376861}.shockwave-power[data-state=active]{border-color:#fff2bd;box-shadow:inset 0 0 15px #85ffda66}.shockwave-power[data-state=ready]{box-shadow:inset 0 0 10px #85ffda22}.shockwave-power:disabled{opacity:.72}.shockwave-power[data-state=active]:disabled{opacity:1}
+@media(max-width:360px){.power-slots{gap:4px}.combat-deck{padding-inline:6px}.combat-deck .tactical-power b,.spell-slot b{font-size:10px}.spell-slot{padding:4px}}

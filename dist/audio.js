@@ -1,6 +1,6 @@
 import {CUES} from './audio-cues.js';
 const clamp=v=>Math.max(0,Math.min(1,Number.isFinite(+v)?+v:0));
-const IMPORTANT=new Set(['ready','win','lose','level','recruit','shield','boom','boss']);
+const IMPORTANT=new Set(['ready','win','lose','level','recruit','shield','boom','boss','shockwave','shockwave-charge']);
 // Temporary procedural fantasy score; independent cosmetic PRNG never consumes gameplay RNG.
 export class Soundscape {
  constructor(){
@@ -21,7 +21,7 @@ export class Soundscape {
    this.music.connect(this.master);this.sfx.connect(this.master);this.ambient.connect(this.sfx);
    this.buses={};for(const name of ['weapons','impacts','abilities','enemies','environment','ui']){const g=c.createGain();g.gain.value=1;g.connect(name==='environment'?this.ambient:this.sfx);this.buses[name]=g;}
    this.noise=c.createBuffer(1,c.sampleRate*2,c.sampleRate);const data=this.noise.getChannelData(0);for(let i=0;i<data.length;i++)data[i]=this.random()*2-1;
-   this.makeBed('wind',250,.025,-.5);this.makeBed('forest',1800,.008,.6);this.makeBed('rain',3400,0,.25);this.makeBed('fire',620,.008,-.3);
+   this.makeBed('wind',160,.003,-.5);this.makeBed('forest',900,.001,.6);this.makeBed('rain',950,0,.25);this.makeBed('fire',320,.002,-.3);
    this.makeMusic();this.sync();
   }
   if(!globalThis.document?.hidden&&!this.scene.paused)this.ctx.resume()?.catch(()=>{});
@@ -40,7 +40,7 @@ export class Soundscape {
  sync(){if(!this.ctx||this.disposed)return;const hidden=!!globalThis.document?.hidden,paused=this.scene.paused||this.scene.state==='paused'||hidden;
   this.target(this.master.gain,this.enabled&&!paused?this.settings.master:0,.045);this.target(this.sfx?.gain,this.settings.sfx);const playing=this.scene.state==='playing';
   this.target(this.music?.gain,this.settings.music*(playing?(this.scene.boss?.65:.8):.55),.8);this.target(this.ambient?.gain,playing?.65:.4,.5);
-  for(const bed of this.beds)if(bed.name==='rain')this.target(bed.gain.gain,clamp(this.scene.rain)*.035,.7);else if(bed.name==='fire')this.target(bed.gain.gain,.006+clamp(this.scene.intensity)*.012,.5);
+  for(const bed of this.beds)if(bed.name==='rain')this.target(bed.gain.gain,clamp(this.scene.rain)*.006,.7);else if(bed.name==='fire')this.target(bed.gain.gain,.001+clamp(this.scene.intensity)*.002,.5);
   if(this.score?.source.playbackRate)this.target(this.score.source.playbackRate,this.scene.boss?1.08:1,.8);
   if(paused&&!this.wasPaused)this.clearVoices();this.wasPaused=paused;this.desiredContextState=paused?'suspended':this.enabled?'running':null;this.reconcileContext();
  }
@@ -50,10 +50,10 @@ export class Soundscape {
   this.contextTransition=true;let operation;try{operation=this.ctx[method]();}catch{this.contextTransition=false;return;}
   Promise.resolve(operation).then(()=>{this.contextTransition=false;this.reconcileContext();},()=>{this.contextTransition=false;});
  }
- busFor(kind){return kind.startsWith('impact')||kind.startsWith('break')?'impacts':['gunner','fire','electric','frost','nature','reloadStart','reloadEnd'].includes(kind)?'weapons':IMPORTANT.has(kind)?'abilities':['wall','chest'].includes(kind)?'enemies':'ui';}
+ busFor(kind){if(kind.startsWith('special-')||kind.startsWith('heavy-')||kind.startsWith('shockwave'))return 'abilities';return kind.startsWith('impact')||kind.startsWith('break')?'impacts':['gunner','fire','electric','frost','nature','reloadStart','reloadEnd'].includes(kind)?'weapons':IMPORTANT.has(kind)?'abilities':['wall','chest'].includes(kind)?'enemies':'ui';}
  voice(freq,dur,volume,type,cut,delay=0,pan=0,bus='weapons',priority=0){
   if(this.disposed||!this.ctx)return false;const limit=priority?28:22;
-  if(this.voices>=limit){if(!priority)return false;const victim=[...this.live].find(v=>!v.priority);if(!victim)return false;victim.finish(true);}
+  if(this.voices>=limit){if(!priority)return false;const victim=[...this.live].find(v=>v.priority<priority);if(!victim)return false;victim.finish(true);}
   const ctx=this.ctx,now=ctx.currentTime+delay,source=type==='noise'?ctx.createBufferSource():ctx.createOscillator();
   if(type==='noise')source.buffer=this.noise;else{source.type=type;source.frequency.setValueAtTime(Math.max(30,freq),now);source.frequency.exponentialRampToValueAtTime(Math.max(30,freq*.48),now+dur);}
   const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.setValueAtTime(cut,now);filter.frequency.exponentialRampToValueAtTime(Math.max(100,cut*.35),now+dur);
@@ -64,7 +64,7 @@ export class Soundscape {
  play(kind,pan=0){if(!this.enabled||this.disposed||!this.ctx||this.ctx.state!=='running'||this.scene.paused||this.scene.state==='paused'||globalThis.document?.hidden)return;
   const now=this.ctx.currentTime,gate=kind==='gunner'?.07:kind==='loot'?.13:kind==='ready'?.55:.1;if(now-(this.last.get(kind)??-10)<gate)return;this.last.set(kind,now);
   const variation=['gunner','fire','electric','frost','nature'].includes(kind)?.94+this.random()*.12:1;
-  for(const [freq,dur,volume,type,cut,delay=0]of CUES[kind]||CUES.ui)this.voice(freq*variation,dur,volume,type,cut,delay,pan,this.busFor(kind),IMPORTANT.has(kind)?1:0);
+  for(const [freq,dur,volume,type,cut,delay=0]of CUES[kind]||CUES.ui)this.voice(freq*variation,dur,volume,type,cut,delay,pan,this.busFor(kind),kind.startsWith('special-')||kind.startsWith('shockwave')?2:IMPORTANT.has(kind)||kind.startsWith('heavy-')?1:0);
  }
  clearVoices(){for(const v of [...this.live])v.finish(true);this.last.clear();}
  dispose(){if(this.disposed)return;this.disposed=true;globalThis.document?.removeEventListener('visibilitychange',this.hidden);this.clearVoices();for(const bed of [...this.beds,...(this.score?[this.score]:[])]){try{bed.source.stop();}catch{}for(const n of bed.nodes)n.disconnect();}this.beds=[];for(const n of [this.master,this.music,this.sfx,this.ambient,this.output,...Object.values(this.buses||{})])n?.disconnect();this.ctx?.close?.()?.catch(()=>{});this.noise=null;this.score=null;}

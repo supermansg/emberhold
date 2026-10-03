@@ -6,7 +6,7 @@ const STYLE={normal:'#fff4d6',elemental:null,special:'#ffe18b',synergy:'#e3c3ff'
 export function feedbackState(f,effects=[]){
  const text=f.text||'';if(/^\+\d+ HP$/.test(text))return 'healing';if(/SHIELD/.test(text))return 'shield';
  if(/COMBO|SHATTER|PIERCE/.test(text))return 'synergy';
- if(/ULTIMATE|POWER/.test(text))return 'special';
+ if(f.presentation?.special||/ULTIMATE|POWER/.test(text))return 'special';
 
  return ELEMENTS.has(f.color)?'elemental':'normal';
 }

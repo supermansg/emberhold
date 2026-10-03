@@ -1,5 +1,7 @@
 # M4 audio
 
+Historical M4 baseline. M4.1 reduces ambient gains, adds priority-2 player cues and resolves Briar impact/death attribution; see [M4.1-PLAYTEST.md](M4.1-PLAYTEST.md) for the current mix.
+
 `dist/audio.js` exports `Soundscape`; `audio-cues.js` contains local layered synthesis recipes. No sampled assets, runtime dependency or shared gameplay randomness is used. The melodic soundtrack is a temporary procedural fantasy phrase, **not final authored music**. Device listening and final mix approval remain human QA.
 
 Integration:
