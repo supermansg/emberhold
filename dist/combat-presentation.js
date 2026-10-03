@@ -1,6 +1,6 @@
 // Cosmetic body motion from observed engine damage. Logical coordinates stay untouched.
 import * as T from './vendor/three.module.js';
-const RESPONSE=[[.13,.18,.19],[.18,.26,.16],[.035,.09,.25],[.012,.04,.24]];
+const RESPONSE=[[.19,.25,.24],[.24,.32,.20],[.045,.12,.28],[.012,.05,.28]];
 export function observeHit(actor,e,effects,time,origin){
  const d=actor.userData;d.hitDirection??=new T.Vector3();d.observedHits??=new WeakMap();
  let value=0;

@@ -1,3 +1,4 @@
+import {createBrassActor,animateBrassAsset} from './brass-asset.js';
 import {ShockwaveView} from './shockwave-view.js';
 import {terrainSurface} from './terrain-surface.js';
 import {enemyVariant} from './enemy-variants.js';
@@ -27,12 +28,12 @@ export class BattleView {
  }
  attach(host){this.observer.disconnect();this.host=host;host.prepend(this.renderer.domElement);this.observer.observe(host);this.resize();}
  resize(){const {width:w,height:h}=this.host.getBoundingClientRect();if(w<1||h<1)return;this.renderer.setSize(w,h,false);this.camera.aspect=w/h;this.camera.updateProjectionMatrix();}
- configureCamera(battle,t,shake=0){const f=Math.max(1,(battle&&(this.cameraMode||0)===0?.60:.64)/this.camera.aspect);if(battle){const preset=[{y:19.5,z:25.5,ty:1.1,tz:-2},{y:15,z:27,ty:1,tz:0},{y:32,z:16,ty:0,tz:-1}][this.cameraMode||0];this.camera.position.set(0,preset.y*f,preset.z*f);this.camera.lookAt(0,preset.ty,preset.tz);this.camera.zoom=1;}else{this.camera.position.set(8*f,15*f,25*f);this.camera.lookAt(0,1,8);this.camera.zoom=this.camera.aspect>1?1.3:1;}if(shake&&!(globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches)){this.camera.position.x+=Math.sin(t*87)*shake;this.camera.position.y+=Math.cos(t*71)*shake*.6;}this.camera.updateProjectionMatrix();this.camera.updateMatrixWorld(true);}
+ configureCamera(battle,t,shake=0){const f=Math.max(1,(battle&&(this.cameraMode||0)===0?.60:.64)/this.camera.aspect);if(battle){const preset=[{y:17.8,z:24.8,ty:1.3,tz:-2},{y:15,z:27,ty:1,tz:0},{y:32,z:16,ty:0,tz:-1}][this.cameraMode||0];this.camera.position.set(0,preset.y*f,preset.z*f);this.camera.lookAt(0,preset.ty,preset.tz);this.camera.zoom=1;}else{this.camera.position.set(8*f,15*f,25*f);this.camera.lookAt(0,1,8);this.camera.zoom=this.camera.aspect>1?1.3:1;}if(shake&&!(globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches)){this.camera.position.x+=Math.sin(t*87)*shake;this.camera.position.y+=Math.cos(t*71)*shake*.6;}this.camera.updateProjectionMatrix();this.camera.updateMatrixWorld(true);}
  buildWorld(){
   const s=this.scene;piece(s,'box','#243d35',0,-.6,-45,150,1.2,180);this.battlefield=buildBattlefield(s,piece);this.battlefield.material.map=terrainSurface();
   // Deterministic low-poly game environment: sculpted rock banks, conifers and masonry.
   const rand=(n)=>{const x=Math.sin(n*127.1+311.7)*43758.5453;return x-Math.floor(x)};
-  for(let i=0;i<100;i++){let x=(rand(i)-.5)*12,z=rand(i+100)*29-16;let p=piece(s,'sphere',i%3?'#7e876f':'#b3a88a',x,.03,z,.12+rand(i+4)*.23,.06,.11+rand(i+7)*.15);p.rotation.y=i;}
+  for(let i=0;i<100;i++){let x=(i%2?1:-1)*(5.4+rand(i)*.8),z=rand(i+100)*29-16;let p=piece(s,'sphere',i%3?'#677467':'#8a8371',x,.03,z,.12+rand(i+4)*.23,.06,.11+rand(i+7)*.15);p.rotation.y=i;}
   for(let side of [-1,1])for(let i=0;i<15;i++){let x=side*(8+rand(i+side*100)*3),z=i*2.4-18,sc=.8+rand(i+30)*.7;piece(s,'sphere','#465a57',x,.4,z,sc*1.1,.8,sc);}
 
   const fort=new T.Group();s.add(fort);this.fort=fort;
@@ -153,16 +154,16 @@ export class BattleView {
  }
  renderHero(index,angle,time){
   if(!this.gallery){this.gallery=new T.Scene();this.gallery.background=new T.Color('#152b32');this.gallery.add(new T.HemisphereLight('#e4faff','#6d4932',2.7));const light=new T.DirectionalLight('#ffe0b0',3);light.position.set(3,5,4);this.gallery.add(light);this.galleryCamera=new T.PerspectiveCamera(38,1,.1,30);this.galleryCamera.position.set(0,1.7,5.7);this.galleryCamera.lookAt(0,1.15,0);piece(this.gallery,'cylinder','#304b50',0,-.12,0,1.2,.2,1.2);}
-  if(this.galleryIndex!==index){if(this.galleryActor){this.galleryActor.userData.dispose?.();this.gallery.remove(this.galleryActor);}const def=HEROES[index];this.galleryActor=this.heroModel(def);this.galleryActor.userData.torso.material=material(def.color);this.gallery.add(this.galleryActor);this.galleryIndex=index;}
-  this.galleryActor.rotation.y=angle;animateCaster(this.galleryActor,{},time*.001,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);animatePremium(this.galleryActor,{},time*.001,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);animateActorDetails(this.galleryActor,time*.001,0,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);this.galleryCamera.aspect=this.camera.aspect;this.galleryCamera.updateProjectionMatrix();this.renderer.render(this.gallery,this.galleryCamera);
+  if(this.galleryIndex!==index){if(this.galleryActor){this.galleryActor.userData.dispose?.();this.gallery.remove(this.galleryActor);}const def=HEROES[index];this.galleryActor=this.heroModel(def);if(!this.galleryActor.userData.authored)this.galleryActor.userData.torso.material=material(def.color);this.gallery.add(this.galleryActor);this.galleryIndex=index;}
+  this.galleryActor.rotation.y=angle;animateBrassAsset(this.galleryActor,{},time*.001,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);animateCaster(this.galleryActor,{},time*.001,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);animatePremium(this.galleryActor,{},time*.001,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);animateActorDetails(this.galleryActor,time*.001,0,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);this.galleryCamera.aspect=this.camera.aspect;this.galleryCamera.updateProjectionMatrix();this.renderer.render(this.gallery,this.galleryCamera);
  }
- heroModel(def){const a=createActorVisual('hero',def,()=>def.rig>0?casterActor(def):gunnerActor(def));if(def.look&&!a.userData.designedLook){const b=a.userData.body,c=def.color;const crest=new T.Group();b.add(crest);a.userData.identity=crest;
+ heroModel(def){const a=(def.id==='gunner'?createBrassActor():null)||createActorVisual('hero',def,()=>def.rig>0?casterActor(def):gunnerActor(def));if(def.look&&!a.userData.designedLook){const b=a.userData.body,c=def.color;const crest=new T.Group();b.add(crest);a.userData.identity=crest;
   if(['solar','void'].includes(def.look)){for(const side of [-1,1]){const fin=piece(crest,'cone',c,side*.56,1.43,-.12,.13,.7,.18);fin.rotation.z=-side*.4;}piece(crest,'box',c,.4,1,1.3,.18,.15,.6);}
   if(def.look==='grove'){for(const side of [-1,1]){const antler=piece(crest,'cylinder','#9b9565',side*.26,2.14,0,.045,.7,.045);antler.rotation.z=-side*.5;piece(crest,'sphere',c,side*.45,2.37,0,.16,.12,.13);}piece(crest,'sphere',c,0,1.2,.34,.17,.12,.07,true);}
   if(def.look==='forge'){piece(crest,'box','#43454d',.55,1.95,.18,.9,.5,.45);piece(crest,'box',c,.55,1.95,.42,.55,.12,.035,true);for(const side of [-1,1])piece(crest,'box','#665651',side*.45,1.32,.03,.45,.22,.5);}
   if(def.look==='prism'||def.look==='aurora'){for(let i=0;i<5;i++){const shard=piece(crest,'cone',c,(i-2)*.16,2.12+(.2-Math.abs(i-2)*.06),0,.08,.45,.12,true);shard.rotation.z=(i-2)*-.15;}piece(crest,'sphere',c,0,1.1,.35,.13,.18,.07,true);}
   a.userData.cloth?.traverse(m=>{if(m.isMesh)m.material=material(c)});
- }a.userData.torso.material=material(def.color);return a;}
+ }if(!a.userData.authored)a.userData.torso.material=material(def.color);return a;}
  capturePortrait(index){
   // Capture the real shared model once; never create a second WebGL context.
   const aspect=this.camera.aspect,size=this.renderer.getSize(new T.Vector2()),ratio=this.renderer.getPixelRatio();
@@ -174,7 +175,7 @@ export class BattleView {
   this.updateStations(game,t);const battle=!!game;this.crystal.rotation.y=t*.55;this.crystal.position.y=4.45+Math.sin(t*2)*.08;this.shield.visible=!!game?.shield;this.shield.material.opacity=.12+Math.sin(t*3)*.04;
   this.configureCamera(battle,t,(game?.shake||0)>=.18?Math.min(.22,game.shake):0);this.environment?.update(t,game,new Date(),!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);this.updateWorldDetails(game,t);this.outpostWeather?.update(this.environment?.atmosphere?.rain||0,this.presentationQuality.level,this.environment?.atmosphere?.daylight??1);this.battlefield.material.roughness=.97-(this.environment?.atmosphere?.rain||0)*.28;const boss=game?.enemies.find(e=>e.isBoss);this.bossAura.visible=!!boss;if(boss){this.bossAura.position.copy(world(boss.x,boss.y,.095));this.bossAura.scale.setScalar(1.7);}
   this.dangerLine.visible=!!game&&game.hp/game.maxHp<.3;this.dangerLine.material.opacity=.2+(globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches?0:(Math.sin(t*4)+1)*.08);
-  const team=game?.team||[{index:0},{index:1},{index:2},{index:3}];for(let i=0;i<team.length;i++){const h=team[i];let a=this.heroes.get(i);if(!a){a=this.heroModel(HEROES[h.index]||h);if(h.color)a.userData.torso.material=material(h.color);this.heroes.set(i,a);this.scene.add(a);}if(a.userData.mastery)a.userData.mastery.visible=(h.rank||1)>=3;
+  const team=game?.team||[{index:0},{index:1},{index:2},{index:3}];for(let i=0;i<team.length;i++){const h=team[i];let a=this.heroes.get(i);if(!a){a=this.heroModel(HEROES[h.index]||h);if(h.color&&!a.userData.authored)a.userData.torso.material=material(h.color);this.heroes.set(i,a);this.scene.add(a);}if(a.userData.mastery)a.userData.mastery.visible=(h.rank||1)>=3;
    if(a.userData.powerRig){const rig=a.userData.powerRig;for(let j=0;j<rig.children.length;j++){const m=rig.children[j];if((h.rig??h.index)===0){m.visible=!h.reloading?j<(h.ammo??9):j<Math.floor((1-Math.max(0,h.cd)/h.reload)*9);}else{const charge=(h.rig??h.index)===3?(h.specialTimer||0)/(h.specialCooldown||14):1-Math.max(0,h.cd||0)/(h.interval||1);m.scale.y=((h.rig??h.index)===1?.3+Math.min(1.5,(h.burn||5)/15):.15+Math.max(0,charge))*((h.rig??h.index)===1?.3:.25);m.visible=(h.rig??h.index)===1||charge>j/rig.children.length;}}}
 a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id===game.target)||game?.enemies.reduce((a,b)=>b.y>(a?.y??-999)?b:a,null);a.rotation.y=target?Math.atan2((target.x-(90+i*105))/35,(target.y-555)/35):Math.PI;a.userData.body.position.y=Math.sin(t*2+i)*.03;const kick=Math.max(0,(h.attackAnim||0)/.22);animateActorDetails(a,t+i,kick,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);const entering=game?Math.min(1,(t-(h.joinedAt||0))/.65):1;a.scale.setScalar(1.4*(.85+.15*entering));a.position.y+=(1-entering)*1.3;a.userData.body.position.z=-kick*((h.rig??h.index)===0?.18:.05);a.userData.body.rotation.x=kick*((h.rig??h.index)===0?-.13:.08);a.userData.body.rotation.z=(h.rig??h.index)===2?Math.sin(t*10)*kick*.06:0;for(let j=0;j<a.userData.limbs.length;j++)if(j%2===1)a.userData.limbs[j].rotation.x=-kick*((h.rig??h.index)===0?.4:(h.rig??h.index)===1?1.05:.8);
    if(h.archetype==='gunner'&&a.userData.weapon){const reduced=!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
@@ -185,6 +186,7 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
     for(const j of [1,3])if(a.userData.limbs[j])a.userData.limbs[j].rotation.x=-.45-prepare*.05-recoil*.12;
    }
    animateCaster(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+   animateBrassAsset(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
    animatePremium(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
   }
   this.scene.updateMatrixWorld(true);

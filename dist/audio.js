@@ -39,7 +39,8 @@ export class Soundscape {
  update(scene={}){if(this.disposed)return;Object.assign(this.scene,scene);this.sync();}
  sync(){if(!this.ctx||this.disposed)return;const hidden=!!globalThis.document?.hidden,paused=this.scene.paused||this.scene.state==='paused'||hidden;
   this.target(this.master.gain,this.enabled&&!paused?this.settings.master:0,.045);this.target(this.sfx?.gain,this.settings.sfx);const playing=this.scene.state==='playing';
-  this.target(this.music?.gain,this.settings.music*(playing?(this.scene.boss?.65:.8):.55),.8);this.target(this.ambient?.gain,playing?.65:.4,.5);
+  const focus=Math.max(0,Math.min(1,((this.focusUntil||0)-this.ctx.currentTime)/.35));for(const name of ['weapons','impacts'])this.target(this.buses?.[name]?.gain,1-focus*.55,.035);
+  this.target(this.music?.gain,this.settings.music*(playing?(this.scene.boss?.65:.8):.55),.8);this.target(this.ambient?.gain,(playing?.45:.3)*(1-focus*.6),.1);
   for(const bed of this.beds)if(bed.name==='rain')this.target(bed.gain.gain,clamp(this.scene.rain)*.006,.7);else if(bed.name==='fire')this.target(bed.gain.gain,.001+clamp(this.scene.intensity)*.002,.5);
   if(this.score?.source.playbackRate)this.target(this.score.source.playbackRate,this.scene.boss?1.08:1,.8);
   if(paused&&!this.wasPaused)this.clearVoices();this.wasPaused=paused;this.desiredContextState=paused?'suspended':this.enabled?'running':null;this.reconcileContext();
@@ -63,6 +64,7 @@ export class Soundscape {
  }
  play(kind,pan=0){if(!this.enabled||this.disposed||!this.ctx||this.ctx.state!=='running'||this.scene.paused||this.scene.state==='paused'||globalThis.document?.hidden)return;
   const now=this.ctx.currentTime,gate=kind==='gunner'?.07:kind==='loot'?.13:kind==='ready'?.55:.1;if(now-(this.last.get(kind)??-10)<gate)return;this.last.set(kind,now);
+  if(kind.startsWith('special-')||kind==='shockwave'){this.focusUntil=now+.5;this.sync();}
   const variation=['gunner','fire','electric','frost','nature'].includes(kind)?.94+this.random()*.12:1;
   for(const [freq,dur,volume,type,cut,delay=0]of CUES[kind]||CUES.ui)this.voice(freq*variation,dur,volume,type,cut,delay,pan,this.busFor(kind),kind.startsWith('special-')||kind.startsWith('shockwave')?2:IMPORTANT.has(kind)||kind.startsWith('heavy-')?1:0);
  }

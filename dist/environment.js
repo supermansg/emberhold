@@ -1,3 +1,4 @@
+import {forestCrown} from './forest-geometry.js';
 import * as T from './vendor/three.module.js';
 const TAU=Math.PI*2,rad=Math.PI/180;
 const clamp=(n,a=0,b=1)=>Math.max(a,Math.min(b,n));
@@ -25,7 +26,7 @@ export class LivingWorld{
   this.scene=scene;this.root=new T.Group();scene.add(this.root);this.dummy=new T.Object3D();this.clockMinute=-1;this.seen=new WeakSet();this.impulses=[];
   const mat=color=>new T.MeshStandardMaterial({color,roughness:1});
   const mesh=(geometry,material,x,y,z,sx=1,sy=1,sz=1)=>{const m=new T.Mesh(geometry,material);m.position.set(x,y,z);m.scale.set(sx,sy,sz);this.root.add(m);return m;};
-  const box=new T.BoxGeometry(1,1,1),rock=new T.IcosahedronGeometry(1,1),cone=new T.ConeGeometry(1,1,6);
+  const box=new T.BoxGeometry(1,1,1),rock=new T.IcosahedronGeometry(1,1),cone=forestCrown();
   mesh(box,mat('#294d3c'),0,-.8,-50,150,1.2,180).receiveShadow=true;
   // The continuous shared path is authored by BattleView; no overlapping road slab.
   const mountainMat=mat('#45675e');
