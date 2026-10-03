@@ -2,9 +2,9 @@
 import * as T from './vendor/three.module.js';
 import {HEROES} from './content.js';
 const ELEMENTS=new Set(HEROES.filter(h=>h.archetype!=='gunner').map(h=>h.color));
-const STYLE={normal:'#fff4d6',elemental:null,special:'#ffe18b',synergy:'#e3c3ff',shield:'#a9eaff'};
+const STYLE={normal:'#fff4d6',elemental:null,special:'#ffe18b',synergy:'#e3c3ff',shield:'#a9eaff',healing:'#a8f0b6'};
 export function feedbackState(f,effects=[]){
- const text=f.text||'';if(/SHIELD/.test(text))return 'shield';
+ const text=f.text||'';if(/^\+\d+ HP$/.test(text))return 'healing';if(/SHIELD/.test(text))return 'shield';
  if(/COMBO|SHATTER|PIERCE/.test(text))return 'synergy';
  if(/ULTIMATE|POWER/.test(text))return 'special';
 

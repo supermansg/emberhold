@@ -17,9 +17,9 @@ function shape(kind){
  else g=new T.CylinderGeometry(1,1,1,12);
  shapes.set(kind,g);return g;
 }
-function add(parent,kind,color,x,y,z,sx,sy,sz){const m=new T.Mesh(shape(kind),surfaceMaterial(color,false,color==='#76573b'?'leather':undefined));m.position.set(x,y,z);m.scale.set(sx,sy,sz);parent.add(m);return m;}
+export function add(parent,kind,color,x,y,z,sx,sy,sz){const m=new T.Mesh(shape(kind),surfaceMaterial(color,false,color==='#76573b'?'leather':undefined));m.position.set(x,y,z);m.scale.set(sx,sy,sz);parent.add(m);return m;}
 // Merge in joint-local space; cache immutable geometry per designed body part.
-function bake(group,key){
+export function bake(group,key){
  if(!batches.has(key)){group.updateMatrixWorld(true);const inverse=group.matrixWorld.clone().invert(),byMaterial=new Map();group.traverse(m=>{if(!m.isMesh)return;const g=m.geometry.index?m.geometry.toNonIndexed():m.geometry.clone();g.applyMatrix4(new T.Matrix4().multiplyMatrices(inverse,m.matrixWorld));const list=byMaterial.get(m.material)||[];list.push(g);byMaterial.set(m.material,list);});
   const result=[];for(const [material,parts]of byMaterial){const g=new T.BufferGeometry();for(const k of ['position','normal']){const data=new Float32Array(parts.reduce((n,p)=>n+p.attributes[k].array.length,0));let at=0;for(const p of parts){data.set(p.attributes[k].array,at);at+=p.attributes[k].array.length;}g.setAttribute(k,new T.BufferAttribute(data,3));}g.computeBoundingSphere();parts.forEach(p=>p.dispose());result.push({geometry:g,material});}batches.set(key,result);
  }

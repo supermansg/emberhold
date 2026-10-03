@@ -39,3 +39,20 @@ img.model-portrait{object-fit:cover;background:#152b32;border-radius:16px;max-wi
 .combat-notice{min-height:16px;font-size:10px;line-height:16px;text-align:center;color:#a4c1ba;transition:color .2s}.combat-notice.notice-active{color:#ffe39e}.hero-hotspot.is-reloading{border-color:#e5bd79;background:#3d382bcc}.hero-hotspot.is-reloading .charge-label{color:#ffde9b}
 
 .presentation-setting{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#c4d7d7;font-size:14px;text-align:right}.presentation-setting select{min-height:44px;max-width:65%;border:1px solid #ffffff30;border-radius:9px;background:#10272e;color:#f1ead5;font:inherit;padding:8px 12px}
+/* M4 shared fantasy surfaces: presentation only, existing RTL flows retained. */
+:root{--bg:#08131f;--panel:#102333;--line:#d6b77630;--gold:#ffd080;--mint:#75d9ed;--muted:#a3b8c6;--frame-shadow:inset 0 1px 0 #ffe3a020,0 8px 24px #0004}
+body{background:radial-gradient(ellipse at top,#172d40,var(--bg) 65%)}
+.primary{background:linear-gradient(160deg,#ffe5ac,#e6aa51 70%,#bc7732);color:#281b14;border:1px solid #ffe3a8;box-shadow:inset 0 2px 0 #fff4c680,0 3px 0 #805023,0 5px 19px #ffae3020;font-weight:900}
+.main-nav{background:#091827f5;border-color:var(--line)}.main-nav [aria-current=page]{background:linear-gradient(140deg,#71512e70,#172837);border-color:#ffd080;box-shadow:inset 0 0 16px #efbb4220,0 0 12px #efbb4220}
+.choice-wrap,.starter-card,.shop-card,.spell-card,.chest-card,.hero-info{border-color:var(--line);box-shadow:var(--frame-shadow);background:linear-gradient(155deg,#19364a,#0b1c2b 80%)}
+.choice-wrap:hover,.starter-card:hover{border-color:var(--gold)}
+.compact-choices .upgrade-card{background:linear-gradient(145deg,#234258,#102231)}
+.compact-choices .level-medal{color:var(--gold);text-shadow:0 0 16px #ffc75b66}
+.xptrack,.career-track{background:#07121d;border:1px solid #83b8cc26}.xptrack>i,.career-track>i{background:linear-gradient(90deg,#278aae,#85ecf3);box-shadow:0 0 10px #69deef55}
+.battle-hud,.wave-status,.combat-deck,.xp-row{background:#0b1c2a}.arena-shell{background:#0b1c2a}.hero-hotspot{background:#091b2dcc;border-color:#d6b77655}.tactical-power,.spell-slot{background:linear-gradient(145deg,#193344,#0d202e)}
+.home-logo{display:block;width:min(270px,65vw);height:auto;margin:5px auto 8px;border-radius:14px;box-shadow:0 12px 35px #0005}.home-title{pointer-events:none}.home-title .eyebrow{color:var(--gold)}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.audio-settings{display:grid;gap:8px;margin:12px 0;padding:12px;background:#071723;border:1px solid var(--line);border-radius:12px;text-align:right}.audio-settings label{display:grid;grid-template-columns:75px 1fr;align-items:center;gap:8px;font-size:13px}.audio-settings input{width:100%;min-height:28px;accent-color:var(--gold)}
+@media(max-height:700px){.home-logo{width:170px;margin:0 auto 4px}.home-title>p{font-size:12px}}
+@media(prefers-reduced-motion:reduce){.primary,.choice-wrap{transition:none}}
+@media(max-width:480px){.topbar{padding:0 12px;gap:8px}.brand{font-size:18px;letter-spacing:1px;gap:6px}.brandmark{font-size:25px}.brand small{font-size:9px;letter-spacing:1px}.top-actions{gap:6px}.top-actions .iconbtn{width:44px;height:44px;flex:none}.top-actions .coin{font-size:12px;white-space:nowrap}}
