@@ -1,6 +1,6 @@
 // Small, shared geometric details. Art identity follows the original hero sheet.
 // All rigid pieces are merged by material by BattleView; moving parts stay on rigs.
-export const ART_VERSION=2;
+export const ART_VERSION=3;
 export function dressActor(T,piece,root,body,limbs,type,hero){
  const skin=hero?'#dfbb94':['#83a952','#c35e4e','#89719e','#555d68'][type];
  const hair=['#934c28','#b83c2e','#d0c9e5','#b1a5d9'][type];
