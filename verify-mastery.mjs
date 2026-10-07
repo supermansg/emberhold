@@ -5,7 +5,9 @@ import {BattleView} from './dist/render3d.js';
 import * as T from './dist/vendor/three.module.js';
 const save=migrateSave({coins:300,power:2,heroes:{gunner:{xp:80,seconds:125,score:60,runs:1},fire:{xp:-4}}});
 assert.equal(heroProgress(save,'gunner').level,2);assert.equal(save.heroes.fire.xp,0);assert.equal(save.power,2);
-const g=new Game({meta:save});assert(g.team[0].damage>new Game({meta:{power:2}}).team[0].damage);
+// Pin the option shuffle: recruitment can replace a randomly selected defense slot.
+let optionSeed=123456;const optionRandom=()=>((optionSeed=(1664525*optionSeed+1013904223)>>>0)/4294967296);
+const g=new Game({meta:save,random:optionRandom});assert(g.team[0].damage>new Game({meta:{power:2}}).team[0].damage);
 function option(game,id){for(let i=0;i<3000;i++){const o=game.makeOptions().find(o=>o.id===id);if(o)return o;}throw Error('Missing '+id)}
 g.level=2;assert(g.makeOptions().some(o=>o.kind==='הגנה'));option(g,'station-turret').apply();g.level=4;option(g,'gadget-gunner').apply();assert.equal(g.team[0].gadgetRank,1);assert.equal(g.team[0].mag,12);
 assert(!new Game().makeOptions().some(o=>o.kind==='גאדג׳ט'));
