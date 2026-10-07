@@ -2,9 +2,9 @@
 import * as T from './vendor/three.module.js';
 import {HEROES} from './content.js';
 const ELEMENTS=new Set(HEROES.filter(h=>h.archetype!=='gunner').map(h=>h.color));
-const STYLE={normal:'#fff4d6',elemental:null,special:'#ffe18b',synergy:'#e3c3ff',shield:'#a9eaff',healing:'#a8f0b6'};
+const STYLE={critical:'#fff0a0',normal:'#fff4d6',elemental:null,special:'#ffe18b',synergy:'#e3c3ff',shield:'#a9eaff',healing:'#a8f0b6'};
 export function feedbackState(f,effects=[]){
- const text=f.text||'';if(/^\+\d+ HP$/.test(text))return 'healing';if(/SHIELD/.test(text))return 'shield';
+ const text=f.text||'';if(f.critical===true)return 'critical';if(/^\+\d+ HP$/.test(text))return 'healing';if(/SHIELD/.test(text))return 'shield';
  if(/COMBO|SHATTER|PIERCE/.test(text))return 'synergy';
  if(f.presentation?.special||/ULTIMATE|POWER/.test(text))return 'special';
 
@@ -29,10 +29,10 @@ export class DamageFeedback {
  }
  update(o,f,camera,direction,height=640){
   if(o===this.empty)return;this.paint(o,f,o.userData.state);
-  const age=Math.max(0,1-f.life/f.maxLife),pop=1+Math.sin(Math.min(1,age*4)*Math.PI)*.12;
-  o.userData.direction.copy(direction);o.position.set((f.x-250)/35+direction.x*age*.18,(f.label?3.2:2.35)+age*.5,(f.y-300)/35+direction.z*age*.18);
+  const strong=['critical','special','synergy','healing'].includes(o.userData.state),age=Math.max(0,Math.min(1,(f.maxLife-f.life)/(f.label?f.maxLife:strong?.7:.58))),pop=(strong?1.16:1)*(1+Math.sin(Math.min(1,age*4)*Math.PI)*(strong?.25:.18)),drift=Math.sin((f.targetId||f.x)*2.39)*.22;
+  o.userData.direction.copy(direction);o.position.set((f.x-250)/35+direction.x*age*.18+drift*age,(f.label?3.2:2.35)+age*(strong?.9:.65),(f.y-300)/35+direction.z*age*.18);
   const unit=2*o.position.distanceTo(camera.position)*Math.tan(camera.fov*Math.PI/360)/Math.max(240,height),h=Math.max(f.label?.9:.8,unit*(f.label?28:25));
-  o.scale.set(h*256/96*pop,h*pop,1);o.material.opacity=Math.pow(Math.max(0,1-age),1.7);
+  o.scale.set(h*256/96*pop,h*pop,1);o.material.opacity=Math.min(1,Math.max(0,(1-age)/.35));
  }
  release(o){if(o===this.empty||!o.userData.busy)return;o.userData.busy=false;o.visible=false;o.removeFromParent();this.free.push(o);}
  reset(){for(const o of this.slots)this.release(o);}

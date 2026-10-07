@@ -1,3 +1,4 @@
+import {SpecialChoreography} from './special-choreography.js';
 import {createBrassActor,animateBrassAsset} from './brass-asset.js';
 import {ShockwaveView} from './shockwave-view.js';
 import {terrainSurface} from './terrain-surface.js';
@@ -24,7 +25,7 @@ export class BattleView {
  constructor(host){
   this.host=host;this.renderer=new T.WebGLRenderer({antialias:true,alpha:false,powerPreference:'high-performance'});this.renderer.setPixelRatio(Math.min(window.devicePixelRatio||1,1.6));this.renderer.shadowMap.enabled=true;this.renderer.shadowMap.type=T.PCFSoftShadowMap;this.renderer.outputColorSpace=T.SRGBColorSpace;this.renderer.toneMapping=T.ACESFilmicToneMapping;this.renderer.toneMappingExposure=1.16;host.prepend(this.renderer.domElement);this.renderer.domElement.className='scene3d';
   this.scene=new T.Scene();this.scene.background=new T.Color('#1b3440');this.scene.fog=new T.Fog('#1b3440',24,65);this.camera=new T.PerspectiveCamera(45,1,.1,240);this.camera.position.set(0,25,22);this.camera.lookAt(0,0,0);
-  this.lootObjects=new Map();this.scarObjects=new Map();this.actors=new Map();this.heroes=new Map();this.fx=new Map();this.ray=new T.Raycaster();this.pointer=new T.Vector2();this.lastGame=null;this.buildWorld();this.damageFeedback.warm();this.resize();this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(host);
+  this.lootObjects=new Map();this.scarObjects=new Map();this.actors=new Map();this.heroes=new Map();this.fx=new Map();this.ray=new T.Raycaster();this.pointer=new T.Vector2();this.lastGame=null;this.buildWorld();this.specialChoreography=new SpecialChoreography(this.scene);this.damageFeedback.warm();this.resize();this.observer=new ResizeObserver(()=>this.resize());this.observer.observe(host);
  }
  attach(host){this.observer.disconnect();this.host=host;host.prepend(this.renderer.domElement);this.observer.observe(host);this.resize();}
  resize(){const {width:w,height:h}=this.host.getBoundingClientRect();if(w<1||h<1)return;this.renderer.setSize(w,h,false);this.camera.aspect=w/h;this.camera.updateProjectionMatrix();}
@@ -127,7 +128,7 @@ export class BattleView {
  pick(clientX,clientY,game){const rect=this.host.getBoundingClientRect();let best=null,dist=Infinity;for(const e of game.enemies){if(e.y<0)continue;const p=this.project(e.x,e.y,e.type===3?2:1);const d=Math.hypot(clientX-rect.left-p.x,clientY-rect.top-p.y);if(d<dist&&d<(e.type===3?70:44)){dist=d;best=e.id}}return best;}
  setPresentationQuality(level){this.presentationQuality.set(level);this.damageFeedback.setQuality(level);this.presentationQuality.apply(this.renderer,this.environment);}
  presentationStats(){return {...this.presentationQuality.stats};}
- reset(){this.shockwaveView?.update(null);this.combatVfx?.reset();this.damageFeedback?.reset();this.presentationQuality?.resetTiming();this.m2Selected=null;this.m2TargetAt=-10;for(const f of this.fallenActors||[])this.removeActor(f.actor);this.fallenActors=[];this.brassEffects?.reset();this.m1Seen=new WeakSet();this.m1ShotOrigins?.clear();for(const a of this.stationObjects?.values()||[])this.scene.remove(a);this.stationObjects?.clear();this.environment?.reset();for(const o of this.lootObjects.values())this.disposeFx(o);this.lootObjects.clear();for(const o of this.scarObjects.values())this.disposeFx(o);this.scarObjects.clear();for(const a of this.actors.values())this.removeActor(a);for(const a of this.heroes.values()){a.userData.dispose?.();this.scene.remove(a);}for(const f of this.fx.values())this.disposeFx(f);this.actors.clear();this.heroes.clear();this.fx.clear();}
+ reset(){this.specialChoreography?.reset();this.shockwaveView?.update(null);this.combatVfx?.reset();this.damageFeedback?.reset();this.presentationQuality?.resetTiming();this.m2Selected=null;this.m2TargetAt=-10;for(const f of this.fallenActors||[])this.removeActor(f.actor);this.fallenActors=[];this.brassEffects?.reset();this.m1Seen=new WeakSet();this.m1ShotOrigins?.clear();for(const a of this.stationObjects?.values()||[])this.scene.remove(a);this.stationObjects?.clear();this.environment?.reset();for(const o of this.lootObjects.values())this.disposeFx(o);this.lootObjects.clear();for(const o of this.scarObjects.values())this.disposeFx(o);this.scarObjects.clear();for(const a of this.actors.values())this.removeActor(a);for(const a of this.heroes.values()){a.userData.dispose?.();this.scene.remove(a);}for(const f of this.fx.values())this.disposeFx(f);this.actors.clear();this.heroes.clear();this.fx.clear();}
  removeActor(a){a.userData.impactMaterial?.dispose();a.userData.dispose?.();a.removeFromParent();for(const n of [a.userData.bar,a.userData.bg])if(n){n.geometry.dispose();n.material.dispose();}}
  disposeFx(o){
   if(o.userData.groundScar){this.scarPool.release(o);return;}
@@ -189,6 +190,7 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
    animateBrassAsset(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
    animatePremium(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
   }
+  this.specialChoreography?.update(game,this.heroes,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches,this.presentationQuality.level,this.presentationQuality.loaded);
   this.scene.updateMatrixWorld(true);
   for(const f of game?.effects||[])if(f.type==='impact'&&f.hero==='gunner'&&!this.m1Seen.has(f)){
    this.m1Seen.add(f);const e=game.enemies.find(e=>e.type===0&&Math.hypot(e.x-f.x,e.y-f.y)<2);const a=e&&this.actors.get(e.id);
@@ -201,7 +203,7 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
 
    }
    animatePremium(a,e,t+e.id,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
-   this.m1Source.copy(this.m1ShotOrigins.get(e.id)||world(250,555,2));observeHit(a,e,game.effects,t,this.m1Source);poseEnemy(a,e,t,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+   this.m1Source.copy(this.m1ShotOrigins.get(e.id)||world(250,555,2));observeHit(a,e,game.effects,t,this.m1Source,game.shockwave);poseEnemy(a,e,t,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
    a.userData.bar.scale.x=Math.max(0,e.hp/e.maxHp)*(e.isBoss?1.7:1);a.userData.bg.scale.x=e.isBoss?1.7:1;a.userData.bar.material.color.set(e.y>=480?'#ff9379':e.isBoss?'#ffd193':'#b3d479');a.userData.bar.quaternion.copy(this.camera.quaternion);a.userData.bg.quaternion.copy(this.camera.quaternion);
   }
   for(const [id,a]of this.actors)if(!alive.has(id)){
@@ -223,7 +225,7 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
 
   const tar=game?.enemies.find(e=>e.id===game.target);if((tar?.id??null)!==this.m2Selected){this.m2Selected=tar?.id??null;this.m2TargetAt=t;}this.targetRing.visible=!!tar;this.targetRing.material.color.set(tar?.isBoss?'#ffb46b':'#fff1ab');this.targetRing.material.transparent=true;this.targetRing.material.opacity=.85;
   if(tar){this.targetRing.position.copy(world(tar.x,tar.y,.09));this.targetRing.scale.setScalar((tar.type===3?1.8:1)*(1+Math.max(0,1-(t-this.m2TargetAt)/.22)*.3));this.targetRing.rotation.z=t;}
-  const liveFx=new Set(game?.effects||[]);for(const[f,o]of this.fx)if(!liveFx.has(f)){this.disposeFx(o);this.fx.delete(f)}this.shockwaveView.update(game,this.presentationQuality.level,reduced,this.presentationQuality.loaded);const waveParticles=this.shockwaveView.root.visible?this.shockwaveView.debris.count:0;let particleBudget=Math.max(0,this.presentationQuality.decorativeBudget-waveParticles);const viewportHeight=this.host.getBoundingClientRect().height;
+  const liveFx=new Set(game?.effects||[]);for(const[f,o]of this.fx)if(!liveFx.has(f)){this.disposeFx(o);this.fx.delete(f)}this.shockwaveView.update(game,this.presentationQuality.level,reduced,this.presentationQuality.loaded);const waveParticles=this.shockwaveView.root.visible?this.shockwaveView.debris.count:0;let particleBudget=Math.max(0,this.presentationQuality.decorativeBudget-waveParticles-(this.specialChoreography?.particles||0));const viewportHeight=this.host.getBoundingClientRect().height;
   for(const f of liveFx){let o=this.fx.get(f);if(!o){o=this.effect(f);this.fx.set(f,o);
     if((o.userData.sliceFx||o.userData.pooledVfx)&&o.userData.kind){const idx=Math.max(0,Math.min((game?.team.length||1)-1,Math.round((f.x-90)/105))),actor=this.heroes.get(idx);
      if(f.type==='shot'||f.type==='muzzle'||f.type==='bolt'){
@@ -244,6 +246,6 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
 
   for(const[f,o]of this.fx)if(!liveFx.has(f)){this.disposeFx(o);this.fx.delete(f)}const brass=this.heroes.get(game?.team.findIndex(h=>h.id==='gunner')??0);this.m1Source.set(0,0,0);brass?.userData.muzzle?.getWorldPosition(this.m1Source);
   this.brassEffects.updateSteam(t,brass?this.m1Source:null,reduced||this.presentationQuality.loaded);this.renderer.render(this.scene,this.camera);
-  const counts=this.combatVfx.stats;this.presentationQuality.observe(time,(globalThis.performance?.now()||renderStart)-renderStart,{activeEffects:counts.active+this.brassEffects.active,particles:waveParticles+counts.particles+this.brassEffects.particles+(this.environment?.particleCount||0),damageNumbers:this.damageFeedback.active,calls:this.renderer.info?.render.calls||0,triangles:this.renderer.info?.render.triangles||0});
+  const counts=this.combatVfx.stats;this.presentationQuality.observe(time,(globalThis.performance?.now()||renderStart)-renderStart,{activeEffects:counts.active+this.brassEffects.active+(this.specialChoreography?.active||0),particles:waveParticles+(this.specialChoreography?.particles||0)+counts.particles+this.brassEffects.particles+(this.environment?.particleCount||0),damageNumbers:this.damageFeedback.active,calls:this.renderer.info?.render.calls||0,triangles:this.renderer.info?.render.triangles||0});
  }
 }

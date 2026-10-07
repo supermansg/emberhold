@@ -4,7 +4,7 @@ const IMPORTANT=new Set(['ready','win','lose','level','recruit','shield','boom',
 // Temporary procedural fantasy score; independent cosmetic PRNG never consumes gameplay RNG.
 export class Soundscape {
  constructor(){
-  this.enabled=true;this.voices=0;this.last=new Map();this.live=new Set();this.beds=[];this.disposed=false;this.seed=0x41c6ce57;
+  this.enabled=true;this.voices=0;this.last=new Map();this.live=new Set();this.beds=[];this.disposed=false;this.seed=0x41c6ce57;this.seenBolts=new WeakSet();
   this.targets=new WeakMap();this.settings={master:.55,music:.38,sfx:.8};this.scene={state:'lobby',boss:false,intensity:0,rain:0,paused:false};
   try{this.enabled=localStorage.getItem('emberhold-sound')!=='off';const saved=JSON.parse(localStorage.getItem('emberhold-audio-gains')||'null');if(saved)for(const k of Object.keys(this.settings))if(Number.isFinite(saved[k]))this.settings[k]=clamp(saved[k]);}catch{}
   this.hidden=()=>this.sync();globalThis.document?.addEventListener('visibilitychange',this.hidden);
@@ -41,7 +41,7 @@ export class Soundscape {
   this.target(this.master.gain,this.enabled&&!paused?this.settings.master:0,.045);this.target(this.sfx?.gain,this.settings.sfx);const playing=this.scene.state==='playing';
   const focus=Math.max(0,Math.min(1,((this.focusUntil||0)-this.ctx.currentTime)/.35));for(const name of ['weapons','impacts'])this.target(this.buses?.[name]?.gain,1-focus*.55,.035);
   this.target(this.music?.gain,this.settings.music*(playing?(this.scene.boss?.65:.8):.55),.8);this.target(this.ambient?.gain,(playing?.45:.3)*(1-focus*.6),.1);
-  for(const bed of this.beds)if(bed.name==='rain')this.target(bed.gain.gain,clamp(this.scene.rain)*.006,.7);else if(bed.name==='fire')this.target(bed.gain.gain,.001+clamp(this.scene.intensity)*.002,.5);
+  const ambientTime=Math.floor(this.ctx.currentTime*2)/2;for(const bed of this.beds){const breath=Math.max(0,Math.sin(ambientTime*(bed.name==='wind'?.23:.41)+bed.name.length));const gain=bed.name==='rain'?clamp(this.scene.rain)*.0025:bed.name==='wind'?.0015*breath*breath:bed.name==='forest'?0:.0008*breath;this.target(bed.gain.gain,gain,.7);}
   if(this.score?.source.playbackRate)this.target(this.score.source.playbackRate,this.scene.boss?1.08:1,.8);
   if(paused&&!this.wasPaused)this.clearVoices();this.wasPaused=paused;this.desiredContextState=paused?'suspended':this.enabled?'running':null;this.reconcileContext();
  }
@@ -51,12 +51,12 @@ export class Soundscape {
   this.contextTransition=true;let operation;try{operation=this.ctx[method]();}catch{this.contextTransition=false;return;}
   Promise.resolve(operation).then(()=>{this.contextTransition=false;this.reconcileContext();},()=>{this.contextTransition=false;});
  }
- busFor(kind){if(kind.startsWith('special-')||kind.startsWith('heavy-')||kind.startsWith('shockwave'))return 'abilities';return kind.startsWith('impact')||kind.startsWith('break')?'impacts':['gunner','fire','electric','frost','nature','reloadStart','reloadEnd'].includes(kind)?'weapons':IMPORTANT.has(kind)?'abilities':['wall','chest'].includes(kind)?'enemies':'ui';}
- voice(freq,dur,volume,type,cut,delay=0,pan=0,bus='weapons',priority=0){
+ busFor(kind){if(kind.startsWith('charge-')||kind.startsWith('special-')||kind.startsWith('heavy-')||kind.startsWith('shockwave'))return 'abilities';return kind.startsWith('impact')||kind.startsWith('break')?'impacts':['gunner','fire','electric','frost','nature','crystal','reloadStart','reloadEnd'].includes(kind)?'weapons':IMPORTANT.has(kind)?'abilities':['wall','chest'].includes(kind)?'enemies':'ui';}
+ voice(freq,dur,volume,type,cut,delay=0,pan=0,bus='weapons',priority=0,endRatio=.48){
   if(this.disposed||!this.ctx)return false;const limit=priority?28:22;
   if(this.voices>=limit){if(!priority)return false;const victim=[...this.live].find(v=>v.priority<priority);if(!victim)return false;victim.finish(true);}
   const ctx=this.ctx,now=ctx.currentTime+delay,source=type==='noise'?ctx.createBufferSource():ctx.createOscillator();
-  if(type==='noise')source.buffer=this.noise;else{source.type=type;source.frequency.setValueAtTime(Math.max(30,freq),now);source.frequency.exponentialRampToValueAtTime(Math.max(30,freq*.48),now+dur);}
+  if(type==='noise')source.buffer=this.noise;else{source.type=type;source.frequency.setValueAtTime(Math.max(30,freq),now);source.frequency.exponentialRampToValueAtTime(Math.max(30,freq*endRatio),now+dur);}
   const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.setValueAtTime(cut,now);filter.frequency.exponentialRampToValueAtTime(Math.max(100,cut*.35),now+dur);
   const gain=ctx.createGain();gain.gain.setValueAtTime(.0001,now);gain.gain.linearRampToValueAtTime(volume,now+.004);gain.gain.exponentialRampToValueAtTime(.0001,now+dur);
   source.connect(filter);filter.connect(gain);const stereo=ctx.createStereoPanner?.();const dest=this.buses?.[bus]||this.sfx||this.master;if(stereo){stereo.pan.value=Math.max(-.75,Math.min(.75,pan));gain.connect(stereo);stereo.connect(dest);}else gain.connect(dest);
@@ -66,8 +66,9 @@ export class Soundscape {
   const now=this.ctx.currentTime,gate=kind==='gunner'?.07:kind==='loot'?.13:kind==='ready'?.55:.1;if(now-(this.last.get(kind)??-10)<gate)return;this.last.set(kind,now);
   if(kind.startsWith('special-')||kind==='shockwave'){this.focusUntil=now+.5;this.sync();}
   const variation=['gunner','fire','electric','frost','nature'].includes(kind)?.94+this.random()*.12:1;
-  for(const [freq,dur,volume,type,cut,delay=0]of CUES[kind]||CUES.ui)this.voice(freq*variation,dur,volume,type,cut,delay,pan,this.busFor(kind),kind.startsWith('special-')||kind.startsWith('shockwave')?2:IMPORTANT.has(kind)||kind.startsWith('heavy-')?1:0);
+  for(const [freq,dur,volume,type,cut,delay=0,endRatio=.48]of CUES[kind]||CUES.ui)this.voice(freq*variation,dur,volume,type,cut,delay,pan,this.busFor(kind),kind.startsWith('charge-')||kind.startsWith('special-')||kind.startsWith('shockwave')?2:IMPORTANT.has(kind)||kind.startsWith('heavy-')?1:0,endRatio);
  }
+ combatEffects(effects=[]){if(!this.enabled||this.disposed||this.ctx?.state!=='running'||this.scene.paused||globalThis.document?.hidden)return;let index=0;for(const f of effects)if(f.type==='bolt'&&f.hero==='electric'&&f.presentation?.special>=2&&!this.seenBolts.has(f)){this.seenBolts.add(f);if(index>=5)continue;this.voice((f.presentation.heroId==='prism'?1568:1600)+index*140,f.presentation.heroId==='prism'?.14:.07,.018,f.presentation.heroId==='prism'?'sine':'triangle',2800,index*.035,0,'abilities',2);index++;}}
  clearVoices(){for(const v of [...this.live])v.finish(true);this.last.clear();}
  dispose(){if(this.disposed)return;this.disposed=true;globalThis.document?.removeEventListener('visibilitychange',this.hidden);this.clearVoices();for(const bed of [...this.beds,...(this.score?[this.score]:[])]){try{bed.source.stop();}catch{}for(const n of bed.nodes)n.disconnect();}this.beds=[];for(const n of [this.master,this.music,this.sfx,this.ambient,this.output,...Object.values(this.buses||{})])n?.disconnect();this.ctx?.close?.()?.catch(()=>{});this.noise=null;this.score=null;}
 }

@@ -1,0 +1,30 @@
+{
+  "m5": {
+    "calls": 443,
+    "triangles": 165510,
+    "geometries": 199,
+    "textures": 2,
+    "ratio": 1,
+    "heroMeshes": [
+      29,
+      24,
+      29,
+      25
+    ],
+    "authored": true
+  },
+  "m51": {
+    "calls": 443,
+    "triangles": 165510,
+    "geometries": 199,
+    "textures": 2,
+    "ratio": 1,
+    "heroMeshes": [
+      29,
+      24,
+      29,
+      25
+    ],
+    "authored": true
+  }
+}
