@@ -9,6 +9,11 @@ export class CombatVFX {
   const geometry=g=>{this.geometries.add(g);return g;};
   this.geo={bullet:geometry(new T.CylinderGeometry(.065,.065,.5,6)),thorn:geometry(new T.OctahedronGeometry(.2,0)),fire:geometry(new T.IcosahedronGeometry(.18,1)),ice:geometry(new T.OctahedronGeometry(.2,0)),trail:geometry(new T.ConeGeometry(.13,.85,6)),flash:geometry(new T.PlaneGeometry(.55,.12)),ring:geometry(new T.RingGeometry(.86,1,24)),debris:geometry(new T.BoxGeometry(.05,.1,.05)),arc:geometry(new T.CylinderGeometry(.025,.025,1,5))};
   const star=new T.Shape();for(let i=0;i<16;i++){const a=i*Math.PI/8,r=i%2?.16:.58;const x=Math.cos(a)*r,y=Math.sin(a)*r;i?star.lineTo(x,y):star.moveTo(x,y);}star.closePath();this.geo.contact=geometry(new T.ShapeGeometry(star));
+  // Shared contact silhouettes: pressure star, flame tongues, lightning and crystal fracture.
+  const silhouette=points=>{const shape=new T.Shape();points.forEach(([x,y],i)=>i?shape.lineTo(x,y):shape.moveTo(x,y));shape.closePath();return geometry(new T.ShapeGeometry(shape));};
+  this.geo.flameContact=silhouette([[-.5,-.3],[-.36,.2],[-.18,0],[0,.7],[.18,.16],[.32,.4],[.5,-.3],[0,-.5]]);
+  this.geo.iceContact=silhouette([[0,.7],[.16,.2],[.55,.35],[.28,-.06],[.45,-.48],[0,-.25],[-.4,-.5],[-.25,0],[-.52,.36],[-.14,.22]]);
+  this.geo.electricContact=silhouette([[.13,.65],[-.36,-.06],[-.04,-.04],[-.18,-.65],[.37,.16],[.06,.12]]);
   this.dummy=new T.Object3D();this.direction=new T.Vector3();this.segment=new T.Vector3();this.a=new T.Vector3();this.b=new T.Vector3();
   this.empty=new T.Group();this.empty.visible=false;this.empty.userData.pooledVfx=true;
   for(const [kind,cap]of Object.entries(this.caps))for(let i=0;i<cap;i++)this.slots.push(this.create(kind));
@@ -35,13 +40,13 @@ export class CombatVFX {
   if(o===this.empty)return;const d=o.userData,k=Math.max(0,Math.min(1,1-f.life/f.maxLife));d.source.copy(source);d.target.copy(target);
   const kind=d.kind,id=f.presentation?.heroId||f.projectile?.presentation?.heroId,heavy=!!(f.presentation?.special||f.projectile?.presentation?.special);const nature=id==='briar'||id==='renewal';const color=f.color||COLORS[d.hero]||'#ffe4a0';d.material.color.set(d.hero==='fire'&&kind==='shot'?'#ffe7a9':color);d.accent.color.set(color);
   if(kind==='shot')o.children[0].geometry=f.projectile?.style==='thorn'?this.geo.thorn:d.hero==='gunner'?this.geo.bullet:d.hero==='frost'?this.geo.ice:this.geo.fire;
-  d.material.opacity=kind==='shot'?1:Math.pow(1-k,.7);d.accent.opacity=(1-k)*.55;
+  d.material.opacity=kind==='shot'?1:Math.pow(1-k,heavy?.5:.7);d.accent.opacity=(1-k)*.55;
   if(kind==='shot'){
    o.position.copy(d.origin).lerp(target,k);if(d.hero==='fire')o.position.y+=Math.sin(k*Math.PI)*.45;
    this.direction.copy(target).sub(d.origin).normalize();o.quaternion.setFromUnitVectors(UP,this.direction);
    o.children[0].rotation.y=k*5;o.children[0].scale.setScalar(f.projectile?.style==='meteor'?1.8:d.hero==='fire'?1+k*.28:1);if(d.hero==='frost')o.children[0].scale.set(.65,1.5,.65);if(f.projectile?.style==='thorn')o.children[0].scale.set(.65,1.4,.16);if(f.projectile?.style==='magma')o.children[0].scale.setScalar(1.45+Math.sin(k*16)*.08);if(f.projectile?.style==='pierce')o.children[0].scale.y=1.5;if(heavy)o.children[0].scale.multiplyScalar(1.7);
    const envelope=o.children[2];envelope.visible=d.hero==='fire'&&!reduced&&!!decorative;envelope.scale.set(1.45+Math.sin(k*24)*.12,1.8+k*.7,1.45);envelope.rotation.y=k*7;
-   const tail=o.children[1];tail.visible=!reduced;tail.scale.set((d.hero==='fire'?1+k*.4:.4)*(heavy?1.8:1),(decorative?1.3:.65)*(heavy?2.5:1),(d.hero==='fire'?1+k*.4:.4)*(heavy?1.8:1));
+   const tail=o.children[1];tail.visible=!reduced;tail.scale.set((d.hero==='fire'?1+k*.4:d.hero==='frost'?.55:.4)*(heavy?1.8:1),(decorative?1.3:.65)*(heavy?2.5:1),(d.hero==='fire'?1+k*.4:.4)*(heavy?1.8:1));
   }else if(kind==='muzzle'){
    o.position.copy(source);o.quaternion.copy(camera.quaternion);o.scale.setScalar((reduced?.5:1)*(heavy?2.5:1)*(1-k*.7));
   }else if(kind==='bolt'){
@@ -56,8 +61,8 @@ export class CombatVFX {
   }else{
    const isImpact=kind==='impact',radius=isImpact?(heavy?.65:.28):Math.min(3.3,(f.radius||26)/35);
    o.position.copy(target);o.position.y=isImpact?target.y:.095;
-   const ring=o.children[0];if(isImpact){ring.quaternion.copy(camera.quaternion);ring.scale.setScalar(.16+k*.32);}else{ring.rotation.set(-Math.PI/2,0,0);ring.scale.setScalar(radius*(.4+k*.6));}
-   const contact=o.children[2];contact.visible=kind!=='ring'&&k<.38;contact.quaternion.copy(camera.quaternion);contact.scale.setScalar((isImpact?(heavy?1.2:.65):Math.min(1.6,radius))*(.65+Math.sin(Math.min(1,k/.38)*Math.PI)*.55));if(d.hero==='frost')contact.scale.x*=.6;contact.rotation.z+=d.hero==='frost'?Math.PI/4:0;
+   const ring=o.children[0];if(isImpact){ring.quaternion.copy(camera.quaternion);ring.scale.setScalar(heavy?.45+k*.7:.16+k*.32);}else{ring.rotation.set(-Math.PI/2,0,0);ring.scale.setScalar(radius*(.4+k*.6));}
+   const contact=o.children[2];contact.position.copy(camera.position).sub(target).normalize().multiplyScalar(isImpact?.72:0);contact.geometry=nature?this.geo.thorn:d.hero==='fire'?this.geo.flameContact:d.hero==='frost'||id==='prism'?this.geo.iceContact:d.hero==='electric'?this.geo.electricContact:this.geo.contact;contact.visible=kind!=='ring'&&k<(heavy?1:.38);contact.quaternion.copy(camera.quaternion);contact.scale.setScalar((isImpact?(heavy?1.45:.65):Math.min(1.6,radius))*(.65+Math.sin(Math.min(1,k/.38)*Math.PI)*.55));if(d.hero==='frost')contact.scale.x*=.6;contact.rotation.z+=d.hero==='frost'?Math.PI/4:0;
    const sparks=o.children[1];sparks.geometry=nature?this.geo.thorn:d.hero==='frost'||id==='prism'?this.geo.ice:this.geo.debris;if(kind==='ring')decorative=0;sparks.count=typeof decorative==='number'?Math.min(6,Math.max(0,decorative)):decorative?6:0;sparks.visible=!reduced&&sparks.count>0;
    this.direction.copy(target).sub(source).normalize();
    for(let i=0;i<6;i++){

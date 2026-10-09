@@ -24,17 +24,18 @@ export function buildOutpost(scene,piece){
    if(j%3===0){piece(root,'cylinder','#b7bba2',x+.22,.18,z,.055,.3,.055);piece(root,'sphere','#b88847',x+.22,.36,z,.17,.075,.17);}
   }
  }
- // Far crossing and gate establish a defended route beyond the playable lane.
+ // Crossing frames the playable far edge (world z=-8.57), with clear space behind it.
+ const crossing=-14;
  for(const side of [-1,1]){
-  box('#465a57',side*7,2.5,-26,2.5,5,2.8);
-  for(const dx of [-.8,0,.8])box('#7d8983',side*7+dx,5.25,-24.8,.55,.65,.5);
-  box('#315566',side*7,3.6,-24.55,.8,1.65,.06);
-  box('#cba15d',side*7,3.65,-24.50,.19,.5,.04);
-  piece(root,'cone','#f29535',side*7,5.65,-26,.22,.7,.22,true);
+  box('#465a57',side*7,2.5,crossing,2.5,5,2.8);
+  for(const dx of [-.8,0,.8])box('#7d8983',side*7+dx,5.25,crossing+1.2,.55,.65,.5);
+  box('#315566',side*7,3.6,crossing+1.45,.8,1.65,.06);
+  box('#cba15d',side*7,3.65,crossing+1.5,.19,.5,.04);
+  piece(root,'cone','#f29535',side*7,5.65,crossing,.22,.7,.22,true);
  }
- box('#574838',0,2.8,-27,12,.24,1.4);
- for(let i=0;i<13;i++){box('#6b4c31',i-6,3.4,-26.3,.13,1.15,.13);if(i%2===0)box('#574838',i-6,1.3,-27,.19,2.8,.19);}
- box('#6b4c31',0,3.9,-26.3,12,.13,.16);
+ box('#574838',0,2.8,crossing-1,12,.24,1.4);
+ for(let i=0;i<13;i++){box('#6b4c31',i-6,3.4,crossing-.3,.13,1.15,.13);if(i%2===0)box('#574838',i-6,1.3,crossing-1,.19,2.8,.19);}
+ box('#6b4c31',0,3.9,crossing-.3,12,.13,.16);
  return root;
 }
 export class OutpostWeather {
