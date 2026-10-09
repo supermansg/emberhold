@@ -4,7 +4,7 @@ const IMPORTANT=new Set(['ready','win','lose','level','recruit','shield','boom',
 // Temporary procedural fantasy score; independent cosmetic PRNG never consumes gameplay RNG.
 export class Soundscape {
  constructor(){
-  this.enabled=true;this.voices=0;this.last=new Map();this.live=new Set();this.beds=[];this.disposed=false;this.seed=0x41c6ce57;this.seenBolts=new WeakSet();
+  this.enabled=true;this.voices=0;this.last=new Map();this.live=new Set();this.beds=[];this.disposed=false;this.peakVoices=0;this.seed=0x41c6ce57;this.seenBolts=new WeakSet();
   this.targets=new WeakMap();this.settings={master:.55,music:.38,sfx:.8};this.scene={state:'lobby',boss:false,intensity:0,rain:0,paused:false};
   try{this.enabled=localStorage.getItem('emberhold-sound')!=='off';const saved=JSON.parse(localStorage.getItem('emberhold-audio-gains')||'null');if(saved)for(const k of Object.keys(this.settings))if(Number.isFinite(saved[k]))this.settings[k]=clamp(saved[k]);}catch{}
   this.hidden=()=>this.sync();globalThis.document?.addEventListener('visibilitychange',this.hidden);
@@ -39,7 +39,7 @@ export class Soundscape {
  update(scene={}){if(this.disposed)return;Object.assign(this.scene,scene);this.sync();}
  sync(){if(!this.ctx||this.disposed)return;const hidden=!!globalThis.document?.hidden,paused=this.scene.paused||this.scene.state==='paused'||hidden;
   this.target(this.master.gain,this.enabled&&!paused?this.settings.master:0,.045);this.target(this.sfx?.gain,this.settings.sfx);const playing=this.scene.state==='playing';
-  const focus=Math.max(0,Math.min(1,((this.focusUntil||0)-this.ctx.currentTime)/.35));for(const name of ['weapons','impacts'])this.target(this.buses?.[name]?.gain,1-focus*.55,.035);
+  const focus=Math.max(0,Math.min(1,((this.focusUntil||0)-this.ctx.currentTime)/.35));for(const name of ['weapons','impacts','enemies'])this.target(this.buses?.[name]?.gain,1-focus*.55,.035);
   this.target(this.music?.gain,this.settings.music*(playing?(this.scene.boss?.65:.8):.55),.8);this.target(this.ambient?.gain,(playing?.45:.3)*(1-focus*.6),.1);
   const ambientTime=Math.floor(this.ctx.currentTime*2)/2;for(const bed of this.beds){const breath=Math.max(0,Math.sin(ambientTime*(bed.name==='wind'?.23:.41)+bed.name.length));const gain=bed.name==='rain'?clamp(this.scene.rain)*.0025:bed.name==='wind'?.0015*breath*breath:bed.name==='forest'?0:.0008*breath;this.target(bed.gain.gain,gain,.7);}
   if(this.score?.source.playbackRate)this.target(this.score.source.playbackRate,this.scene.boss?1.08:1,.8);
@@ -60,13 +60,14 @@ export class Soundscape {
   const filter=ctx.createBiquadFilter();filter.type='lowpass';filter.frequency.setValueAtTime(cut,now);filter.frequency.exponentialRampToValueAtTime(Math.max(100,cut*.35),now+dur);
   const gain=ctx.createGain();gain.gain.setValueAtTime(.0001,now);gain.gain.linearRampToValueAtTime(volume,now+.004);gain.gain.exponentialRampToValueAtTime(.0001,now+dur);
   source.connect(filter);filter.connect(gain);const stereo=ctx.createStereoPanner?.();const dest=this.buses?.[bus]||this.sfx||this.master;if(stereo){stereo.pan.value=Math.max(-.75,Math.min(.75,pan));gain.connect(stereo);stereo.connect(dest);}else gain.connect(dest);
-  const record={priority,finish:(stop=false)=>{if(!this.live.delete(record))return;this.voices=this.live.size;if(stop)try{source.stop();}catch{}for(const n of [source,filter,gain,stereo])n?.disconnect();}};this.live.add(record);this.voices=this.live.size;source.onended=()=>record.finish();if(type==='noise')source.start(now,this.random());else source.start(now);source.stop(now+dur+.025);return true;
+  const record={priority,finish:(stop=false)=>{if(!this.live.delete(record))return;this.voices=this.live.size;if(stop)try{source.stop();}catch{}for(const n of [source,filter,gain,stereo])n?.disconnect();}};this.live.add(record);this.voices=this.live.size;this.peakVoices=Math.max(this.peakVoices,this.voices);source.onended=()=>record.finish();if(type==='noise')source.start(now,this.random());else source.start(now);source.stop(now+dur+.025);return true;
  }
  play(kind,pan=0){if(!this.enabled||this.disposed||!this.ctx||this.ctx.state!=='running'||this.scene.paused||this.scene.state==='paused'||globalThis.document?.hidden)return;
   const now=this.ctx.currentTime,gate=kind==='gunner'?.07:kind==='loot'?.13:kind==='ready'?.55:.1;if(now-(this.last.get(kind)??-10)<gate)return;this.last.set(kind,now);
   if(kind.startsWith('special-')||kind==='shockwave'){this.focusUntil=now+.5;this.sync();}
+  const crowded=1-Math.min(1,Math.max(0,this.scene.intensity||0))*.28;
   const variation=['gunner','fire','electric','frost','nature'].includes(kind)?.94+this.random()*.12:1;
-  for(const [freq,dur,volume,type,cut,delay=0,endRatio=.48]of CUES[kind]||CUES.ui)this.voice(freq*variation,dur,volume,type,cut,delay,pan,this.busFor(kind),kind.startsWith('charge-')||kind.startsWith('special-')||kind.startsWith('shockwave')?2:IMPORTANT.has(kind)||kind.startsWith('heavy-')?1:0,endRatio);
+  for(const [freq,dur,volume,type,cut,delay=0,endRatio=.48]of CUES[kind]||CUES.ui)this.voice(freq*variation,dur,volume*(['weapons','impacts'].includes(this.busFor(kind))?crowded:1),type,cut,delay,pan,this.busFor(kind),kind.startsWith('charge-')||kind.startsWith('special-')||kind.startsWith('shockwave')?2:IMPORTANT.has(kind)||kind.startsWith('heavy-')?1:0,endRatio);
  }
  combatEffects(effects=[]){if(!this.enabled||this.disposed||this.ctx?.state!=='running'||this.scene.paused||globalThis.document?.hidden)return;let index=0;for(const f of effects)if(f.type==='bolt'&&f.hero==='electric'&&f.presentation?.special>=2&&!this.seenBolts.has(f)){this.seenBolts.add(f);if(index>=5)continue;this.voice((f.presentation.heroId==='prism'?1568:1600)+index*140,f.presentation.heroId==='prism'?.14:.07,.018,f.presentation.heroId==='prism'?'sine':'triangle',2800,index*.035,0,'abilities',2);index++;}}
  clearVoices(){for(const v of [...this.live])v.finish(true);this.last.clear();}

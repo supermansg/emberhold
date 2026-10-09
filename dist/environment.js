@@ -58,7 +58,7 @@ export class LivingWorld{
  update(t,game,date=new Date(),reduced=false){
   const minute=Math.floor(+date/10000);if(this.clockMinute!==minute){this.clockMinute=minute;this.atmosphere=atmosphereAt(date);const a=this.atmosphere,d=a.daylight;
    this.sun.position.set(a.east*35,Math.max(2,a.up*35),-a.north*35);this.sun.intensity=clamp(a.up*3.5,0,2.7)*(1-a.cloud*.55);this.sun.color.set(a.up<.25?'#ffb575':'#ffe7c6');
-   this.ambient.intensity=1.15+d*.5;this.ambient.color.set(d>.5?'#bcdde4':'#779cce');this.fill.intensity=.55+(1-d)*.5;
+   this.ambient.intensity=1.26+d*.42;this.ambient.color.set(d>.5?'#bcdde4':'#779cce');this.fill.intensity=.7+(1-d)*.48;
    const sky=new T.Color('#102338').lerp(new T.Color('#89b9c7'),d).lerp(new T.Color('#657d8a'),a.cloud*.35);this.scene.background=sky;this.scene.fog=new T.Fog(sky,36-a.rain*4,115-a.rain*25);
    this.sunDisc.position.set(a.east*95,a.up*95,-a.north*95);this.sunDisc.visible=a.up>0;this.sunDisc.material.color.set(a.up<.2?'#ffb077':'#fff3c4');this.sunDisc.material.transparent=true;this.sunDisc.material.opacity=1-a.cloud*.7;
    this.clouds[0].m.material.opacity=.12+a.cloud*.28;this.rain.visible=a.rain>.01&&!reduced;

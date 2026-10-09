@@ -6,13 +6,13 @@ export class SpecialChoreography {
  arm(index,time){if(this.rigs[index])this.rigs[index].arm=time;}
  update(game,actors,reduced=false,quality='standard',loaded=false){if(this.game!==game){this.reset();this.game=game;}if(!game)return;const time=game.time;
  for(const f of game.effects)if(f.type==='special'&&f.presentation?.special>=2&&!this.seen.has(f)){this.seen.add(f);const index=game.team.findIndex(h=>h.id===f.presentation.heroId);if(index>=0)this.rigs[index].start=time-(f.maxLife-f.life);}
- for(let i=0;i<4;i++){const r=this.rigs[i],actor=actors.get(i),h=game.team[i];if(!actor||!h){r.root.visible=false;continue;}const age=time-r.start,press=time-r.arm,release=age>=0&&age<.8,charging=press>=0&&press<.3,ready=i===0&&game.powerCharge>=game.powerNeeded;const active=release||charging||ready;r.root.visible=active;if(!active)continue;
+ for(let i=0;i<4;i++){const r=this.rigs[i],actor=actors.get(i),h=game.team[i];if(!actor||!h){r.root.visible=false;continue;}const age=time-r.start,press=time-r.arm,release=age>=0&&age<.8,charging=press>=0&&press<.3,ready=i===0&&game.powerCharge>=game.powerNeeded,automatic=!h.reloading&&!h.attackAnim&&h.cd>0&&h.cd<.12&&!!game.enemies?.some(e=>e.hp>0&&e.y>0&&555-e.y<h.range);const active=release||charging||ready||automatic;r.root.visible=active;if(!active)continue;
  const id=h.id,cold=['frost','aurora','prism'].includes(id),electric=id==='electric',heavy=['gunner','umbra','sol'].includes(id);r.material.color.set(COLORS[id]||h.color);
- const envelope=release?Math.max(0,1-age/.8):charging?.65+press: .2;const force=release&&!reduced?Math.sin(Math.min(1,age/.18)*Math.PI)*.08:0;
- actor.userData.body.rotation.x+=heavy?-force:force*.6;actor.userData.body.position.z+=heavy?force*.5:0;
- actor.updateMatrixWorld(true);(actor.userData.muzzle||actor).getWorldPosition(r.root.position);r.root.position.y+=.03;
- r.ring.rotation.set(Math.PI/2,0,reduced?0:time*(electric?5:cold?-.8:1));r.ring.scale.setScalar(release?1.2+age*6:charging?1+press: .65);r.material.opacity=envelope*(release?.8:.65);
- r.shards.geometry=cold||id==='briar'?this.crystal:this.round;r.shards.count=reduced||loaded?0:quality==='low'?3:quality==='high'?8:5;
+ const envelope=release?Math.max(0,1-age/.8):charging?.65+press:automatic?.16+(1-h.cd/.12)*.32: .2;const force=release&&!reduced?Math.sin(Math.min(1,age/.18)*Math.PI)*(heavy?.18:.11):0;
+ actor.userData.body.rotation.x+=heavy?(actor.userData.authored?force:-force):force*.6;actor.userData.body.position.z+=heavy?force*.5:0;
+ actor.updateMatrixWorld(true);actor.getWorldQuaternion(r.root.quaternion);(actor.userData.muzzle||actor).getWorldPosition(r.root.position);r.root.position.y+=.03;
+ r.ring.rotation.set(0,0,reduced?0:time*(electric?5:cold?-.8:1));r.ring.scale.setScalar(release?1.35+Math.sin(Math.min(1,age/.65)*Math.PI)*3.1:charging?1.35-press*1.4:automatic?.8+h.cd*2: .7);r.material.opacity=envelope*(release?.8:.65);
+ r.shards.geometry=cold||id==='briar'?this.crystal:this.round;r.shards.count=reduced||loaded||automatic&&!release&&!charging&&!ready?0:quality==='low'?3:quality==='high'?8:5;
  for(let j=0;j<r.shards.count;j++){const angle=j*Math.PI*2/r.shards.count+(reduced?0:time*(electric?9:1.5)),radius=release?.15+age*(heavy?1.5:1):.22;this.dummy.position.set(Math.cos(angle)*radius,Math.sin(angle)*radius,release?-age*.5:0);this.dummy.rotation.set(angle,angle*.7,0);this.dummy.scale.setScalar((cold?1.4:1)*envelope);this.dummy.updateMatrix();r.shards.setMatrixAt(j,this.dummy.matrix);}r.shards.instanceMatrix.needsUpdate=true;
  }}
  reset(){this.seen=new WeakSet();for(const r of this.rigs){r.start=r.arm=-100;r.root.visible=false;}}

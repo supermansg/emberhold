@@ -1,3 +1,4 @@
+import {applyAttackMotion} from './attack-motion.js';
 import {SpecialChoreography} from './special-choreography.js';
 import {createBrassActor,animateBrassAsset} from './brass-asset.js';
 import {ShockwaveView} from './shockwave-view.js';
@@ -189,6 +190,7 @@ a.position.copy(world(90+i*105,555,.75));let target=game?.enemies.find(e=>e.id==
    animateCaster(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
    animateBrassAsset(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
    animatePremium(a,h,t+i,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
+   applyAttackMotion(a,h,t+i,!!game?.enemies.some(e=>e.hp>0&&e.y>0&&555-e.y<h.range),!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches);
   }
   this.specialChoreography?.update(game,this.heroes,!!globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches,this.presentationQuality.level,this.presentationQuality.loaded);
   this.scene.updateMatrixWorld(true);

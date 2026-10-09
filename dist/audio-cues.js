@@ -42,3 +42,9 @@ CUES['special-thunder']=CUES['special-electric'];
 CUES.crystal=[[1568,.12,.024,'sine',2800],[2093,.16,.016,'sine',3400,.035]];
 CUES['impact-crystal']=[[2350,.15,.026,'sine',3800],[3136,.12,.014,'sine',4200,.025]];
 CUES['break-crystal']=[[2093,.18,.022,'sine',3300]];
+
+// M5.2: concise body/transient pairs leave space between automatic attacks.
+CUES.fire=[[120,.13,.05,'sine',420],[0,.11,.046,'noise',900],[280,.07,.016,'triangle',1000,.025]];
+CUES['impact-fire']=[[72,.2,.07,'sine',280],[0,.13,.06,'noise',720]];
+CUES.electric=[[1280,.055,.034,'triangle',2400],[0,.025,.036,'noise',3000],[220,.08,.028,'sine',800]];
+CUES['impact-frost']=[[2349,.095,.029,'sine',3600],[3136,.08,.018,'sine',4300,.024],[0,.025,.017,'noise',2800]];

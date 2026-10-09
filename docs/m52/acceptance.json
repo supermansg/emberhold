@@ -1,0 +1,122 @@
+{
+  "gunner": {
+    "success": true,
+    "effects": [
+      "special",
+      "text",
+      "text",
+      "impact",
+      "text",
+      "impact",
+      "text",
+      "impact"
+    ],
+    "calls": 519
+  },
+  "electric": {
+    "success": true,
+    "effects": [
+      "special",
+      "text",
+      "bolt",
+      "impact",
+      "text",
+      "bolt",
+      "impact",
+      "text",
+      "bolt",
+      "impact",
+      "bolt",
+      "impact",
+      "text",
+      "bolt",
+      "impact",
+      "text"
+    ],
+    "calls": 541
+  },
+  "fire": {
+    "success": true,
+    "effects": [
+      "special",
+      "shot"
+    ],
+    "calls": 501
+  },
+  "frost": {
+    "success": true,
+    "effects": [
+      "special",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "text",
+      "blast"
+    ],
+    "calls": 549
+  },
+  "origin": {
+    "front": 535,
+    "y": [
+      510,
+      290,
+      100,
+      25
+    ],
+    "hp": [
+      100000,
+      100000,
+      100000,
+      100000
+    ]
+  },
+  "middle": {
+    "front": 270.04761904761904,
+    "y": [
+      430,
+      198,
+      100,
+      25
+    ],
+    "hp": [
+      100000,
+      100000,
+      100000,
+      100000
+    ]
+  },
+  "far": {
+    "front": 0,
+    "y": [
+      430,
+      198,
+      68,
+      18.6
+    ],
+    "hp": [
+      100000,
+      100000,
+      100000,
+      100000
+    ]
+  },
+  "upgrade": {
+    "title": "להבה מתמשכת",
+    "who": "אמבר",
+    "kind": "יכולת",
+    "after": "10 נזק לשנייה",
+    "desc": "השריפה נמשכת שלוש שניות אחרי פגיעה. השדרוג מגביר את נזק השריפה לכל אויב שנמצא בפיצוץ."
+  },
+  "rewards": {
+    "coins": 1,
+    "pool": 48
+  }
+}
