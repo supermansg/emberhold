@@ -8,15 +8,9 @@ Run `npm run dev` and open http://localhost:4173, or double-click `Open Emberhol
 
 Vercel integration uses `npm test` as its build command and serves hand-authored `dist` directly; never run the default Vite build into it. This is a Preview-only integration, with no merge or production promotion. See [integration report](docs/stage25/INTEGRATION.md), [QA status](docs/stage25/QA.md) and [Stage 3 proposal](docs/stage25/PREMIUM-VERTICAL-SLICE.md). Physical Android/iPhone and creative acceptance remain separate gates.
 
-The following sections retain historical import/version notes. Their old "no game code changed" and nine-test statements describe the import, not this integration candidate.
+Verified Preview of runtime integration commit `8d7029c30eb86a6486a2ab22088ee274bde139b5`: https://emberhold-7p0utfuoc-dudi1710-gmailcoms-projects.vercel.app . Protected access requires the temporary share link supplied separately; no access tokens are stored here. Vercel build and real-entry browser smoke passed. See the QA ledger for evidence and device limits.
 
-Current development candidate: **Stage 2.5 integration**, branch `codex/stage25-integration`, based on M5.2 `c2a39a14e22b3e716a84bc8fa35e83e3585cd14b`. Retains authored Brass GLB, all M5.2 combat motion/VFX/audio, Specials, full-lane Shockwave, upgrade illustrations, quality tiers and M4 run-XP pacing. Integrates Stage 2 offer guarantees, opt-in diagnostics and missing landscape/touch usability. Run `npm test` for 23 suites. Production `main` remains unchanged.
-
-Run `npm run dev` and open http://localhost:4173, or double-click `Open Emberhold.lnk` / `scripts/open-app.cmd`. The existing launcher icon is `scripts/emberhold.ico`. Diagnostics: http://127.0.0.1:4173/?perf=1 (Vite development only). Preserve real saves by testing in a fresh browser context/origin.
-
-Vercel integration uses `npm test` as its build command and serves hand-authored `dist` directly; never run the default Vite build into it. This is a Preview-only integration, with no merge or production promotion. See [integration report](docs/stage25/INTEGRATION.md), [QA status](docs/stage25/QA.md) and [Stage 3 proposal](docs/stage25/PREMIUM-VERTICAL-SLICE.md). Physical Android/iPhone and creative acceptance remain separate gates.
-
-The following sections retain historical import/version notes. Their old "no game code changed" and nine-test statements describe the import, not this integration candidate.
+The following sections retain historical import/version notes. Their old test counts and unverified-browser statements describe earlier milestones.
 
 Local source: Sites version 10, commit `c3092d3653e02ceb5719816979bfbf9c3523e0cf`, verified on 2026-09-10 as the latest saved version and remote main.
 Use Node 24, run `npm ci` once, then `npm run dev` and open http://localhost:4173.

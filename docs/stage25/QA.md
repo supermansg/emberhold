@@ -14,6 +14,10 @@ Local runtime: Windows / Node 24.14.0. Separate browser contexts/fixture storage
 
 ## Preview acceptance gate
 
-Confirm Vercel target Preview and exact integration SHA, build test log, authored root entry and JS/CSS/WebP/GLB/addon MIME/status. Smoke-test real entry with no response interception: hero selection, gameplay, pause/resume, mobile layouts, console and asset failures. Production deployment identity must remain the initial one. Any protected access/share-link limit must be reported explicitly.
+PASS: Preview deployment dpl_DhSDA6HmD4zRP5UAvnW4cCzmLWua is READY, target null (Preview), branch codex/stage25-integration, exact runtime commit 8d7029c30eb86a6486a2ab22088ee274bde139b5. URL: https://emberhold-7p0utfuoc-dudi1710-gmailcoms-projects.vercel.app . Vercel build logs show all 23 suites passing and successful static output deployment.
+
+PASS: deployed real-entry smoke, no interception: authored app.js matches local source, JS/CSS/WebP/GLB/addons all HTTP 200 with correct MIME/payload; GLB 567,340 bytes. Hero selection, rendered gameplay, Shockwave, speeds, pause/resume, retirement/restart and 390x844 / 844x390 / 320x740 layouts pass, errors=[] and failed=[]. See evidence/preview-smoke.json and preview-landscape.png.
+
+Preview authentication remains enabled. A temporary share link was created for desktop/mobile review, expiring 2026-10-24; it is supplied privately in the delivery response rather than committed. Production identity is checked separately at handoff. Documentation-only commits after the runtime commit do not alter game source.
 
 Physical Android Chrome/iPhone Safari, thermal behavior, hardware GPU FPS and listening/creative acceptance: NOT VERIFIED. Emulated touch does not establish physical-device acceptance. Stage 3 remains awaiting explicit approval.

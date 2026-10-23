@@ -1,5 +1,10 @@
 # Changelog
 
+## 2026-10-23 — Stage 2.5 Preview acceptance
+- Pushed integration runtime 8d7029c on codex/stage25-integration; Vercel Preview READY with exact SHA and all 23 build-time suites passing.
+- Deployed real-entry touch smoke passed at three viewport sizes with correct static assets, no page errors or failed requests. Preserved evidence and updated current launch/status docs.
+- Removed duplicated current-status paragraphs in README. Physical mobile and creative approval remain unverified; Stage 3 awaits approval.
+
 ## 2026-10-23 — Stage 2.5 M5.2 integration candidate
 - Based a dedicated branch on verified M5.2 c2a39a1; preserved local main-based Stage 2 in a hash-verified external snapshot and Git stash.
 - Preserved M5.2 authored Brass, combat motion, quality/VFX pools, audio, Specials, Shockwave and upgrade UI; retained its run-XP progression.
