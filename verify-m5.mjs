@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {execFileSync} from 'node:child_process';
+import {assertAuthority} from './scripts/assert-authority.mjs';
 import * as T from './dist/vendor/three.module.js';
 import {loadBrassAsset,createBrassActor,animateBrassAsset,disposeBrassAsset,brassAssetStats} from './dist/brass-asset.js';
 import {CombatVFX} from './dist/combat-vfx.js';
@@ -23,6 +23,6 @@ const scene=new T.Scene(),pool=new CombatVFX(scene),camera=new T.PerspectiveCame
 for(let i=0;i<500;i++){const s=pool.acquire('special','fire');pool.update(s,{life:.3,maxLife:.65,radius:115,presentation:{special:2,heroId:'fire'}},source,target,camera,false,0);assert(s.children[3].visible);pool.release(s);}assert.equal(pool.stats.active,0);assert.equal(pool.slots.length,96);pool.dispose();
 const wave=new ShockwaveView(scene),g={shockwave:{age:.4,front:440}};for(const quality of ['low','standard','high']){wave.update(g,quality,false,true);assert(wave.root.visible);assert.equal(wave.debris.count,0);assert.equal(wave.core.position.z,4);}wave.update({shockwave:{age:2,front:0}});assert(!wave.root.visible);wave.dispose();assert.equal(scene.children.length,0);
 assert(upgradeIllustration({icon:'❄'}).includes('❄'));assert(!upgradeIllustration({icon:'<script>'}).includes('<script>'));
-// Non-Shockwave authority/config/save sources remain byte-identical to M4.1; M5.1 intentionally extends Shockwave reach.
-for(const file of ['engine.js','content.js','progression.js','collection.js']){const baseline=execFileSync('git',['show',`56eab30:dist/${file}`]);assert.deepEqual(readFileSync(`dist/${file}`),baseline,file);}
+// Preserve authority, allowing only normalized checkout EOLs and Stage 2's reviewed offer fix.
+for(const file of ['engine.js','content.js','progression.js','collection.js'])assertAuthority(file,'56eab30');
 console.log(`PASS M5: actual GLB decode (${tris} triangles/${draws} meshes), shared lifecycle/fallback, socket pause, bounded special/wave pools, unchanged non-Shockwave authority/save/content.`);

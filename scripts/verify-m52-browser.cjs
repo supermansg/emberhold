@@ -5,7 +5,8 @@ const artifacts=process.env.M2_ARTIFACTS || '/tmp/emberhold-m52-artifacts';fs.mk
 const baseURL=process.env.M2_BASE_URL || 'http://127.0.0.1:4173';
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH || '/usr/bin/chromium',headless:true,args:['--no-sandbox','--use-angle=swiftshader','--enable-unsafe-swiftshader','--disable-dev-shm-usage']});
- const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:2,hasTouch:true});
+ const context=await browser.newContext({viewport:{width:390,height:844},deviceScaleFactor:Number(process.env.QA_DPR||2),hasTouch:true});
+ context.setDefaultTimeout(90000); // Software rendering/screenshots can exceed the action default.
  await context.addInitScript(()=>{
   const OriginalDate=Date;window.__m2Date='2026-06-21T09:40:00Z';
   window.Date=class extends OriginalDate {constructor(...args){super(...(args.length?args:[window.__m2Date]));}static now(){return new OriginalDate(window.__m2Date).getTime();}};
@@ -33,9 +34,9 @@ const baseURL=process.env.M2_BASE_URL || 'http://127.0.0.1:4173';
  const stats=await page.evaluate(()=>{const {view3d:v}=__m2Test.state();return {webgl:v.renderer.getContext().getParameter(v.renderer.getContext().VERSION),calls:v.renderer.info.render.calls,triangles:v.renderer.info.render.triangles,geometries:v.renderer.info.memory.geometries,textures:v.renderer.info.memory.textures}});
  // Physical (non-button) hero picking, then ordinary inspection and resume.
  const hero=await page.evaluate(()=>{const {view3d:v}=__m2Test.state(),r=v.host.getBoundingClientRect(),p=v.project(90,555,2.8);return {x:r.left+p.x,y:r.top+p.y}});
- await page.mouse.click(hero.x,hero.y);await page.waitForSelector('#closeHero');assert.equal(await page.evaluate(()=>__m2Test.state().game.state),'inspecting');await page.locator('#closeHero').click();
+ await page.touchscreen.tap(hero.x,hero.y);await page.waitForSelector('#closeHero');assert.equal(await page.evaluate(()=>__m2Test.state().game.state),'inspecting');await page.locator('#closeHero').click();
  const target=await page.evaluate(()=>{const {game:g,view3d:v}=__m2Test.state(),r=v.host.getBoundingClientRect(),e=g.enemies.find(e=>e.id===105),p=v.project(e.x,e.y,1);return {x:r.left+p.x,y:r.top+p.y}});
- await page.mouse.click(target.x,target.y);await page.waitForFunction(()=>__m2Test.state().game.target!==null);
+ await page.touchscreen.tap(target.x,target.y);await page.waitForFunction(()=>__m2Test.state().game.target!==null);
  await page.locator('#pause').click();await page.waitForFunction(()=>__m2Test.state().sfx.ctx.state==='suspended');const paused=await page.evaluate(()=>__m2Test.state().game.time);await page.waitForTimeout(200);assert.equal(await page.evaluate(()=>__m2Test.state().game.time),paused);for(const level of ['low','high','standard']){const snapshot=await page.evaluate(()=>JSON.stringify(__m2Test.state().game));await page.locator('#presentationQuality').selectOption(level);assert.equal(await page.evaluate(()=>JSON.stringify(__m2Test.state().game)),snapshot);await page.waitForFunction(level=>__m2Test.state().view3d.presentationQuality.level===level,level);}await page.locator('#resume').click();await page.waitForFunction(()=>__m2Test.state().sfx.ctx.state==='running');
  for(const expected of [2,3,1]){await page.locator('#speed').click();assert.equal(await page.evaluate(()=>__m2Test.state().speed),expected);}
  await page.evaluate(()=>{const {game:g}=__m2Test.state();g.powerCharge=g.powerNeeded;for(const s of g.spells)s.charge=s.need;__m2Test.hud();});

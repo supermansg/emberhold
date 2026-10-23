@@ -1,0 +1,16 @@
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {execFileSync} from 'node:child_process';
+import {assertAuthority,authoritySource,normalizeLines,OFFER_BEFORE,OFFER_AFTER} from './scripts/assert-authority.mjs';
+assert.equal(normalizeLines('a\r\nb\n'),'a\nb\n');
+assert.equal(authoritySource(OFFER_AFTER,'engine.js'),OFFER_BEFORE);
+assert.notEqual(authoritySource(OFFER_AFTER+' DAMAGE CHANGED','engine.js'),OFFER_BEFORE);
+assert.equal(authoritySource(OFFER_AFTER,'progression.js'),OFFER_AFTER,'no exception for save code');
+assert.throws(()=>authoritySource(OFFER_AFTER+OFFER_AFTER,'engine.js'));
+for(const file of ['engine.js','shockwave.js','content.js','collection.js','progression.js','run-xp.js'])assertAuthority(file,'c2a39a1');
+const app=readFileSync('dist/app.js','utf8');
+assert(app.includes('motionFeedback.update(game.time)')&&app.includes('soundIdentity')&&app.includes('upgradeIllustration(o)'));
+assert(app.includes('diagnostics?.frame(now,')&&app.includes('presentation:view3d?.presentationStats()'));
+for(const file of ['render3d.js','audio.js','attack-motion.js','combat-vfx.js','special-choreography.js','shockwave-view.js','brass-asset.js'])assertAuthority(file,'c2a39a1');
+for(const file of ['assets/models/brass.glb','assets/emberhold-brand.jpg','assets/heroes.webp','assets/enemies.webp','assets/battlefield.webp'])assert.deepEqual(readFileSync('dist/'+file),execFileSync('git',['show','c2a39a1:dist/'+file],{maxBuffer:4*1024*1024}),file+' original art bytes preserved');
+console.log('PASS integration: exact M5.2 authority/presentation retained except one reviewed offer fix; EOL normalization does not hide unrelated edits.');

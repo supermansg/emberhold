@@ -1,6 +1,5 @@
 import assert from 'node:assert/strict';
-import {readFileSync} from 'node:fs';
-import {execFileSync} from 'node:child_process';
+import {assertAuthority} from './scripts/assert-authority.mjs';
 import {attackPose} from './dist/attack-motion.js';
 import {upgradeTheme,upgradeIllustration} from './dist/upgrade-presentation.js';
 for(const id of ['gunner','fire','electric','frost','briar','aurora']){
@@ -11,8 +10,8 @@ for(const id of ['gunner','fire','electric','frost','briar','aurora']){
 assert.notDeepEqual(attackPose({id:'gunner',attackAnim:.12}),attackPose({id:'electric',attackAnim:.12}));
 for(const [id,theme]of [['burn','fire'],['chain','electric'],['slow','ice'],['shatter','ice'],['damage-briar','nature'],['damage-prism','crystal'],['speed-gunner','tempo'],['wall','defense'],['damage-gunner','mechanical'],['team','team']])assert.equal(upgradeTheme({id}),theme);
 assert.notEqual(upgradeIllustration({id:'burn'}),upgradeIllustration({id:'chain'}));assert(!upgradeIllustration({icon:'<script>'}).includes('<script>'));
-for(const file of ['engine.js','shockwave.js','content.js','collection.js','progression.js','run-xp.js'])assert.deepEqual(readFileSync(`dist/${file}`),execFileSync('git',['show',`cce0fee:dist/${file}`]),file+' authority unchanged');
-console.log('PASS M5.2: distinct deterministic attack envelopes, no mutation, truthful upgrade art mapping and byte-identical gameplay authority.');
+for(const file of ['engine.js','shockwave.js','content.js','collection.js','progression.js','run-xp.js'])assertAuthority(file,'cce0fee');
+console.log('PASS M5.2: distinct deterministic attack envelopes, no mutation, truthful upgrade art mapping and preserved authority except approved offer-slot correction.');
 import * as T from './dist/vendor/three.module.js';
 import {CombatVFX} from './dist/combat-vfx.js';
 import {ShockwaveView} from './dist/shockwave-view.js';

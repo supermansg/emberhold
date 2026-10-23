@@ -1,0 +1,11 @@
+import assert from 'node:assert/strict';
+import {FrameStats,createDiagnostics} from './dist/dev-performance.js';
+assert.equal(createDiagnostics(),null,'static/Node environment never activates developer UI');
+const stats=new FrameStats(4);
+assert.equal(stats.summary(),null);
+for(const ms of [10,20,30,40,50])stats.add(ms);
+const s=stats.summary();assert.equal(s.samples,4);assert.equal(s.meanMs,35);
+assert.equal(s.p95Ms,50);assert.equal(s.maxMs,50);assert.equal(s.fps,1000/35);
+stats.add(NaN);stats.add(0);assert.equal(stats.summary().samples,4);
+stats.clear();assert.equal(stats.summary(),null);
+console.log('PASS: bounded frame samples, percentiles, FPS derivation, invalid input and reset. No device benchmark.');

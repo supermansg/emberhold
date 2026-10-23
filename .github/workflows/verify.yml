@@ -10,9 +10,9 @@ jobs:
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
-      - run: node verify.mjs
-      - run: node verify-v3.mjs
-      - run: node verify-v4.mjs
+      - run: npm test

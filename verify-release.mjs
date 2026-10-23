@@ -1,0 +1,10 @@
+import assert from 'node:assert/strict';
+import {readFileSync,existsSync} from 'node:fs';
+const config=JSON.parse(readFileSync('vercel.json','utf8'));
+assert.equal(config.buildCommand,'npm test','deployment must pass all tests without building into authored dist');
+assert.equal(config.outputDirectory,'dist');
+assert(!config.rewrites&&!config.redirects,'preserve existing direct static routes');
+for(const path of ['dist/index.html','dist/app.js','dist/style.css','dist/vendor/three.module.js','dist/vendor/three.core.min.js','dist/assets/heroes.webp','dist/assets/enemies.webp','dist/assets/battlefield.webp','dist/assets/models/brass.glb','dist/vendor/addons/loaders/GLTFLoader.js','dist/vendor/addons/utils/BufferGeometryUtils.js'])assert(existsSync(path),path);
+const html=readFileSync('dist/index.html','utf8');assert(html.includes('src="app.js"'));assert(html.includes('href="style.css"'));
+const app=readFileSync('dist/app.js','utf8');assert(app.includes("import.meta.env?.DEV&&new URLSearchParams(location.search).get('perf')==='1'"));
+console.log('PASS: test-gated static deployment config, authored entry/assets present and development diagnostic activation guard. No deployment executed.');
