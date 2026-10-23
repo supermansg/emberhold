@@ -1,4 +1,21 @@
-# Stage 2.5 QA ledger
+# Stage 2.5 QA and Stage 2.6 production release ledger
+
+## Stage 2.6 release — 2026-10-23
+
+RELEASED: Stage 2.5 runtime candidate d8556d6fea02d7f42de2fcddad44d6094cf4f293 was revalidated and fast-forwarded from 88ba79a into main without force. Owner release authorization is the Stage 2.6 request. M5 63b8516, M5.1 cce0fee and M5.2 c2a39a1 are ancestors; PR #5/#6 remain historical drafts, not blindly merged. No feature work discarded.
+
+Production: https://emberhold-five.vercel.app/ ; deployment dpl_DaBzBPfprDLzgomvXMzNmBfAJW9j, target production, READY, exact candidate SHA on main, canonical alias verified. Existing project prj_MxLtZbCGcGvJEclnIdWMbwR7tG1M / team_qgfmM9DIp4b18J6MNq44StTi retained. Domain verified with no redirect. Node 24; effective production logs run npm test/all 23 suites; vercel.json outputs authored dist. No project setting or dependency changes.
+
+PASS: fresh local 23-suite run; exact candidate Preview at three viewports; same-origin old live -> candidate -> old live synthetic save persisted by real collection equip actions; production public entry, assets, exact app.js, rendered gameplay, touch Shockwave, speeds, pause/resume, retirement/restart and all three viewports; real new-production save/reload; home/heroes/detail/collection/fort document overflow and nav bounds with reduced motion. Zero page errors/failed asset responses in smoke. Production is not claimed successful solely from READY. See ../evidence/stage26/release.json and adjacent evidence reports/screenshots.
+
+Save safety: progression.js, collection.js and content.js are identical to old production (EOL-only normalization); emberhold-v1 key and origin retained. Synthetic coins 12345, careerXp 4567, keys 17 and all hero/card fields survived old/new/old and deployed reload. This is representative compatibility, not access to real player saves. No save reset or schema migration. Active-run recovery/cloud sync remain absent. Bad JSON/storage-denial and concurrent stale tabs retain existing limitations; no new guarantee for unsupported or malformed data.
+
+Rollback: retained old production dpl_FoxG6714A2BrDZK2P3MRDrpyegts at 88ba79a. Procedure and auto-assignment caveat in ../DEVELOPMENT.md. Backward save persistence was tested; live rollback was deliberately not performed on the healthy site.
+
+Stage 2.6 follow-up changes are docs and QA harnesses only, with dist unchanged from the accepted candidate. Preview/production verification is repeated for the follow-up SHA; the runtime release version above remains valid. Physical phones, hardware FPS, prolonged thermal behavior, complete accessibility/contrast and creative listening approval remain NOT VERIFIED. No Stage 3 production assets/UI redesign have begun.
+
+---
+## Historical Stage 2.5 candidate verification
 
 Local runtime: Windows / Node 24.14.0. Separate browser contexts/fixture storage; real user saves are not reset. Production is outside test mutation scope.
 

@@ -40,7 +40,7 @@ fs.mkdirSync(artifacts,{recursive:true});
   await page.locator('#resume').tap();await page.locator('#pause').tap();await page.locator('#leave').tap();await page.locator('#again').waitFor();
   await page.locator('#again').tap();await page.locator('[data-starter]').first().tap();await page.waitForFunction(()=>document.body.classList.contains('in-battle'));
   assert.deepEqual(errors,[]);assert.deepEqual(failed,[]);
-  const report={status:'PASS',mode:process.env.QA_STATIC==='1'?'static Preview':'local Vite',assets,layouts,errors,failed,limitations:'Desktop Chromium touch emulation / software rendering; not physical Android/iPhone acceptance.'};
+  const report={status:'PASS',origin:new URL(base).origin,mode:process.env.QA_STATIC==='1'?'static deployment':'local Vite',assets,layouts,errors,failed,limitations:'Desktop Chromium touch emulation / software rendering; not physical Android/iPhone acceptance.'};
   fs.writeFileSync(path.join(artifacts,'smoke-results.json'),JSON.stringify(report,null,2));console.log(JSON.stringify(report));
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exitCode=1;});

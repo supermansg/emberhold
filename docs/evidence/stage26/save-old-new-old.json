@@ -1,0 +1,31 @@
+{
+  "status": "PASS",
+  "phases": [
+    {
+      "phase": "old-live",
+      "origin": "https://emberhold-five.vercel.app",
+      "status": "PASS",
+      "coins": 12345,
+      "careerXp": 4567,
+      "keys": 17
+    },
+    {
+      "phase": "candidate-same-origin",
+      "origin": "https://emberhold-five.vercel.app",
+      "status": "PASS",
+      "coins": 12345,
+      "careerXp": 4567,
+      "keys": 17
+    },
+    {
+      "phase": "rollback-old-live",
+      "origin": "https://emberhold-five.vercel.app",
+      "status": "PASS",
+      "coins": 12345,
+      "careerXp": 4567,
+      "keys": 17
+    }
+  ],
+  "errors": [],
+  "limitations": "Representative synthetic save in a fresh browser context, not inspection of real player profiles. Candidate static files intercepted only in the middle phase; old phases are actual existing production."
+}

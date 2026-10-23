@@ -57,3 +57,15 @@ Existing scripts/art/brass.py targets Blender 4.3. Do not run it as discovery: i
 Locate and reconfirm the five historical reference boards mentioned by M5; old numeric IDs are not available image evidence. Approve Brass reference sheet before producing final assets. Compare reference, existing M5.2 and candidate with identical camera, daylight/weather, DPR, quality and frozen game state. Capture turntable, actual 390px battle, normal shot, reload, Special release/contact, enemy reaction and boss warning. Version the images and record concrete differences.
 
 Technical PASS: sockets/aim, timing/damage/save/reward invariance, pause/speed, shared-resource lifecycle and measured device budgets. Separate creative approval: silhouette, face, materials, palette, animation, lighting and game feel. Expand to the remaining roster only after this slice is approved. Stage 3 is awaiting approval.
+
+## Stage 2.6 production specification refinement
+
+Runtime reference is now the released M5.2 + Stage 2.5 integration (d8556d6), not old main 88ba79a. The product/UI roadmap is in ../product-backlog.md; keep numeric art budgets here as the single source of truth. Stage 3 still requires approval.
+
+First optimization gate: reproduce frozen normal and 36-enemy/rain/x3 scenes; attribute submissions to static forest, actor submeshes, shadows, labels and VFX. Batch compatible static materials, instance repeated rigid enemy parts where motion permits, add enemy distance/quality LOD, share atlas materials and reduce shadow casters before adding lights or full-screen passes. Compare same camera/DPR/quality, preserve picking IDs and death/loot lifecycle. Draw-call targets above require a real reduction from the measured >1000 dense workload, not CSS changes.
+
+Brass export acceptance: Blender executable/version + glTF exporter smoke in a new versioned folder, applied units/axes, validated normals/UV/roughness, no embedded cameras/lights, independent skeleton instance, named sockets and exact clip inventory/duration. Validate bounds and culling while firing/reloading, no foot sliding or muzzle drift, no overbright metal under night/rain. Preserve authored source script and source/reference provenance. Heroes currently have no health: hit/death clips are enemy/boss requirements or preview-only future clips, not new Brass gameplay mechanics.
+
+Boss warnings must follow existing attack timing, mass resistance and target authority; a new charge/slam pattern is a separate approved gameplay feature. Layer elemental release/travel/contact on truthful events, retain essential Low-tier telegraphs, no decorative shader that hides frozen/burning/selected states. Test clipped/offscreen targets and reduced motion.
+
+Toolchain recheck at Stage 2.6: no Blender in current PATH and no standard Program Files Blender Foundation folder. Existing scripts/art/brass.py explicitly targets Blender 4.3 and exports authored rigid articulation. Prior deeper registry/bpy findings remain in the audit above; portable/ArtCraft runtimes are still unverified. No source script, .blend or export was executed or overwritten.

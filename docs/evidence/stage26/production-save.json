@@ -1,0 +1,23 @@
+{
+  "status": "PASS",
+  "phases": [
+    {
+      "phase": "new-live",
+      "origin": "https://emberhold-five.vercel.app",
+      "status": "PASS",
+      "coins": 12345,
+      "careerXp": 4567,
+      "keys": 17
+    },
+    {
+      "phase": "new-live-reload",
+      "origin": "https://emberhold-five.vercel.app",
+      "status": "PASS",
+      "coins": 12345,
+      "careerXp": 4567,
+      "keys": 17
+    }
+  ],
+  "errors": [],
+  "limitations": "Representative synthetic save in a fresh browser context, not inspection of real player profiles. In compatibility mode only the middle phase is intercepted; QA_DEPLOYED=1 tests real deployed persistence/reload without interception."
+}

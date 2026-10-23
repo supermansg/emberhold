@@ -1,0 +1,18 @@
+{
+  "version": "Stage 2.5 / production release 2026.10.23",
+  "runtimeCandidate": "d8556d6fea02d7f42de2fcddad44d6094cf4f293",
+  "productionDeployment": "dpl_DaBzBPfprDLzgomvXMzNmBfAJW9j",
+  "canonicalUrl": "https://emberhold-five.vercel.app/",
+  "target": "production",
+  "status": "READY and post-deployment browser PASS",
+  "previousDeployment": "dpl_FoxG6714A2BrDZK2P3MRDrpyegts",
+  "previousCommit": "88ba79af3a59253090565b950e9cdcf3b19d6370",
+  "tests": "23 suites revalidated locally and in Vercel production build",
+  "saveCompatibility": "same-origin old live -> intercepted candidate -> old live PASS; new live reload PASS",
+  "limitations": [
+    "physical Android/iPhone NOT VERIFIED",
+    "live rollback drill not executed",
+    "hardware FPS and creative acceptance NOT VERIFIED"
+  ],
+  "followup": "Stage 2.6 documentation/QA-only commits preserve dist exactly; metadata for later deployment is available in Git/Vercel, not self-referentially embedded in its own commit."
+}

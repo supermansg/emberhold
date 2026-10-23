@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-23 — Stage 2.6 production release and premium roadmap
+- Revalidated exact accepted d8556d6, M5/M5.1/M5.2 ancestry, 23 suites, Preview and same-origin old/new/old progression. Fast-forwarded main without force; existing production domain/project now serves the accepted game.
+- Verified production SHA/alias, assets and actual gameplay at portrait/landscape/narrow sizes; synthetic save reload and non-combat navigation/overflow checks pass. Documented retained rollback deployment and unverified hardware limits.
+- Established permanent owner-acceptance/Preview/release/post-deploy policy; expanded mobile contract, premium UI component/motion blueprint, truthful Player Profile inventory/cloud migration design, canonical share feature specification and prioritized roadmap.
+- Added reusable isolated save/mobile QA scripts and sanitized evidence. No gameplay/assets/dependencies/authentication changed; no full Stage 3 implementation.
+
 ## 2026-10-23 — Stage 2.5 Preview acceptance
 - Pushed integration runtime 8d7029c on codex/stage25-integration; Vercel Preview READY with exact SHA and all 23 build-time suites passing.
 - Deployed real-entry touch smoke passed at three viewport sizes with correct static assets, no page errors or failed requests. Preserved evidence and updated current launch/status docs.

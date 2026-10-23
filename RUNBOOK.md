@@ -1,3 +1,12 @@
+# Current operations — Stage 2.6
+
+Public game: https://emberhold-five.vercel.app/ . Current release/rollback evidence: docs/stage25/QA.md. Mandatory release process and exact rollback commands: docs/DEVELOPMENT.md. Use isolated codex/* branches; every accepted milestone needs Preview/tests, explicit owner acceptance and verified production release. Stage 2.6 authorizes this release; future milestones need separate acceptance.
+
+Local launch: npm run dev -> http://localhost:4173. npm test runs 23 suites. Do not build/clean authored dist. Existing browser harness environment and old/new save QA commands are documented in DEVELOPMENT.md. QA_DEPLOYED=1 with scripts/verify-stage26-save.cjs verifies live save reload without interception. scripts/verify-stage26-mobile.cjs audits non-combat nav/overflow; it is not full accessibility or physical-device approval. Keep generated artifacts under ignored qa-artifacts, copy sanitized evidence only into docs/evidence.
+
+---
+## Historical Stage 2.5 operation notes (release restrictions superseded by Stage 2.6 request)
+
 # Local operation
 
 Use Node 24. Install dependencies with `npm ci`; start with `npm run dev`.

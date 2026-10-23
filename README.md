@@ -2,13 +2,13 @@
 
 ## Open Latest App
 
-Current development candidate: **Stage 2.5 integration**, branch `codex/stage25-integration`, based on M5.2 `c2a39a14e22b3e716a84bc8fa35e83e3585cd14b`. Retains authored Brass GLB, all M5.2 combat motion/VFX/audio, Specials, full-lane Shockwave, upgrade illustrations, quality tiers and M4 run-XP pacing. Integrates Stage 2 offer guarantees, opt-in diagnostics and missing landscape/touch usability. Run `npm test` for 23 suites. Production `main` remains unchanged.
+Current release: **Stage 2.5, published and verified during Stage 2.6 (2026-10-23)**. Open the public game at **https://emberhold-five.vercel.app/** on desktop/mobile. Runtime release candidate: `d8556d6fea02d7f42de2fcddad44d6094cf4f293`, integrated into main by fast-forward. Later Stage 2.6 documentation/QA commits preserve the same game files.
 
-Run `npm run dev` and open http://localhost:4173, or double-click `Open Emberhold.lnk` / `scripts/open-app.cmd`. The existing launcher icon is `scripts/emberhold.ico`. Diagnostics: http://127.0.0.1:4173/?perf=1 (Vite development only). Preserve real saves by testing in a fresh browser context/origin.
+Retains all M5.2 combat motion, authored Brass GLB, Specials, full-lane Shockwave, upgrade UI, audio and progression; adds the protected upgrade-offer fix, development diagnostics and touch/landscape rules. All 23 suites, exact Preview, same-origin old/new/old saves and actual production gameplay/mobile-emulation smoke pass. Physical Android/iPhone, hardware FPS and creative acceptance remain unverified. Detailed release SHA/deployment/evidence and rollback target: [release ledger](docs/stage25/QA.md).
 
-Vercel integration uses `npm test` as its build command and serves hand-authored `dist` directly; never run the default Vite build into it. This is a Preview-only integration, with no merge or production promotion. See [integration report](docs/stage25/INTEGRATION.md), [QA status](docs/stage25/QA.md) and [Stage 3 proposal](docs/stage25/PREMIUM-VERTICAL-SLICE.md). Physical Android/iPhone and creative acceptance remain separate gates.
+Local: `npm run dev` at http://localhost:4173 or double-click `Open Emberhold.lnk` / `scripts/open-app.cmd`; launcher icon is `scripts/emberhold.ico`. `npm test` runs 23 suites with full Git history. Diagnostics: http://127.0.0.1:4173/?perf=1 (development only). Never run Vite build into authored dist. Vercel runs npm test and serves dist directly.
 
-Verified Preview of runtime integration commit `8d7029c30eb86a6486a2ab22088ee274bde139b5`: https://emberhold-7p0utfuoc-dudi1710-gmailcoms-projects.vercel.app . Protected access requires the temporary share link supplied separately; no access tokens are stored here. Vercel build and real-entry browser smoke passed. See the QA ledger for evidence and device limits.
+[Permanent release workflow and rollback](docs/DEVELOPMENT.md) · [mobile acceptance](docs/qa-checklist.md) · [premium UI/profile/share roadmap](docs/product-backlog.md) · [Stage 3 art slice](docs/stage25/PREMIUM-VERTICAL-SLICE.md). Stage 3 implementation requires explicit approval.
 
 The following sections retain historical import/version notes. Their old test counts and unverified-browser statements describe earlier milestones.
 

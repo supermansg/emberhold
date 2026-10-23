@@ -1,0 +1,562 @@
+{
+  "status": "PASS",
+  "screens": [
+    {
+      "destination": "battle",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 844,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 291.6625061035156,
+          "y": 787.47998046875,
+          "w": 89.42501831054688,
+          "h": 47.0400390625
+        },
+        {
+          "name": "heroes",
+          "x": 196.5,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 102.25,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "heroes",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 2138,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 290.75,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 197.41250610351562,
+          "y": 787.47998046875,
+          "w": 89.42501831054688,
+          "h": 47.0400390625
+        },
+        {
+          "name": "collection",
+          "x": 102.25,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "hero-detail",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 2710,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 290.75,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 196.5,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 102.25,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "collection",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 2243,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 290.75,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 196.5,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 103.1624984741211,
+          "y": 787.47998046875,
+          "w": 89.42499542236328,
+          "h": 47.0400390625
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "fort",
+      "width": 390,
+      "height": 844,
+      "scrollWidth": 390,
+      "scrollHeight": 1094,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 290.75,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 196.5,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 102.25,
+          "y": 787,
+          "w": 91.25,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8.912498474121094,
+          "y": 787.47998046875,
+          "w": 89.42500305175781,
+          "h": 47.0400390625
+        }
+      ]
+    },
+    {
+      "destination": "battle",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "scrollHeight": 510,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 562.2999877929688,
+          "y": 333.4800109863281,
+          "w": 127.4000244140625,
+          "h": 47.03997802734375
+        },
+        {
+          "name": "heroes",
+          "x": 425,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 289,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 153,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "heroes",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "scrollHeight": 2008,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 561,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 426.29998779296875,
+          "y": 333.4800109863281,
+          "w": 127.4000244140625,
+          "h": 47.03997802734375
+        },
+        {
+          "name": "collection",
+          "x": 289,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 153,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "hero-detail",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "scrollHeight": 2574,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 561,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 425,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 289,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 153,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "collection",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "scrollHeight": 1517,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 561,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 425,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 290.29998779296875,
+          "y": 333.4800109863281,
+          "w": 127.39999389648438,
+          "h": 47.03997802734375
+        },
+        {
+          "name": "fort",
+          "x": 153,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "fort",
+      "width": 844,
+      "height": 390,
+      "scrollWidth": 844,
+      "scrollHeight": 1098,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 561,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 425,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 289,
+          "y": 333,
+          "w": 130,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 154.3000030517578,
+          "y": 333.4800109863281,
+          "w": 127.40000915527344,
+          "h": 47.03997802734375
+        }
+      ]
+    },
+    {
+      "destination": "battle",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "scrollHeight": 740,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 238.9875030517578,
+          "y": 683.47998046875,
+          "w": 72.27500915527344,
+          "h": 47.0400390625
+        },
+        {
+          "name": "heroes",
+          "x": 161.5,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 84.75,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "heroes",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "scrollHeight": 2179,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 238.25,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 162.2375030517578,
+          "y": 683.47998046875,
+          "w": 72.27500915527344,
+          "h": 47.0400390625
+        },
+        {
+          "name": "collection",
+          "x": 84.75,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "hero-detail",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "scrollHeight": 2936,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 238.25,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 161.5,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 84.75,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "collection",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "scrollHeight": 2486,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 238.25,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 161.5,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 85.48750305175781,
+          "y": 683.47998046875,
+          "w": 72.27500915527344,
+          "h": 47.0400390625
+        },
+        {
+          "name": "fort",
+          "x": 8,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        }
+      ]
+    },
+    {
+      "destination": "fort",
+      "width": 320,
+      "height": 740,
+      "scrollWidth": 320,
+      "scrollHeight": 1139,
+      "nav": [
+        {
+          "name": "battle",
+          "x": 238.25,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "heroes",
+          "x": 161.5,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "collection",
+          "x": 84.75,
+          "y": 683,
+          "w": 73.75,
+          "h": 48
+        },
+        {
+          "name": "fort",
+          "x": 8.737499237060547,
+          "y": 683.47998046875,
+          "w": 72.27499389648438,
+          "h": 47.0400390625
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "limitations": "Checks document overflow and nav target bounds on home/heroes/detail/collection/fort with reduced-motion emulation. Does not prove every text contrast, overlap, safe-area inset or physical scrolling behavior."
+}
