@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-25 — Stage 3 development candidate, production unchanged
+- Completed real authenticated Preview QA: cloud load/reload, repeat sync, stale-write rejection after controlled remote revision update, SVG rejection, private raster upload/reload/reset, logout guest isolation and fresh-email relogin. Compared final save/record to pre-QA backup: unchanged; revision 5. Public avatar URL returned 404. One unreferenced private 4362-byte QA image retained. Re-ran all 26 suites successfully. No runtime/production change; physical-device/creative acceptance remains pending.
 - Verified first real mobile cloud write against the database: revision 1/save version 1, one profile/stat row, four starter unlocks and matching projected statistics. Empty run history remains truthful. Authenticated reload/conflict/logout/avatar checks remain pending; no runtime or production change.
 - Pushed runtime cb51ad6 and created draft PR #7. Exact Vercel Preview READY; verified 18 deployed hashes, four viewports and live save/reload. Owner explicitly approved a 23-hour review link and one exact Supabase redirect URL; configured both without local/wildcard allowlist additions. Fresh Preview login email sent; real session/cloud/avatar acceptance remains pending.
 - Added versioned authored Brass GLB with actual skin/skeleton/clips, simulation-timed mixer, independent skeletons and animated sockets. Original GLB remains intact; no Blender installation was found.

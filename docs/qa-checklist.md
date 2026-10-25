@@ -46,8 +46,8 @@ A release may explicitly accept known unverified hardware/creative limits, as St
 - [x] Same-crowd draw-call comparison; screenshots inspected; no physical FPS claim.
 - [x] Real login email transport accepted and owner confirmed receipt.
 - [x] Exact Preview Auth redirect and 23-hour review-link permission/configuration.
-- [ ] Real session restoration/cloud conflict/logout acceptance.
-- [ ] Real authenticated private avatar upload/reload; signed URL/privacy acceptance.
+- [x] Real session restoration/cloud conflict/logout and fresh-email relogin; conflict uses controlled remote revision injection, not two physical devices.
+- [x] Real authenticated private avatar upload/reload/reset; 256x256 WebP and public URL denied (404).
 - [x] Preview exact commit, 18 asset hashes, guest runtime/save/reload, four viewports; screenshot comparison evidence.
 - [ ] Physical Android/iPhone, listening and owner visual/play acceptance.
 - [ ] Explicit production promotion approval; main remains ee0e835.

@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-25",
+  "runtime": "cb51ad631692f380fee1b460e88252336061c75e",
+  "revision": 5,
+  "saveUnchanged": true,
+  "recordUnchanged": true,
+  "avatarRestored": true,
+  "runs": 0,
+  "unlocks": 4,
+  "checks": {
+    "cloudLoad": "PASS",
+    "repeatSync": "PASS",
+    "authReload": "PASS",
+    "liveControlledConflict": "PASS revision 3 -> remote 4; stale write rejected",
+    "profileNameRestore": "PASS",
+    "avatarSvgRejection": "PASS",
+    "avatarUpload": "PASS WebP 256x256 / 4362 bytes",
+    "avatarReload": "PASS",
+    "publicAvatarUrl": "PASS 404 without signed URL",
+    "avatarReset": "PASS",
+    "logoutGuestIsolation": "PASS guest 5 coins / 1 retired run; account 0 coins / 0 runs",
+    "freshEmailRelogin": "PASS",
+    "physicalCrossDevice": "UNVERIFIED",
+    "logoutCancellation": "UNVERIFIED dialog transport timed out; confirmed logout itself passed"
+  },
+  "limits": [
+    "Controlled remote revision injection, not two physical devices.",
+    "One unreferenced private QA avatar (4362 bytes) retained; no user storage deletion performed.",
+    "No gameplay data changed; revision and writeId advanced.",
+    "Physical phone performance/audio and owner creative acceptance remain pending."
+  ]
+}
