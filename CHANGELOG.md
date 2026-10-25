@@ -1,5 +1,13 @@
 # Changelog
 
+## 2026-10-25 — Stage 3 development candidate, production unchanged
+- Added versioned authored Brass GLB with actual skin/skeleton/clips, simulation-timed mixer, independent skeletons and animated sockets. Original GLB remains intact; no Blender installation was found.
+- Added forest ruins/moss/gateway/material depth, interruptible first-boss windup/recovery and joint-surface batching. Same fixed crowd comparison measured ~49.6% fewer draw calls in software Chrome, not mobile FPS.
+- Added premium menus/cards/profile, real run/achievement tracking, responsive entry/skip/repeat/reduced motion and canonical native/clipboard/manual sharing. Fixed landscape menu controls obscured by navigation.
+- Added dedicated Supabase browser SDK, email auth, owner-local save namespaces, explicit guest import/cloud choice, backups, durable request retries/revision conflicts and private raster avatar upload. Added security-invoker snapshot projection migration; verified rolled-back owner isolation and projection. Real login/cloud/avatar end-to-end remains pending.
+- Patched Vite/source-map dependency advisories; fresh npm audit returned zero vulnerabilities. Added focused Node/browser/data-boundary tests and exact approved authority-patch verification.
+- Corrected Supabase Site URL from localhost:3000 to canonical game URL. Automatic approval review blocked expanding the redirect allowlist; no local redirect additions were saved. Exact Preview approval is required before real magic-link acceptance.
+
 ## 2026-10-23 — Stage 2.6 production release and premium roadmap
 - Revalidated exact accepted d8556d6, M5/M5.1/M5.2 ancestry, 23 suites, Preview and same-origin old/new/old progression. Fast-forwarded main without force; existing production domain/project now serves the accepted game.
 - Verified production SHA/alias, assets and actual gameplay at portrait/landscape/narrow sizes; synthetic save reload and non-combat navigation/overflow checks pass. Documented retained rollback deployment and unverified hardware limits.

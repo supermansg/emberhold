@@ -38,3 +38,16 @@ A release may explicitly accept known unverified hardware/creative limits, as St
 - [x] No build, remote push or deployment performed.
 - [ ] Browser gameplay and mobile touch QA.
 - [ ] GPU performance and device audio QA.
+# Stage 3 acceptance (2026-10-25)
+
+- [x] 26 Node suites, approved boss change and exact preserved authority/art/economy checks.
+- [x] Four viewport guest/profile/share/entry/pause/retire browser checks; full M5.2 browser combat regression.
+- [x] Player storage failure/account isolation/retry/conflict tests; live rolled-back SQL owner isolation/projection.
+- [x] Same-crowd draw-call comparison; screenshots inspected; no physical FPS claim.
+- [x] Real login email transport accepted and owner confirmed receipt.
+- [ ] Exact Preview Auth redirect permission, real session restoration/cloud conflict/logout acceptance.
+- [ ] Real authenticated private avatar upload/reload; signed URL/privacy acceptance.
+- [ ] Preview exact commit/assets/runtime verification and screenshot comparison.
+- [ ] Physical Android/iPhone, listening and owner visual/play acceptance.
+- [ ] Explicit production promotion approval; main remains ee0e835.
+

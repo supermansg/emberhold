@@ -13,4 +13,7 @@ assert(app.includes('motionFeedback.update(game.time)')&&app.includes('soundIden
 assert(app.includes('diagnostics?.frame(now,')&&app.includes('presentation:view3d?.presentationStats()'));
 for(const file of ['render3d.js','audio.js','attack-motion.js','combat-vfx.js','special-choreography.js','shockwave-view.js','brass-asset.js'])assertAuthority(file,'c2a39a1');
 for(const file of ['assets/models/brass.glb','assets/emberhold-brand.jpg','assets/heroes.webp','assets/enemies.webp','assets/battlefield.webp'])assert.deepEqual(readFileSync('dist/'+file),execFileSync('git',['show','c2a39a1:dist/'+file],{maxBuffer:4*1024*1024}),file+' original art bytes preserved');
-console.log('PASS integration: exact M5.2 authority/presentation retained except one reviewed offer fix; EOL normalization does not hide unrelated edits.');
+const renderer=readFileSync('dist/render3d.js','utf8');
+assert.throws(()=>authoritySource(renderer.replace('if(!a.userData.skeletal)','if(true)'),'render3d.js'),'unauthorized modification inside an approved rendering hunk fails');
+assert.throws(()=>authoritySource(readFileSync('dist/engine.js','utf8')+"\nimport {stepBossRam} from './boss-behavior.js';\n",'engine.js'),'duplicate gameplay hook fails');
+console.log('PASS integration: original art/save/economy and unchanged M5.2 modules preserved; only exact reviewed offer/boss/presentation patches allowed, mutated patches rejected.');

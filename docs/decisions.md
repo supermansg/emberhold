@@ -1,5 +1,10 @@
 # Decisions
 
+## 2026-10-25 — Stage 3 authorized development boundary
+Use codex/stage3-premium-world from ee0e835. Keep main/production fixed pending tested milestone acceptance. Retain original GLB and progression; derive a versioned skinned Brass through reproducible local Three.js authoring because Blender was not found. Surface batching preserves joints/triangles. First boss alone gains an interruptible strike; all unchanged authoritative modules retain historical checks with exact reversible approved diff fixtures.
+
+Use the existing dedicated EMBERHOLD Supabase project. Preserve the original guest save key and place new profile data in a sidecar, with separate account UUID namespaces. Explicit whole-snapshot import replaces additive economy merges. Persist retry IDs before cloud writes; use row revision predicates and unique inserts for conflicts. Relational profile/stat/run/unlock/achievement projection is atomic under an invoker trigger; private bucket avatars are rasterized and owner scoped. Email delivery acceptance is distinct from real login verification. No competitive trust is assigned to client-submitted progress. Auth redirect boundary additions require exact owner approval after automatic review rejected broad local additions.
+
 ## 2026-10-23 — Stage 2.6 release and product boundaries
 Release the accepted exact Stage 2.5 candidate via non-forced main fast-forward after regression/Preview and same-origin backward save checks. Use the existing Vercel project/domain and retained old deployment for rollback. Adopt the permanent operational acceptance/release policy in DEVELOPMENT.md; no new branch protection or cloud auth is configured. Keep product/profile/share specifications in product-backlog.md, mobile contract in qa-checklist.md and asset details in the existing premium slice spec. Unknown profile fields cannot be added to the current save without migration because migrateSave drops them. No full Stage 3 UI/art implementation is authorized.
 

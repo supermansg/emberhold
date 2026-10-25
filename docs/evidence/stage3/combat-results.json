@@ -1,0 +1,43 @@
+{
+  "stats": {
+    "webgl": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+    "calls": 295,
+    "triangles": 171004,
+    "geometries": 299,
+    "textures": 9
+  },
+  "performance": {
+    "activeEffects": 6,
+    "particles": 69,
+    "damageNumbers": 5,
+    "calls": 325,
+    "triangles": 167954,
+    "quality": "low",
+    "frameMs": 83.21484684971495,
+    "renderMs": 28.945956829063668,
+    "decorationReduced": true
+  },
+  "positions": [
+    {
+      "inside": true,
+      "w": 54,
+      "h": 54
+    },
+    {
+      "inside": true,
+      "w": 54,
+      "h": 47
+    },
+    {
+      "inside": true,
+      "w": 54,
+      "h": 47
+    },
+    {
+      "inside": true,
+      "w": 73.421875,
+      "h": 54
+    }
+  ],
+  "errors": []
+}

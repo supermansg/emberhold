@@ -1,0 +1,50 @@
+[
+  {
+    "optimized": false,
+    "samples": [
+      {
+        "level": "low",
+        "calls": 1056,
+        "triangles": 286452,
+        "geometry": 249
+      },
+      {
+        "level": "standard",
+        "calls": 1057,
+        "triangles": 286900,
+        "geometry": 251
+      },
+      {
+        "level": "high",
+        "calls": 1057,
+        "triangles": 287268,
+        "geometry": 251
+      }
+    ],
+    "errors": []
+  },
+  {
+    "optimized": true,
+    "samples": [
+      {
+        "level": "low",
+        "calls": 532,
+        "triangles": 286452,
+        "geometry": 232
+      },
+      {
+        "level": "standard",
+        "calls": 533,
+        "triangles": 286900,
+        "geometry": 234
+      },
+      {
+        "level": "high",
+        "calls": 533,
+        "triangles": 287268,
+        "geometry": 234
+      }
+    ],
+    "errors": []
+  }
+]
