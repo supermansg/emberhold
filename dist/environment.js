@@ -1,3 +1,4 @@
+import {buildPremiumForest} from './premium-forest.js';
 import {forestCrown} from './forest-geometry.js';
 import * as T from './vendor/three.module.js';
 const TAU=Math.PI*2,rad=Math.PI/180;
@@ -42,9 +43,10 @@ export class LivingWorld{
   this.groundPlants=new T.InstancedMesh(new T.ConeGeometry(.12,.55,3),mat('#608564'),192);this.groundPlants.instanceMatrix.setUsage(T.DynamicDrawUsage);this.groundPlants.frustumCulled=false;this.root.add(this.groundPlants);
   this.flowers=new T.InstancedMesh(new T.IcosahedronGeometry(.07,0),mat('#b6be88'),48);this.root.add(this.flowers);
   for(let i=0;i<48;i++){const side=i%2?1:-1;this.dummy.position.set(side*(7.3+noise(i+410)*5),.25,-22+noise(i+418)*33);this.dummy.rotation.set(0,i,0);this.dummy.scale.setScalar(.7+noise(i+422));this.dummy.updateMatrix();this.flowers.setMatrixAt(i,this.dummy.matrix);this.flowers.setColorAt(i,new T.Color(i%3?'#d2bb80':'#9bbdce'));}this.flowers.instanceMatrix.needsUpdate=true;
+  this.premiumForest=buildPremiumForest(this.root);
   this.sun=new T.DirectionalLight('#ffe0ad',2.7);this.sun.castShadow=true;this.sun.shadow.mapSize.set(1024,1024);Object.assign(this.sun.shadow.camera,{left:-18,right:18,top:23,bottom:-23,near:.5,far:90});this.sun.shadow.bias=-.0006;scene.add(this.sun);
   this.ambient=new T.HemisphereLight('#bedbea','#263c32',1.5);scene.add(this.ambient);
-  this.fill=new T.DirectionalLight('#a0d8ee',.5);this.fill.position.set(8,12,4);scene.add(this.fill);
+  this.fill=new T.DirectionalLight('#a7dbe8',.75);this.fill.position.set(-9,14,-8);scene.add(this.fill);
   this.sunDisc=mesh(new T.SphereGeometry(2,12,8),new T.MeshBasicMaterial({color:'#fff2b4',fog:false}),0,30,-80);
   this.clouds=[];const cloudMat=new T.MeshBasicMaterial({color:'#cbdbe2',transparent:true,opacity:.22,depthWrite:false});for(let i=0;i<12;i++){const m=mesh(rock,cloudMat,(noise(i+9)-.5)*100,24+noise(i)*14,-35-noise(i+15)*60,9+noise(i)*9,1.4,4);this.clouds.push({m,x:m.position.x,phase:noise(i+23)*TAU});}
   this.leaves=new T.InstancedMesh(new T.PlaneGeometry(.16,.28),new T.MeshBasicMaterial({color:'#bdcb77',side:T.DoubleSide}),48);this.leaves.instanceMatrix.setUsage(T.DynamicDrawUsage);this.leaves.frustumCulled=false;this.root.add(this.leaves);
@@ -58,7 +60,7 @@ export class LivingWorld{
  update(t,game,date=new Date(),reduced=false){
   const minute=Math.floor(+date/10000);if(this.clockMinute!==minute){this.clockMinute=minute;this.atmosphere=atmosphereAt(date);const a=this.atmosphere,d=a.daylight;
    this.sun.position.set(a.east*35,Math.max(2,a.up*35),-a.north*35);this.sun.intensity=clamp(a.up*3.5,0,2.7)*(1-a.cloud*.55);this.sun.color.set(a.up<.25?'#ffb575':'#ffe7c6');
-   this.ambient.intensity=1.26+d*.42;this.ambient.color.set(d>.5?'#bcdde4':'#779cce');this.fill.intensity=.7+(1-d)*.48;
+   this.ambient.intensity=1.26+d*.42;this.ambient.color.set(d>.5?'#bcdde4':'#779cce');this.fill.intensity=1.05+(1-d)*.28;
    const sky=new T.Color('#102338').lerp(new T.Color('#89b9c7'),d).lerp(new T.Color('#657d8a'),a.cloud*.35);this.scene.background=sky;this.scene.fog=new T.Fog(sky,36-a.rain*4,115-a.rain*25);
    this.sunDisc.position.set(a.east*95,a.up*95,-a.north*95);this.sunDisc.visible=a.up>0;this.sunDisc.material.color.set(a.up<.2?'#ffb077':'#fff3c4');this.sunDisc.material.transparent=true;this.sunDisc.material.opacity=1-a.cloud*.7;
    this.clouds[0].m.material.opacity=.12+a.cloud*.28;this.rain.visible=a.rain>.01&&!reduced;

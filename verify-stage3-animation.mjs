@@ -1,0 +1,22 @@
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import * as T from './dist/vendor/three.module.js';
+import {GLTFLoader} from './dist/vendor/addons/loaders/GLTFLoader.js';
+import {cloneSkinnedActor,brassPose} from './dist/brass-animation.js';
+import {ActorPresentation} from './dist/actor-presentation.js';
+const bytes=fs.readFileSync('dist/assets/models/brass-stage3.glb');
+const asset=await new GLTFLoader().parseAsync(bytes.buffer.slice(bytes.byteOffset,bytes.byteOffset+bytes.byteLength),'');
+assert.deepEqual(asset.animations.map(c=>c.name),['idle','anticipation','release','recovery','reload','impact','death']);
+const a=cloneSkinnedActor(asset.scene),b=cloneSkinnedActor(asset.scene);a.updateMatrixWorld(true);b.updateMatrixWorld(true);
+const meshes=[];a.traverse(o=>{if(o.isSkinnedMesh)meshes.push(o);});assert.equal(meshes.length,4);assert.ok(bytes.length<1.5e6);
+const ha=new ActorPresentation(a,{clips:asset.animations}),hb=new ActorPresentation(b,{clips:asset.animations});
+ha.sample('idle',0);hb.sample('idle',0);a.updateMatrixWorld(true);b.updateMatrixWorld(true);
+const muzzle=a.getObjectByName('Muzzle'),rest=muzzle.getWorldPosition(new T.Vector3());
+ha.sample('release',.08);a.updateMatrixWorld(true);assert.ok(muzzle.getWorldPosition(new T.Vector3()).distanceTo(rest)>.05,'actual skeletal muzzle motion');
+assert.ok(b.getObjectByName('Muzzle').getWorldPosition(new T.Vector3()).distanceTo(rest)<1e-7,'instances independent');
+const before=a.getObjectByName('Weapon').quaternion.toArray();ha.sample('release',.08);assert.deepEqual(a.getObjectByName('Weapon').quaternion.toArray(),before,'paused sample stable');
+assert.notEqual(meshes[0].skeleton.bones[0],b.getObjectByName('Body'));assert.equal(meshes[0].geometry,b.getObjectByName(meshes[0].name).geometry);
+assert.equal(brassPose({attackAnim:.22},7).name,'release');assert.equal(brassPose({attackAnim:.08},7).name,'recovery');assert.equal(brassPose({cd:.05},7).name,'anticipation');assert.equal(brassPose({reloading:true,cd:.5,reload:1},7).name,'reload');assert.deepEqual(brassPose({attackAnim:.22},7,true),{name:'idle',phase:0});
+for(const clip of asset.animations){ha.sample(clip.name,clip.duration*.5);a.updateMatrixWorld(true);for(const mesh of meshes){mesh.skeleton.update();const p=mesh.getVertexPosition(0,new T.Vector3());assert.ok(p.toArray().every(Number.isFinite),clip.name+' finite deformed vertex');}}
+ha.dispose();ha.dispose();assert.equal(hb.disposed,false);hb.dispose();
+console.log('Stage 3 skeletal Brass PASS: 7 clips, independent bones, true deformed geometry, animated muzzle, deterministic paused sampling, four draws, 1.02 MB.');

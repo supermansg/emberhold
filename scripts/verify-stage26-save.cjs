@@ -20,7 +20,7 @@ const artifact=process.env.QA_ARTIFACTS||'qa-artifacts/stage26-save';
     if(fs.existsSync(file)&&fs.statSync(file).isFile())await route.fulfill({status:200,contentType:types[path.extname(file)]||'application/octet-stream',body:fs.readFileSync(file)});else await route.continue();
    });
    if(phase==='rollback-old-live')await context.unrouteAll({behavior:'wait'});
-   await page.goto(base);await page.locator('#start').waitFor({state:'visible'});
+   await page.goto(base);if(await page.locator('#guestEntry').isVisible()){await page.locator('#guestEntry').click();await page.locator('#welcome').waitFor({state:'hidden'});}await page.locator('#start').waitFor({state:'visible'});
    assert.deepEqual(await page.evaluate(()=>JSON.parse(localStorage.getItem('emberhold-v1'))),expected,phase+' initial save');
    await page.locator('[data-page="collection"]').tap();await page.locator('[data-equip="meteor"]').tap();
    expected.collection.loadout=expected.collection.loadout.includes('meteor')?expected.collection.loadout.filter(x=>x!=='meteor'):[...expected.collection.loadout,'meteor'];

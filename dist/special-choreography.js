@@ -9,7 +9,7 @@ export class SpecialChoreography {
  for(let i=0;i<4;i++){const r=this.rigs[i],actor=actors.get(i),h=game.team[i];if(!actor||!h){r.root.visible=false;continue;}const age=time-r.start,press=time-r.arm,release=age>=0&&age<.8,charging=press>=0&&press<.3,ready=i===0&&game.powerCharge>=game.powerNeeded,automatic=!h.reloading&&!h.attackAnim&&h.cd>0&&h.cd<.12&&!!game.enemies?.some(e=>e.hp>0&&e.y>0&&555-e.y<h.range);const active=release||charging||ready||automatic;r.root.visible=active;if(!active)continue;
  const id=h.id,cold=['frost','aurora','prism'].includes(id),electric=id==='electric',heavy=['gunner','umbra','sol'].includes(id);r.material.color.set(COLORS[id]||h.color);
  const envelope=release?Math.max(0,1-age/.8):charging?.65+press:automatic?.16+(1-h.cd/.12)*.32: .2;const force=release&&!reduced?Math.sin(Math.min(1,age/.18)*Math.PI)*(heavy?.18:.11):0;
- actor.userData.body.rotation.x+=heavy?(actor.userData.authored?force:-force):force*.6;actor.userData.body.position.z+=heavy?force*.5:0;
+ if(!actor.userData.skeletal){actor.userData.body.rotation.x+=heavy?(actor.userData.authored?force:-force):force*.6;actor.userData.body.position.z+=heavy?force*.5:0;}
  actor.updateMatrixWorld(true);actor.getWorldQuaternion(r.root.quaternion);(actor.userData.muzzle||actor).getWorldPosition(r.root.position);r.root.position.y+=.03;
  r.ring.rotation.set(0,0,reduced?0:time*(electric?5:cold?-.8:1));r.ring.scale.setScalar(release?1.35+Math.sin(Math.min(1,age/.65)*Math.PI)*3.1:charging?1.35-press*1.4:automatic?.8+h.cd*2: .7);r.material.opacity=envelope*(release?.8:.65);
  r.shards.geometry=cold||id==='briar'?this.crystal:this.round;r.shards.count=reduced||loaded||automatic&&!release&&!charging&&!ready?0:quality==='low'?3:quality==='high'?8:5;

@@ -1,4 +1,21 @@
-# Current operations — Stage 2.6
+# Current operations — Stage 3 development
+
+Run `npm run dev` at http://localhost:4173. For stable automated screenshots use `npm run qa:serve` at http://127.0.0.1:4174; this serves authored dist without live reload. `npm test` runs 26 suites. Dedicated branch: codex/stage3-premium-world. Production baseline remains ee0e835; no Stage 3 production permission exists.
+
+Browser scripts require PLAYWRIGHT_MODULE and CHROMIUM_PATH pointing at existing installations. `QA_BASE_URL=http://127.0.0.1:4174/ node scripts/verify-stage3-ui.cjs`; `node scripts/verify-stage3-account-ui.cjs` uses that static origin with explicitly fake service responses. `scripts/verify-m52-browser.cjs` accepts M2_BASE_URL and M2_ARTIFACTS. Full instructions/evidence: docs/STAGE3.md. Run browser suites sequentially for stable software-renderer measurements.
+
+Supabase project agwdfotqgurlknuhnnup is dedicated to EMBERHOLD. Browser configuration in account-ui.js contains only a public publishable key; never add service-role credentials. SDK 2.118.0 UMD and license are vendored from the pinned npm dependency. If updating the SDK, copy both again and verify package/audit/browser behavior. Site URL is canonical; the sole redirect URL is the exact cb51ad6 Preview in docs/STAGE3.md, explicitly owner-approved. No local/wildcard additions were saved. No unrelated projects or billing were changed.
+
+Preview is Vercel-protected. Owner approved a 23-hour link for deployment dpl_EAB6N2yrhpEV5pE5XD2ZtBQYXBmt only. Supply that link via QA_BASE_URL to scripts/verify-stage3-preview.cjs; it establishes a cookie then verifies 18 payload hashes. Never commit its token or disable project protection. QA_BASE_URL also selects the four-viewport UI suite. Live save/reload: QA_PRODUCTION_URL=the-review-link QA_DEPLOYED=1 node scripts/verify-stage26-save.cjs. Canonical game sharing never uses this link. Existing CLI credentials were invalid; use authenticated Vercel MCP rather than changing credentials implicitly.
+
+`scripts/verify-stage3-auth.cjs` sends a real email ONLY with explicit QA_AUTH_EMAIL opt-in; never run it in CI. It records transport acceptance, not login success. Complete owner-driven login, session reload, import/sync/conflict/logout and avatar acceptance separately. Do not store OTPs, signed URLs, auth state or email screenshots in Git.
+
+Supabase migration ledger: 20261023183750 foundation; 20261025180138 stage3_snapshot_projection. SQL reference: docs/stage3-player-projection.sql. Live rollback-only policy fixture: docs/stage3-rls-qa.sql. Projection runs with invoker permissions and owner RLS; no elevated function is used. The versioned progress snapshot is authoritative; relational history/unlocks/achievements are append-only event records. Cloud progress is casual self-owned data, unsuitable for trusted competitive rewards.
+
+Guest progression key remains emberhold-v1. Profile is a separate emberhold-profile-v1 sidecar. Account copies use emberhold-account-UUID-{save,record}-v1. Backups and sync metadata are owner-scoped. A user explicitly chooses cloud/local/guest import; no currency summation. Sync is explicit or retried on network reconnection. A conflict requires another explicit choice. Local storage is origin-specific: Preview cannot automatically access production-origin guest data.
+
+---
+# Historical operations — Stage 2.6
 
 Public game: https://emberhold-five.vercel.app/ . Current release/rollback evidence: docs/stage25/QA.md. Mandatory release process and exact rollback commands: docs/DEVELOPMENT.md. Use isolated codex/* branches; every accepted milestone needs Preview/tests, explicit owner acceptance and verified production release. Stage 2.6 authorizes this release; future milestones need separate acceptance.
 

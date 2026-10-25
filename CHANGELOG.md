@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-25 — Stage 3 development candidate, production unchanged
+- Completed real authenticated Preview QA: cloud load/reload, repeat sync, stale-write rejection after controlled remote revision update, SVG rejection, private raster upload/reload/reset, logout guest isolation and fresh-email relogin. Compared final save/record to pre-QA backup: unchanged; revision 5. Public avatar URL returned 404. One unreferenced private 4362-byte QA image retained. Re-ran all 26 suites successfully. No runtime/production change; physical-device/creative acceptance remains pending.
+- Verified first real mobile cloud write against the database: revision 1/save version 1, one profile/stat row, four starter unlocks and matching projected statistics. Empty run history remains truthful. Authenticated reload/conflict/logout/avatar checks remain pending; no runtime or production change.
+- Pushed runtime cb51ad6 and created draft PR #7. Exact Vercel Preview READY; verified 18 deployed hashes, four viewports and live save/reload. Owner explicitly approved a 23-hour review link and one exact Supabase redirect URL; configured both without local/wildcard allowlist additions. Fresh Preview login email sent; real session/cloud/avatar acceptance remains pending.
+- Added versioned authored Brass GLB with actual skin/skeleton/clips, simulation-timed mixer, independent skeletons and animated sockets. Original GLB remains intact; no Blender installation was found.
+- Added forest ruins/moss/gateway/material depth, interruptible first-boss windup/recovery and joint-surface batching. Same fixed crowd comparison measured ~49.6% fewer draw calls in software Chrome, not mobile FPS.
+- Added premium menus/cards/profile, real run/achievement tracking, responsive entry/skip/repeat/reduced motion and canonical native/clipboard/manual sharing. Fixed landscape menu controls obscured by navigation.
+- Added dedicated Supabase browser SDK, email auth, owner-local save namespaces, explicit guest import/cloud choice, backups, durable request retries/revision conflicts and private raster avatar upload. Added security-invoker snapshot projection migration; verified rolled-back owner isolation and projection. Real login/cloud/avatar end-to-end remains pending.
+- Patched Vite/source-map dependency advisories; fresh npm audit returned zero vulnerabilities. Added focused Node/browser/data-boundary tests and exact approved authority-patch verification.
+- Corrected Supabase Site URL from localhost:3000 to canonical game URL. Automatic approval review blocked expanding the redirect allowlist; no local redirect additions were saved. Exact Preview approval is required before real magic-link acceptance.
+
 ## 2026-10-23 — Stage 2.6 production release and premium roadmap
 - Revalidated exact accepted d8556d6, M5/M5.1/M5.2 ancestry, 23 suites, Preview and same-origin old/new/old progression. Fast-forwarded main without force; existing production domain/project now serves the accepted game.
 - Verified production SHA/alias, assets and actual gameplay at portrait/landscape/narrow sizes; synthetic save reload and non-combat navigation/overflow checks pass. Documented retained rollback deployment and unverified hardware limits.

@@ -1,0 +1,76 @@
+
+> test
+> node verify.mjs && node verify-v3.mjs && node verify-v4.mjs && node verify-environment.mjs && node verify-content.mjs && node verify-mastery.mjs && node verify-fidelity.mjs && node verify-collection.mjs && node verify-audio.mjs && node verify-m1.mjs && node verify-m2.mjs && node verify-m3.mjs && node verify-m4.mjs && node verify-m4-authority.mjs && node verify-m4-audio.mjs && node verify-m41.mjs && node verify-m5.mjs && node verify-m51.mjs && node verify-m52.mjs && node verify-offers.mjs && node verify-performance.mjs && node verify-release.mjs && node verify-integration.mjs && node verify-stage3-animation.mjs && node verify-stage3-world.mjs && node verify-stage3-player.mjs
+
+{"hero":0,"state":"won","wave":10,"kills":235,"choices":11,"team":4,"time":347,"hp":2}
+{"hero":1,"state":"won","wave":10,"kills":235,"choices":11,"team":4,"time":356,"hp":650}
+{"hero":2,"state":"won","wave":10,"kills":235,"choices":11,"team":4,"time":313,"hp":650}
+{"hero":3,"state":"won","wave":10,"kills":235,"choices":11,"team":4,"time":318,"hp":650}
+PASS: manual pause, 3 unique valid options, recruitment, full-team filters, four complete runs, speed stepping.
+PASS: upgraded team wins final boss.
+PASS: manual target overrides nearest, clearing restores default.
+PASS: shield absorbs before fence health, heroes have no health.
+PASS: one house, 3 distinct random starters, bosses at 3/6/10, kill-based wave progress, owned hero eligibility.
+PASS: delayed loot, pause safety, exact-once collection and settlement, career XP, legacy save migration, personal purchases, shield timing, recruitment logs, 1x/2x/3x stepping.
+PASS: projectile arrival, pauses, target death, splash, damage snapshots, empowered fire, death attribution, bounded/reused text, speed parity, settlement and Three.js scene lifecycle.
+{"heroMeshes":[41,24,29,25],"textCanvases":29,"browserTested":false}
+Hero center occlusions at aspect 0.5042016806722689 [ 0, 0, 0, 0 ]
+Hero center occlusions at aspect 0.5145118733509235 [ 0, 0, 0, 0 ]
+Hero center occlusions at aspect 0.8395061728395061 [ 0, 0, 0, 0 ]
+PASS: solar direction, weather continuity, motion/pause/reduced motion, bounded impact responses and hero visibility rays. GPU pixels/performance not tested.
+PASS: fifth hero recruitment/combat, distinct identity/archetype, training isolation, validation, map enemy selection, renderer adapters and truthful bounded feedback.
+PASS: migration, training/mastery, pause-safe participation, no idle XP, exact-once rewards, gadget gates, station damage, frost combo, four 3D turntables and station geometry. GPU/touch-device QA not performed.
+PASS: four distinct manual powers, charge/pause/empty-field gates, projectile arrival, AoE/slow damage, capped charge, shared detailed actor rigs, reduced motion and portrait capture restoration. No GPU pixel validation.
+PASS: 10 heroes, default/future locks, legal recruitment, legacy saves, delayed key drops, single settlement, chest consumption/unlocks, card upgrades, two-slot equip limit, all four spells, camera framing and distinct model decorations. No GPU/browser QA.
+PASS: layered audio routing, stereo placement, voice ceiling/cleanup, rate gate and mute; reload and power-ready event timing/pause safety. Listening/device speaker quality not verified.
+PASS: M1 surfaces, weapon socket and mobile formation framing.
+PASS: M1 pooled effects, cosmetic directional response, paused death lifecycle and unchanged Game/rewards.
+PASS: visible target marker, dead-target origin cleanup and optional adapter limbs.
+PASS: M2 bounded, reused archetype VFX and disposal.
+PASS: M2 truthful pooled damage priorities, caps and cleanup.
+PASS: M2 presentation quality and differentiated cosmetic responses.
+PASS: M2 real renderer socket/lifecycle, pause, class deaths and simulation parity at every quality/speed.
+PASS: M2 spell sky origin preserved.
+PASS: authored variants and truthful damage/reaction evidence.
+PASS: fixed ground scar resources and lifecycle.
+PASS: major-only bounded camera impulse.
+PASS: dense effects respect quality budgets and cleanup.
+PASS: M3 actor geometry, sockets, reload, freeze, reduced-motion/pause/speeds, clips, fallback/cancellation, disposal.
+PASS: M4 monotone/configurable long-run XP, overflow/queued choices, pause, total XP and complete roster adapters.
+PASS: M4/M3 seeded combat authority identical at every speed when intentional XP pacing and the separately tested wave-3 boss rule are isolated.
+PASS M4 audio: independent persisted gains, score/state/ambience routing, reserved priority voice cap, pause/visibility cleanup, disposal and independent cosmetic RNG.
+PASS M4.1: travelling zero-damage Shockwave, resistance, bounds, exact-once contact, pause, cooldown and repeat activation.
+PASS M4.1: all ten leader powers/all four spells preserve exact M4 authoritative state at all speeds.
+PASS M4.1: reserved essential wave/special feedback, quality invariance, pool ceilings, paused visuals and disposal.
+PASS M5: actual GLB decode (15826 triangles/29 meshes), shared lifecycle/fallback, socket pause, bounded special/wave pools, unchanged non-Shockwave authority/save/content.
+PASS M5.1: full-lane zero-damage Shockwave, all mass classes, deterministic speeds, pause and empty lane.
+PASS M5.1: bounded reusable reward nodes, pause/reset/disposal, reserved elemental rigs and truthful critical classification.
+PASS M5.2: distinct deterministic attack envelopes, no mutation, truthful upgrade art mapping and preserved authority except exact approved offer-slot/boss hooks.
+PASS M5.2: distinct essential contacts, 1000 pooled reuses, exact geometry disposal, visible origin/full-lane Low front.
+PASS M5.2: special reinforces authored recoil, eligible zero-shard anticipation, crowd mix attenuation and reserved special priority.
+PASS: seed 7 and 1,000 seeded early offer sets preserve defense, recruitment, uniqueness and eligibility.
+PASS: bounded frame samples, percentiles, FPS derivation, invalid input and reset. No device benchmark.
+PASS: test-gated static deployment config, authored entry/assets present and development diagnostic activation guard. No deployment executed.
+PASS integration: original art/save/economy and unchanged M5.2 modules preserved; only exact reviewed offer/boss/presentation patches allowed, mutated patches rejected.
+Stage 3 skeletal Brass PASS: 7 clips, independent bones, true deformed geometry, animated muzzle, deterministic paused sampling, four draws, 1.02 MB.
+PASS Stage 3 first-boss windup, shield, pause, actual Shockwave interrupt, recovery, joint-preserving shared batches, forest instance budgets [{"type":0,"before":{"meshes":21,"triangles":4980},"after":{"meshes":7,"triangles":4980}},{"type":1,"before":{"meshes":23,"triangles":5104},"after":{"meshes":8,"triangles":5104}},{"type":2,"before":{"meshes":24,"triangles":5364},"after":{"meshes":8,"triangles":5364}}]
+PASS Guest save retained with isolated account A/B records
+PASS Malformed source is never replaced with default progress
+PASS Snapshot backup failure prevents all writes
+PASS Second write failure rolls back both previous save and profile
+PASS Explicit account import backs up account while retaining guest
+PASS New tracking does not fabricate historical statistics
+PASS Settlement is exactly once and achievements follow actual results
+PASS Run bound to account cannot settle into a different account
+PASS Failed record write can retry without duplicate increments
+PASS Retirement only credits completely finished waves
+PASS Failed run-start storage is reported and recovered exactly once at settlement
+PASS Future profile versions and invalid cloud envelopes rejected
+PASS Profile identity rejects locked avatars and bounds input
+PASS CAS inserts account-specific snapshot and retries idempotently
+PASS Lost response retry does not duplicate committed cloud writes
+PASS Stale revision rejected before overwriting newer cloud data
+PASS Competing update between read and write rejected by CAS predicate
+PASS Concurrent first insert becomes explicit conflict
+PASS Unknown remote schema fails closed
+PASS 19 player-storage/profile/cloud CAS checks. In-memory doubles only; live Auth/RLS are separate integration checks.

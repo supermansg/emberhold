@@ -1,3 +1,4 @@
+import {stepBossRam} from './boss-behavior.js';
 import {activateShockwave,stepShockwave} from './shockwave.js';
 import {runXpRequirement} from './run-xp.js';
 import {ownsHero,heroCardRank,SPELLS} from './collection.js';
@@ -105,7 +106,7 @@ export class Game {
   for(const h of this.team)if(this.enemies.some(e=>e.hp>0))h.activeSeconds+=dt;
   for(const s of this.stations){s.cd-=dt;const e=this.enemies.filter(e=>e.hp>0&&e.y>80).sort((a,b)=>b.y-a.y)[0];if(s.cd<=0&&e){s.cd=s.kind==='turret'?1.4:1.8;this.hit(e,(s.kind==='turret'?16:6)*s.rank,s.color);if(s.kind==='frost'){e.slow=2;e.slowAmount=Math.max(e.slowAmount||0,.35);e.slowPresentation=null;}this.fx('bolt',s.x,s.y,s.color,{tx:e.x,ty:e.y});s.firedAt=this.time;}}
   this.updateProjectiles(dt);
-  for(const e of this.enemies){if(e.y>=523&&e.hp>0){e.attack-=dt;if(e.attack<=0){let dmg=e.damage;let blocked=Math.min(dmg,this.shield);this.shield-=blocked;this.hp=Math.max(0,this.hp-(dmg-blocked));this.shake=Math.max(this.shake,.12);this.emit('wallHit',{blocked,dmg});e.attack=1.05;this.fx('blast',e.x,535,'#ff766e',{radius:18});}}}
+  for(const e of this.enemies){if(stepBossRam(this,e,dt))continue;if(e.y>=523&&e.hp>0){e.attack-=dt;if(e.attack<=0){let dmg=e.damage;let blocked=Math.min(dmg,this.shield);this.shield-=blocked;this.hp=Math.max(0,this.hp-(dmg-blocked));this.shake=Math.max(this.shake,.12);this.emit('wallHit',{blocked,dmg});e.attack=1.05;this.fx('blast',e.x,535,'#ff766e',{radius:18});}}}
   if(this.hp<=0){this.resolveDeaths();this.projectiles=[];this.flushLoot();this.state='lost';this.emit('end');return;}
   for(const h of this.team){h.attackAnim=Math.max(0,h.attackAnim-dt);h.cd-=dt;h.specialTimer+=dt;if(h.archetype==='frost'&&h.specialTimer>=h.specialCooldown){h.specialTimer=0;this.presentation={heroId:h.id,special:1};for(const e of this.enemies){e.slow=3;e.slowAmount=.95;e.slowPresentation=this.presentation;}this.fx('blast',250,340,h.color,{radius:250,hero:'frost'});this.emit('special',{hero:'frost'});this.presentation=null;}if(h.cd<=0){if(h.reloading)this.emit('reloadEnd',{hero:h.id,pan:-.65+this.team.indexOf(h)*.43});h.reloading=false;let alive=this.enemies.filter(e=>e.hp>0&&e.y>0&&555-e.y<h.range);let t=alive.find(e=>e.id===this.target)||alive.sort((a,b)=>b.y-a.y)[0];if(t)this.attack(h,t);}}
   this.resolveDeaths();this.checkLevel();

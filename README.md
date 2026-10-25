@@ -2,6 +2,17 @@
 
 ## Open Latest App
 
+**Stage 3 development candidate (2026-10-25):** run `npm run dev` at http://localhost:4173. Existing `Open Emberhold.lnk` / `scripts/open-app.cmd` opens this working version. `npm run qa:serve` serves the exact static game at http://127.0.0.1:4174 without live reload. Never build into authored `dist`.
+
+Includes skeletal Brass, enhanced forest, interruptible first-boss strike, fewer crowd draw calls, premium navigation, real tracked profile/history/achievements, guest/account separation, Supabase email login/cloud-save controller, private avatar upload, skippable real-time entry and canonical sharing. Stage 3 is **not released to production**. Authenticated cloud/avatar QA passed; physical-device and owner creative acceptance remain pending. See [current implementation and QA ledger](docs/STAGE3.md) for evidence and remaining gates. `npm test` now runs 26 suites. The new favicon is `dist/assets/emberhold-icon.svg`; the launcher retains `scripts/emberhold.ico`.
+
+Runtime candidate `cb51ad6`: [Stage 3 Preview](https://emberhold-jlab6dy2s-dudi1710-gmailcoms-projects.vercel.app/) (Vercel login required, or the owner-approved 23-hour link supplied separately in chat). [Draft PR #7](https://github.com/supermansg/emberhold/pull/7). All 26 Node suites, deployed combat, four viewports, save/reload and 18 source/model hashes passed. Real email login, cloud conflict/reload/logout/relogin and avatar upload/reload/reset passed. Production remains `ee0e835`.
+
+Stage 3 account QA update: real cloud load/reload, repeated sync, controlled live revision conflict, private 256x256 avatar upload/reload/reset, logout guest isolation and fresh-email relogin passed. Final cloud save/profile equal the pre-QA backup; revision advanced to 5, with 0 account coins/runs and four starter unlocks. All 26 Node suites passed again. See docs/evidence/stage3/authenticated-qa.json. Physical cross-device/performance/audio and owner creative acceptance remain pending; production is unchanged.
+
+### Last production release (Stage 2.6; historical status below)
+
+
 Current release: **Stage 2.5, published and verified during Stage 2.6 (2026-10-23)**. Open the public game at **https://emberhold-five.vercel.app/** on desktop/mobile. Runtime release candidate: `d8556d6fea02d7f42de2fcddad44d6094cf4f293`, integrated into main by fast-forward. Later Stage 2.6 documentation/QA commits preserve the same game files.
 
 Retains all M5.2 combat motion, authored Brass GLB, Specials, full-lane Shockwave, upgrade UI, audio and progression; adds the protected upgrade-offer fix, development diagnostics and touch/landscape rules. All 23 suites, exact Preview, same-origin old/new/old saves and actual production gameplay/mobile-emulation smoke pass. Physical Android/iPhone, hardware FPS and creative acceptance remain unverified. Detailed release SHA/deployment/evidence and rollback target: [release ledger](docs/stage25/QA.md).

@@ -1,0 +1,14 @@
+{
+  "size": [
+    390,
+    844
+  ],
+  "changedPixelsAbove6": 25699,
+  "changedPercent": 7.8074,
+  "meanAbsoluteChannelError": [
+    1.3799337708105481,
+    1.5761423016162353,
+    1.525914448900231
+  ],
+  "interpretation": "Observed pixel difference; not creative approval or FPS"
+}
