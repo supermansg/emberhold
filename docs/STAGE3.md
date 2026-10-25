@@ -21,7 +21,8 @@ Branch: `codex/stage3-premium-world`, based on production `ee0e8359c32544cae5bfa
 | UI browser | PASS 320x740, 390x844, 844x390, 1365x900 | Guest entry, home/profile/heroes, 44px targets/hit tests, share branches, repeat/skip/reduced motion, pause/retire/history; no page errors |
 | Full M5.2 browser combat | PASS local AND exact cb51ad6 Preview | Four defenders, targeting, powers/spells, loot/death, pause/resume/speeds, mute, Shockwave, weather, stress and upgrades; errors empty |
 | Live SQL ownership/projection | PASS | Transaction rolled back synthetic users and test rows; owner A could not read/update B or insert foreign achievements; stats/unlocks projected |
-| Email and real login | HTTP 200; owner confirmed successful login/save-choice; live Auth has one signed-in user | Cloud write/reload, logout and authenticated avatar acceptance still pending |
+| Email and real login | HTTP 200; owner confirmed successful login/save-choice; live Auth has one signed-in user | First write verified below; authenticated reload/logout/avatar acceptance still pending |
+| First real mobile cloud write | PASS screenshot plus direct database verification | Revision 1, save/envelope version 1; one profile/stat row, four starter unlocks, projected statistics match. No runs were invented. Reload/conflict/logout/avatar still pending |
 | Auth redirect configuration | Site URL canonical; one exact Preview redirect approved/saved | Initial broad local additions were rejected and never saved; owner then explicitly approved this single deployment URL. Total allowed redirects: 1 |
 | Preview payload/UI/save | PASS 18 SHA-256 payloads; all four viewports; actual save/reload | Approved temporary Vercel share cookie. No auth/access token appears in evidence or canonical sharing |
 | Private Chrome Preview | PASS actual guest Brass combat/speed/pause/retire/reload/profile | Confirmed 5 earned coins, 15 career XP, one retired run, highest completed wave 0; representative runtime check |
@@ -37,7 +38,7 @@ Local-vs-deployed home UI at 390x844: 0.3667% pixels changed above 6/255, with m
 
 ## Remaining acceptance and risks
 
-1. Real link/code completion, session reload, cloud sync across devices, conflict choices and logout. Exact Preview redirect and temporary sharing were approved/configured; a fresh email was sent from the approved Preview. First email was sent before redirect correction, so do not treat the old link as valid game acceptance.
+1. Real login and first cloud write are verified. Session reload, cross-device cloud loading, conflict choices and logout remain pending. Exact Preview redirect and temporary sharing were approved/configured; the verified login used the fresh Preview flow. First email was sent before redirect correction, so do not treat the old link as valid game acceptance.
 2. Real authenticated private avatar upload/signing/reload; browser raster preparation and SQL policies alone are insufficient.
 3. Physical phones, owner listening/play/visual comparison, long sessions and multi-tab writes. Same-browser simultaneous active play remains unsupported/unverified.
 4. Blender/artist material/texturing/LOD refinement and larger world art direction. Current asset is a playable skeletal slice, not a claimed final AAA character.

@@ -1,0 +1,15 @@
+{
+  "observedDate": "2026-10-25",
+  "evidence": "Owner mobile screenshot reports cloud success; independently verified by read-only Supabase SQL",
+  "progressRows": 1,
+  "revision": 1,
+  "saveVersion": 1,
+  "envelopeVersion": 1,
+  "profileRows": 1,
+  "statRows": 1,
+  "starterUnlocks": 4,
+  "runHistoryRows": 0,
+  "projectedStatisticsMatchSnapshot": true,
+  "authenticatedReloadConflictLogoutAvatar": "PENDING",
+  "productionChanged": false
+}

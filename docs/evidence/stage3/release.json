@@ -27,7 +27,7 @@
     "previewSaveReload": "PASS",
     "liveRlsProjectionRollback": "PASS",
     "realEmailLogin": "Owner confirmed save-selection screen; one signed-in user observed server-side",
-    "realCloudSaveAcceptance": "PENDING",
+    "realCloudSaveAcceptance": "First real mobile write PASS: database revision 1, one profile/stat row, four starter unlocks, projection matches. Authenticated reload/conflict/logout pending.",
     "realAvatarAcceptance": "PENDING",
     "physicalMobile": "UNVERIFIED",
     "ownerCreativeAcceptance": "PENDING"
