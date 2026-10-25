@@ -6,6 +6,8 @@
 
 Includes skeletal Brass, enhanced forest, interruptible first-boss strike, fewer crowd draw calls, premium navigation, real tracked profile/history/achievements, guest/account separation, Supabase email login/cloud-save controller, private avatar upload, skippable real-time entry and canonical sharing. Stage 3 is **not released to production**. Account email delivery is confirmed; full authenticated cloud/avatar flow still needs acceptance. See [current implementation and QA ledger](docs/STAGE3.md) for evidence and remaining gates. `npm test` now runs 26 suites. The new favicon is `dist/assets/emberhold-icon.svg`; the launcher retains `scripts/emberhold.ico`.
 
+Runtime candidate `cb51ad6`: [Stage 3 Preview](https://emberhold-jlab6dy2s-dudi1710-gmailcoms-projects.vercel.app/) (Vercel login required, or the owner-approved 23-hour link supplied separately in chat). [Draft PR #7](https://github.com/supermansg/emberhold/pull/7). All 26 Node suites, deployed combat, four viewports, save/reload and 18 source/model hashes passed. Real email login reached save selection; cloud/avatar acceptance is still pending. Production remains `ee0e835`.
+
 ### Last production release (Stage 2.6; historical status below)
 
 Current release: **Stage 2.5, published and verified during Stage 2.6 (2026-10-23)**. Open the public game at **https://emberhold-five.vercel.app/** on desktop/mobile. Runtime release candidate: `d8556d6fea02d7f42de2fcddad44d6094cf4f293`, integrated into main by fast-forward. Later Stage 2.6 documentation/QA commits preserve the same game files.

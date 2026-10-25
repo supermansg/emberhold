@@ -1,0 +1,35 @@
+{
+  "runtimeCommit": "cb51ad631692f380fee1b460e88252336061c75e",
+  "branch": "codex/stage3-premium-world",
+  "pullRequest": "https://github.com/supermansg/emberhold/pull/7",
+  "preview": {
+    "deploymentId": "dpl_EAB6N2yrhpEV5pE5XD2ZtBQYXBmt",
+    "url": "https://emberhold-jlab6dy2s-dudi1710-gmailcoms-projects.vercel.app/",
+    "state": "READY",
+    "environment": "preview",
+    "sharing": "Owner explicitly approved a 23-hour link. Token intentionally excluded."
+  },
+  "production": {
+    "commit": "ee0e8359c32544cae5bfa06782d51a728180bebb",
+    "deploymentId": "dpl_5jegWFKHAYdLkqbYeDmxeHE4xbfx",
+    "url": "https://emberhold-five.vercel.app/",
+    "changed": false
+  },
+  "verification": {
+    "nodeSuites": 26,
+    "node": "PASS",
+    "playerDataChecks": 19,
+    "previewPayloadHashes": 18,
+    "previewPayload": "PASS",
+    "viewports": [[320,740],[390,844],[844,390],[1365,900]],
+    "previewUI": "PASS",
+    "previewCombat": "PASS",
+    "previewSaveReload": "PASS",
+    "liveRlsProjectionRollback": "PASS",
+    "realEmailLogin": "Owner confirmed save-selection screen; one signed-in user observed server-side",
+    "realCloudSaveAcceptance": "PENDING",
+    "realAvatarAcceptance": "PENDING",
+    "physicalMobile": "UNVERIFIED",
+    "ownerCreativeAcceptance": "PENDING"
+  }
+}

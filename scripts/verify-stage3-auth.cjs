@@ -20,7 +20,7 @@ if(!email)throw Error('Set QA_AUTH_EMAIL to an explicitly authorized test addres
   await page.waitForFunction(()=>!document.querySelector('#welcomeAuth form button')?.disabled);
   const message=await host.locator('[role="status"]').textContent();
   fs.mkdirSync('qa-artifacts/stage3-auth',{recursive:true});
-  fs.writeFileSync('qa-artifacts/stage3-auth/mail-result.json',JSON.stringify({status,message,base,at:new Date().toISOString(),authenticated:false},null,2));
+  fs.writeFileSync('qa-artifacts/stage3-auth/mail-result.json',JSON.stringify({status,message,base:new URL(base).origin+'/',at:new Date().toISOString(),authenticated:false},null,2));
   console.log(JSON.stringify({status,message,authenticated:false}));
   if(status!==200)process.exitCode=1;
  }finally{await browser.close();}

@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-25 — Stage 3 development candidate, production unchanged
+- Pushed runtime cb51ad6 and created draft PR #7. Exact Vercel Preview READY; verified 18 deployed hashes, four viewports and live save/reload. Owner explicitly approved a 23-hour review link and one exact Supabase redirect URL; configured both without local/wildcard allowlist additions. Fresh Preview login email sent; real session/cloud/avatar acceptance remains pending.
 - Added versioned authored Brass GLB with actual skin/skeleton/clips, simulation-timed mixer, independent skeletons and animated sockets. Original GLB remains intact; no Blender installation was found.
 - Added forest ruins/moss/gateway/material depth, interruptible first-boss windup/recovery and joint-surface batching. Same fixed crowd comparison measured ~49.6% fewer draw calls in software Chrome, not mobile FPS.
 - Added premium menus/cards/profile, real run/achievement tracking, responsive entry/skip/repeat/reduced motion and canonical native/clipboard/manual sharing. Fixed landscape menu controls obscured by navigation.

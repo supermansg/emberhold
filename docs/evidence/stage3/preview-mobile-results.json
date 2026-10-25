@@ -1,0 +1,158 @@
+[
+  {
+    "viewport": {
+      "width": 320,
+      "height": 740
+    },
+    "controls": [
+      {
+        "id": "start",
+        "x": 29,
+        "y": 487,
+        "w": 262,
+        "h": 57,
+        "hit": true
+      },
+      {
+        "id": "openProfile",
+        "x": 3.1875,
+        "y": 12.5,
+        "w": 44,
+        "h": 44,
+        "hit": true
+      },
+      {
+        "id": "shareGame",
+        "x": 163,
+        "y": 566,
+        "w": 128,
+        "h": 44,
+        "hit": true
+      }
+    ],
+    "errors": [],
+    "share": [
+      "shared",
+      "cancelled",
+      "copied",
+      "manual"
+    ]
+  },
+  {
+    "viewport": {
+      "width": 390,
+      "height": 844
+    },
+    "controls": [
+      {
+        "id": "start",
+        "x": 32,
+        "y": 591,
+        "w": 326,
+        "h": 57,
+        "hit": true
+      },
+      {
+        "id": "openProfile",
+        "x": 12,
+        "y": 12.5,
+        "w": 44,
+        "h": 44,
+        "hit": true
+      },
+      {
+        "id": "shareGame",
+        "x": 198,
+        "y": 670,
+        "w": 160,
+        "h": 44,
+        "hit": true
+      }
+    ],
+    "errors": [],
+    "share": [
+      "shared",
+      "cancelled",
+      "copied",
+      "manual"
+    ]
+  },
+  {
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "controls": [
+      {
+        "id": "start",
+        "x": 37.25,
+        "y": 184,
+        "w": 331.625,
+        "h": 48,
+        "hit": true
+      },
+      {
+        "id": "openProfile",
+        "x": 22,
+        "y": 12.5,
+        "w": 44,
+        "h": 44,
+        "hit": true
+      },
+      {
+        "id": "shareGame",
+        "x": 205.0625,
+        "y": 250,
+        "w": 163.8125,
+        "h": 44,
+        "hit": true
+      }
+    ],
+    "errors": [],
+    "share": [
+      "shared",
+      "cancelled",
+      "copied",
+      "manual"
+    ]
+  },
+  {
+    "viewport": {
+      "width": 1365,
+      "height": 900
+    },
+    "controls": [
+      {
+        "id": "start",
+        "x": 960.609375,
+        "y": 477,
+        "w": 290,
+        "h": 57,
+        "hit": true
+      },
+      {
+        "id": "openProfile",
+        "x": 70.5,
+        "y": 19,
+        "w": 44,
+        "h": 44,
+        "hit": true
+      },
+      {
+        "id": "shareGame",
+        "x": 960.609375,
+        "y": 630,
+        "w": 290,
+        "h": 44,
+        "hit": true
+      }
+    ],
+    "errors": [],
+    "share": [
+      "shared",
+      "cancelled",
+      "copied",
+      "manual"
+    ]
+  }
+]

@@ -1,6 +1,6 @@
 # Stage 3 candidate — 2026-10-25
 
-Branch: `codex/stage3-premium-world`, based on production `ee0e8359c32544cae5bfa06782d51a728180bebb`. Commit/Preview evidence will be appended after push. Production remains Stage 2.6 at https://emberhold-five.vercel.app/ . This is a review candidate, not production readiness or owner creative acceptance.
+Branch: `codex/stage3-premium-world`, based on production `ee0e8359c32544cae5bfa06782d51a728180bebb`. Runtime candidate: `cb51ad631692f380fee1b460e88252336061c75e`. Draft PR: https://github.com/supermansg/emberhold/pull/7 . READY Preview: https://emberhold-jlab6dy2s-dudi1710-gmailcoms-projects.vercel.app/ ; deployment `dpl_EAB6N2yrhpEV5pE5XD2ZtBQYXBmt`, target Preview, exact Git SHA verified. A 23-hour review link was explicitly approved/created; its token is not stored in Git. The clean URL requires Vercel access without that link. Production remains Stage 2.6 at https://emberhold-five.vercel.app/ . This is a review candidate, not production readiness or owner creative acceptance.
 
 ## Implemented
 
@@ -19,10 +19,12 @@ Branch: `codex/stage3-premium-world`, based on production `ee0e8359c32544cae5bfa
 | Player data tests | 19 PASS | In-memory storage/PostgREST doubles; not real Auth |
 | Account controller browser | PASS delayed switch blocked during run, explicit import, external signout, 256x256 raster/SVG rejection | Explicit fake Auth; not authenticated storage upload |
 | UI browser | PASS 320x740, 390x844, 844x390, 1365x900 | Guest entry, home/profile/heroes, 44px targets/hit tests, share branches, repeat/skip/reduced motion, pause/retire/history; no page errors |
-| Full M5.2 browser combat | PASS | Four defenders, targeting, powers/spells, loot/death, pause/resume/speeds, mute, Shockwave, weather, stress and upgrades; errors empty |
+| Full M5.2 browser combat | PASS local AND exact cb51ad6 Preview | Four defenders, targeting, powers/spells, loot/death, pause/resume/speeds, mute, Shockwave, weather, stress and upgrades; errors empty |
 | Live SQL ownership/projection | PASS | Transaction rolled back synthetic users and test rows; owner A could not read/update B or insert foreign achievements; stats/unlocks projected |
-| Email delivery | HTTP 200 and owner confirmed receipt | No successful real session/cloud/avatar acceptance yet |
-| Auth redirect configuration | Site URL corrected; additions blocked | localhost:3000 was default. Automatic approval rejected adding three local origins; no additions saved. Need exact Preview URL permission |
+| Email and real login | HTTP 200; owner confirmed successful login/save-choice; live Auth has one signed-in user | Cloud write/reload, logout and authenticated avatar acceptance still pending |
+| Auth redirect configuration | Site URL canonical; one exact Preview redirect approved/saved | Initial broad local additions were rejected and never saved; owner then explicitly approved this single deployment URL. Total allowed redirects: 1 |
+| Preview payload/UI/save | PASS 18 SHA-256 payloads; all four viewports; actual save/reload | Approved temporary Vercel share cookie. No auth/access token appears in evidence or canonical sharing |
+| Private Chrome Preview | PASS actual guest Brass combat/speed/pause/retire/reload/profile | Confirmed 5 earned coins, 15 career XP, one retired run, highest completed wave 0; representative runtime check |
 | Physical Android/iPhone | UNVERIFIED | No actual device/hardware FPS/thermal/audio acceptance |
 
 Stable software Chrome fixed-crowd comparison (same 36 enemies, four heroes, geometry and camera): low calls 1056→532; standard/high 1057→533 (~49.6% reduction); triangles unchanged 286452/286900/287268; geometry resources 249→232 or 251→234. This isolates batching in the current renderer, not a claim of whole-production before/after FPS. Current full VFX stress additionally measured ~534+ calls; consult raw m3-stress.json, not a single-frame FPS estimate.
@@ -31,9 +33,11 @@ Evidence under ignored `qa-artifacts/stage3-{ui,world,brass,combat,auth}` and st
 
 Automated pixel comparison is reproducible with `python scripts/compare-screenshots.py BEFORE AFTER OUTPUT_PREFIX` (existing Pillow runtime). Fixed-crowd before/after batching captures: 7.8074% pixels changed by more than 6/255; mean absolute channel error approximately 1.38/1.58/1.53. Pair/diff/JSON are retained in evidence. This records presentation differences and does not declare artistic equivalence or replace visual review.
 
+Local-vs-deployed home UI at 390x844: 0.3667% pixels changed above 6/255, with mean absolute channel error approximately 0.253/0.242/0.218. Real-time world/weather capture timing can differ; controls/hit areas passed on both. The deployed profile screenshot was inspected after correcting its narrow heading. Evidence-only follow-up commits do not change the tested cb51ad6 game payload or its approved immutable Preview URL.
+
 ## Remaining acceptance and risks
 
-1. Exact Preview redirect allowlist approval, real link/code completion, session reload, cloud sync across devices, conflict choices and logout. First email was sent before redirect correction, so do not treat that link as valid game acceptance.
+1. Real link/code completion, session reload, cloud sync across devices, conflict choices and logout. Exact Preview redirect and temporary sharing were approved/configured; a fresh email was sent from the approved Preview. First email was sent before redirect correction, so do not treat the old link as valid game acceptance.
 2. Real authenticated private avatar upload/signing/reload; browser raster preparation and SQL policies alone are insufficient.
 3. Physical phones, owner listening/play/visual comparison, long sessions and multi-tab writes. Same-browser simultaneous active play remains unsupported/unverified.
 4. Blender/artist material/texturing/LOD refinement and larger world art direction. Current asset is a playable skeletal slice, not a claimed final AAA character.
