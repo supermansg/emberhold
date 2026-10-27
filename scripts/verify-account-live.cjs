@@ -55,8 +55,3 @@ const code=()=>new Promise((resolve,reject)=>{const entry={resolve,reject,timer:
   input.close();if(process.stdin.isTTY)process.stdin.setRawMode(false);await browser.close();
  }
 })().catch(e=>{console.error(e.message);process.exitCode=1;input.close();});
-
-
-
-
-
