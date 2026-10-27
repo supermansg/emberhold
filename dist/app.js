@@ -122,4 +122,4 @@ lobby();requestAnimationFrame(loop);
 
 $('audioSettings').onclick=audioSettings;
 
-const premiumUI=createPremiumUI({getSave:()=>save,applySave:snapshot=>{save=migrateSave(snapshot);showHome();},portrait,getRenderer:()=>view3d,showHome,navigate,toast,unlockAudio:()=>sfx.unlock(),openModal,closeModal,isInRun:()=>!!game&&!ended});
+const premiumUI=createPremiumUI({getSave:()=>save,applySave:snapshot=>{save=migrateSave(snapshot);showHome();},portrait,getRenderer:()=>view3d,showHome,navigate,toast,unlockAudio:()=>sfx.unlock(),openModal,closeModal,isInRun:()=>!!game&&!ended,onAccountBlocked:()=>{pause();openModal('<section class="modal simple-modal"><h2>ההתקדמות עודכנה בלשונית אחרת</h2><p>המשחק הושהה כדי למנוע החלפת שמירה חדשה בעותק ישן. טענו מחדש לפני המשך.</p><button id="reloadAccount" class="primary">טעינה מחדש בטוחה</button></section>');$('reloadAccount').onclick=()=>location.reload();}});

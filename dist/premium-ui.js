@@ -12,15 +12,21 @@ export async function shareGame({navigator:nav=globalThis.navigator,manual=()=>{
 const $=id=>document.getElementById(id),num=v=>Math.floor(Number(v)||0).toLocaleString('he-IL');
 
 export function createPremiumUI(api){
- const account=createAccountUI({getSave:api.getSave,applySave:api.applySave,isPlaying:api.isInRun,toast:api.toast,onAuthenticated:()=>{api.toast('ברוכים הבאים. החשבון מחובר.');if(!$('welcome').classList.contains('hidden'))enter();}});
+ const account=createAccountUI({getSave:api.getSave,applySave:api.applySave,isPlaying:api.isInRun,toast:api.toast,onBlocked:api.onAccountBlocked,onState:state=>{
+  const guest=$('guestEntry');guest.textContent=state.ready?'כניסה לעולם שלכם':'המשך כאורח';guest.classList.toggle('primary',state.ready);guest.classList.toggle('secondary',!state.ready);
+  if(state.initializing){$('app').inert=true;return;}
+  if(visited&&!state.user&&!entering)finishEntry();
+  if(state.user&&!state.ready&&!state.blocked&&!api.isInRun()&&$('welcome').classList.contains('hidden'))welcome();
+  $('app').inert=!$('welcome').classList.contains('hidden');
+ },onAuthenticated:()=>{if(!$('welcome').classList.contains('hidden'))enter();}});
  account.mount($('welcomeAuth'));
  const reduced=matchMedia('(prefers-reduced-motion: reduce)');let entering=false,timer,sharing=false;
  function finishEntry(){clearTimeout(timer);entering=false;api.getRenderer()?.skipWorldEntry?.();$('welcome').classList.add('hidden');document.body.classList.remove('at-gate','entering-world');$('app').inert=false;try{localStorage.setItem('emberhold-world-entered','1');}catch{}$('start').focus();}
  function enter(){if(entering)return;entering=true;api.unlockAudio();document.body.classList.add('entering-world');if(!reduced.matches)api.getRenderer()?.beginWorldEntry?.(1800);timer=setTimeout(finishEntry,reduced.matches?0:1800);}
- function welcome(){api.showHome();account.mount($('welcomeAuth'));$('welcome').classList.remove('hidden');document.body.classList.add('at-gate');$('app').inert=true;$('guestEntry').focus();}
+ function welcome(){api.showHome();account.mount($('welcomeAuth'));$('welcome').classList.remove('hidden');document.body.classList.add('at-gate');$('app').inert=true;const heading=$('welcome').querySelector('h1');heading.tabIndex=-1;heading.focus({preventScroll:true});}
  $('guestEntry').onclick=enter;$('skipEntry').onclick=finishEntry;$('replayEntry').onclick=welcome;
  $('welcome').addEventListener('keydown',e=>{if(e.key==='Escape')finishEntry();if(e.key==='Tab'){const items=[...$('welcome').querySelectorAll('button,input,a')].filter(el=>!el.disabled&&el.offsetParent);if(e.shiftKey&&document.activeElement===items[0]){e.preventDefault();items.at(-1).focus();}else if(!e.shiftKey&&document.activeElement===items.at(-1)){e.preventDefault();items[0].focus();}}});
- let visited=false;try{visited=localStorage.getItem('emberhold-world-entered')==='1';}catch{}if(!visited)welcome();
+ let visited=false;try{visited=localStorage.getItem('emberhold-world-entered')==='1';}catch{}welcome();
  async function share(){if(sharing)return;sharing=true;try{await shareGame({notify:api.toast,manual:url=>{api.openModal('<section class="modal simple-modal"><h2>הזמינו חברים למצודה</h2><p>אפשר להעתיק את הקישור ולשלוח בכל דרך שנוחה לכם.</p><input id="shareLink" class="profile-input" aria-label="קישור למשחק" dir="ltr" readonly><button id="shareClose" class="primary">סיום</button></section>');$('shareLink').value=url;$('shareLink').select();$('shareClose').onclick=api.closeModal;}});}finally{sharing=false;}}
  $('shareGame').onclick=share;
  function profile(){if(api.isInRun())return;let record;try{record=readRecord();}catch{api.toast('לא ניתן לקרוא את הפרופיל. הנתונים הקיימים נשמרו ללא שינוי.');return;}api.showHome();$('lobby').classList.add('hidden');$('profile').classList.remove('hidden');document.querySelectorAll('[data-page]').forEach(b=>b.setAttribute('aria-current','false'));

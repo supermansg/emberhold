@@ -1,0 +1,12 @@
+{
+  "date": "2026-10-27",
+  "environment": "local authored candidate, real Supabase and Resend Free, authorized owner mailbox only",
+  "branch": "codex/stage35-account-first",
+  "smtpEnabledVerified": true,
+  "templatesReloadVerified": ["magic-link-or-otp", "confirm-sign-up"],
+  "passed": ["real OTP sent and received", "code verified through game UI", "automatic cloud loading", "reload retained session", "new tab retained session", "reversible profile autosave acknowledged in database", "profile persisted after reload", "avatar upload", "avatar persisted after reload", "hero avatar reset"],
+  "snapshotComparison": {"beforeRevision":6,"afterRevision":8,"saveUnchanged":true,"recordUnchanged":true},
+  "remaining": ["live session-only and signout/relogin", "new-user mailbox", "general public email delivery", "exact new Preview acceptance", "physical devices", "owner release acceptance"],
+  "limits": "Resend provider sender allows owner-only testing without a verified domain. No paid service/domain authorized. Signout confirmation interrupted browser transport; no cancellation success claimed. Private QA avatar object is retained unreferenced, not deleted. No production game release.",
+  "secretsRecorded": false
+}

@@ -1,5 +1,8 @@
 # Decisions
 
+## 2026-10-27 — Free-only Checkpoint A
+Owner requires zero paid services and no domain. Continue on codex/stage35-account-first; retain prior Stage 3/production. Use Resend Free self-test only when owner-entered SMTP secret is saved; no public-delivery claim from a resend.dev self-test. No domain, upgrade, subscription or paid fallback is authorized. Automatic account flow retains snapshots, CAS, idempotency and guest isolation; dedicated SDK storage adapter makes remember-device functional. Dirty intent precedes mutations; stale tabs and stale async identities fail closed. Checkpoint B remains gated on A acceptance/release.
+
 ## 2026-10-25 — Stage 3 authorized development boundary
 Use codex/stage3-premium-world from ee0e835. Keep main/production fixed pending tested milestone acceptance. Retain original GLB and progression; derive a versioned skinned Brass through reproducible local Three.js authoring because Blender was not found. Surface batching preserves joints/triangles. First boss alone gains an interruptible strike; all unchanged authoritative modules retain historical checks with exact reversible approved diff fixtures.
 

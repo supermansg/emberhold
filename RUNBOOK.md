@@ -1,5 +1,13 @@
 # Current operations — Stage 3 development
 
+## Checkpoint A override (2026-10-26)
+
+Branch `codex/stage35-account-first`; `npm test` runs 27 suites. Same local launch URLs/launcher and authored-dist rule. Automatic account load/save replaces routine manual choice/sync. SDK key `emberhold-auth-v2` routes via account-session.js to localStorage (remembered) or sessionStorage (tab session); legacy SDK key migrates once. Device preference is not a security boundary against someone with access to the same browser profile. Never log session values.
+
+Save and record writes persist dirty intent first. A pending request keeps its ID/base revision/snapshot until acknowledgement. Queue debounce 700ms, retry delays 1/4/12s, offline cache stays local and reconnect revalidates before writing. A stale tab fails closed and requires reload. Guest/account namespaces and version-1 saves remain compatible; no additive currency merge. See CHECKPOINT-A.md.
+
+Browser checks (installed Playwright/Chrome, local QA server): scripts/verify-account-first-browser.cjs (fake Auth/transport), verify-account-session-sdk.cjs (real SDK/storage, fake Auth endpoint), verify-account-first-layout.cjs (intercepted mail), original Stage 3 UI/account/combat scripts. Real automated emails require explicit QA_AUTH_EMAIL opt-in. Owner-configured Resend Free SMTP and real owner OTP passed through the local candidate UI. Use the code form; no localhost redirect expansion is required. No domain or paid service is authorized. Details: CHECKPOINT-A-EMAIL-OPTIONS.md. Existing Stage 3 Preview is not this candidate; production approval is still required.
+
 Run `npm run dev` at http://localhost:4173. For stable automated screenshots use `npm run qa:serve` at http://127.0.0.1:4174; this serves authored dist without live reload. `npm test` runs 26 suites. Dedicated branch: codex/stage3-premium-world. Production baseline remains ee0e835; no Stage 3 production permission exists.
 
 Browser scripts require PLAYWRIGHT_MODULE and CHROMIUM_PATH pointing at existing installations. `QA_BASE_URL=http://127.0.0.1:4174/ node scripts/verify-stage3-ui.cjs`; `node scripts/verify-stage3-account-ui.cjs` uses that static origin with explicitly fake service responses. `scripts/verify-m52-browser.cjs` accepts M2_BASE_URL and M2_ARTIFACTS. Full instructions/evidence: docs/STAGE3.md. Run browser suites sequentially for stable software-renderer measurements.

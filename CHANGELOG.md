@@ -1,5 +1,16 @@
 # Changelog
 
+## 2026-10-27 — Free-only continuation
+- Owner explicitly excludes paid services and domain purchase. Resend Free SMTP is now saved; both OTP templates retain code and link compatibility. Real owner email OTP, automatic cloud loading, reload/new-tab restore, reversible autosave and private avatar upload/reload/reset passed locally. Final save/record match the pre-test snapshot, revision 6 to 8. No general-public delivery claim; signout dialog transport interrupted, further acceptance pending.
+- Added a revoked-session regression and fixed offline fallback so explicit server denial cannot restore an authenticated account from cache. Network-only failures retain the safe offline path. No player cloud data or production changed.
+- Independent review exposed the offline navigator plus 401 edge case; reproduced failing then fixed and passed. Remember-device isolation now also prevents another tab's opt-in from promoting a private session or replacing an unrelated remembered account. All 27 suites and real-SDK storage fixtures passed.
+
+## 2026-10-26 — Checkpoint A automatic accounts, development only
+- Added real SDK remembered/tab-session routing and legacy migration; automatic loading, durable autosave queue and concise conflict recovery. Recovery/avatar/logout moved into settings; email/code form replaces routine cloud choices.
+- Protected dirty intent before data mutations, stale local-tab writes, late account responses and active-run boundaries. Preserved gameplay/economy/assets/guest data. Added 14 foundation cases and isolated controller/actual-SDK storage/layout tests; npm test now runs 27 suites.
+- Fixed short-landscape OTP/skip overlap. Local combat/controller/responsive checks pass within documented fixture limits; live OTP and exact new Preview remain pending.
+- Owner approved Resend Free only and has no domain. Default Supabase templates are locked without SMTP/Pro/Hook. Prepared sourced costs/setup and owner login handoff; no subscription, DNS, SMTP or production change. Checkpoint B not started.
+
 ## 2026-10-25 — Stage 3 development candidate, production unchanged
 - Completed real authenticated Preview QA: cloud load/reload, repeat sync, stale-write rejection after controlled remote revision update, SVG rejection, private raster upload/reload/reset, logout guest isolation and fresh-email relogin. Compared final save/record to pre-QA backup: unchanged; revision 5. Public avatar URL returned 404. One unreferenced private 4362-byte QA image retained. Re-ran all 26 suites successfully. No runtime/production change; physical-device/creative acceptance remains pending.
 - Verified first real mobile cloud write against the database: revision 1/save version 1, one profile/stat row, four starter unlocks and matching projected statistics. Empty run history remains truthful. Authenticated reload/conflict/logout/avatar checks remain pending; no runtime or production change.

@@ -2,12 +2,12 @@ import {migrateSave} from './progression.js';
 import {normalizeRecord} from './player-record.js';
 
 export function validateSnapshot(value){
- if(!value||value.version!==1||!value.save||typeof value.save!=='object'||Array.isArray(value.save))throw Error('גרסת שמירה בענן אינה נתמכת. לא הוחלפו נתונים.');
- return {...value,save:migrateSave(value.save),record:normalizeRecord(value.record)};
+ if(!value||value.version!==1||!value.save||typeof value.save!=='object'||Array.isArray(value.save))throw Object.assign(Error('גרסת שמירה בענן אינה נתמכת. לא הוחלפו נתונים.'),{fatal:true});
+ try{return {...value,save:migrateSave(value.save),record:normalizeRecord(value.record)};}catch(error){error.fatal=true;throw error;}
 }
 export async function fetchCloud(client,userId){
  const {data,error}=await client.from('player_progress').select('revision,snapshot,save_version').eq('user_id',userId).maybeSingle();
- if(error)throw error;if(data){if(data.save_version!==1)throw Error('גרסת ענן חדשה יותר');validateSnapshot(data.snapshot);}return data;
+ if(error)throw error;if(data){if(data.save_version!==1)throw Object.assign(Error('גרסת ענן חדשה יותר. ההתקדמות לא הוחלפה.'),{fatal:true});validateSnapshot(data.snapshot);}return data;
 }
 // A persisted request ID makes a retry after a lost response safe. A different
 // revision is always a conflict, never an additive currency merge.

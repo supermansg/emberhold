@@ -1,5 +1,14 @@
 # Current mobile-first acceptance contract — Stage 2.6
 
+## Checkpoint A candidate (2026-10-27)
+- [x] Local automatic restore/autosave, dirty queue/retry, offline/reconnect and account/run/tab race checks.
+- [x] Actual SDK remembered/session storage matrix with fixture transport; 27 Node suites and local combat regression.
+- [x] Email/code form in four viewports; no overlapping skip control.
+- [x] Local current-candidate live owner OTP, cloud loading, reload/new-tab retention, reversible autosave and avatar upload/reload/reset; Free self-test only. Final save/record unchanged (revision 6 to 8).
+- [ ] Current-candidate live session-only/signout/relogin and exact Preview; browser dialog interrupted control, not a passing cancellation result.
+- [ ] Exact new Preview deployment/payload and authenticated acceptance.
+- [ ] Physical devices/owner creative acceptance and exact production approval. No paid or domain work authorized.
+
 Apply to every milestone; use PASS / FAIL / NOT VERIFIED and record commit, browser/device, viewport, DPR, quality and scenario. Current scope evidence is in stage25/QA.md; a measured software run is not a physical-device benchmark.
 
 | Gate | Acceptance and verification |

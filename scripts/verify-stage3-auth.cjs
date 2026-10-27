@@ -9,13 +9,13 @@ if(!email)throw Error('Set QA_AUTH_EMAIL to an explicitly authorized test addres
  try{
   const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'reduce'});
   const page=await context.newPage();page.setDefaultTimeout(60000);
-  await page.goto(base);await page.locator('.welcome-account summary').click();
+  await page.goto(base);
   const host=page.locator('#welcomeAuth');
-  await host.getByRole('button',{name:'שליחת קישור להתחברות / הרשמה'}).waitFor();
+  await host.getByRole('button',{name:'שליחת קוד כניסה'}).waitFor();
   await page.waitForFunction(()=>!document.querySelector('#welcomeAuth form button')?.disabled);
   await host.getByRole('textbox',{name:'כתובת אימייל להתחברות'}).fill(email);
   const response=page.waitForResponse(r=>r.url().includes('/auth/v1/otp'));
-  await host.getByRole('button',{name:'שליחת קישור להתחברות / הרשמה'}).click();
+  await host.getByRole('button',{name:'שליחת קוד כניסה'}).click();
   const reply=await response;const status=reply.status();
   await page.waitForFunction(()=>!document.querySelector('#welcomeAuth form button')?.disabled);
   const message=await host.locator('[role="status"]').textContent();

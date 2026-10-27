@@ -2,6 +2,8 @@
 
 ## Open Latest App
 
+**Checkpoint A candidate (2026-10-27):** `npm run dev` → http://localhost:4173. Branch `codex/stage35-account-first` adds automatic account loading/saving and an email OTP/remember form. All 27 local suites pass. Real owner OTP, automatic cloud loading, reload/new-tab restore, reversible autosave and avatar upload/reload/reset passed locally. Resend Free sender supports owner-only testing; no domain or paid service. Exact new Preview and remaining live session/signout acceptance are pending. [Current implementation and test limits](docs/CHECKPOINT-A.md) · [approved Free email plan](docs/CHECKPOINT-A-EMAIL-OPTIONS.md). No production release or Checkpoint B implementation.
+
 **Stage 3 development candidate (2026-10-25):** run `npm run dev` at http://localhost:4173. Existing `Open Emberhold.lnk` / `scripts/open-app.cmd` opens this working version. `npm run qa:serve` serves the exact static game at http://127.0.0.1:4174 without live reload. Never build into authored `dist`.
 
 Includes skeletal Brass, enhanced forest, interruptible first-boss strike, fewer crowd draw calls, premium navigation, real tracked profile/history/achievements, guest/account separation, Supabase email login/cloud-save controller, private avatar upload, skippable real-time entry and canonical sharing. Stage 3 is **not released to production**. Authenticated cloud/avatar QA passed; physical-device and owner creative acceptance remain pending. See [current implementation and QA ledger](docs/STAGE3.md) for evidence and remaining gates. `npm test` now runs 26 suites. The new favicon is `dist/assets/emberhold-icon.svg`; the launcher retains `scripts/emberhold.ico`.
