@@ -1,4 +1,6 @@
 # Relevant skills
+- Checkpoint A: session persistence adapters, OTP delivery, autosave/idempotency/CAS, multi-tab data races, browser fixture boundaries and live-account release QA. Resend Free approved; production and Checkpoint B gated.
+- Stage 3: skeletal glTF/AnimationMixer, joint batching, mobile UI/accessibility, owner-scoped Supabase Auth/RLS/Storage, versioned conflict-safe cloud saves and browser regression. Implementation is authorized; production still needs owner acceptance.
 - JavaScript modules and Three.js rendering
 - Browser game mechanics and Web Audio
 - Vite local development

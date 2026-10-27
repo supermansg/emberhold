@@ -1,5 +1,15 @@
 # Current mobile-first acceptance contract — Stage 2.6
 
+## Checkpoint A candidate (2026-10-27)
+- [x] Local automatic restore/autosave, dirty queue/retry, offline/reconnect and account/run/tab race checks.
+- [x] Actual SDK remembered/session storage matrix with fixture transport; 27 Node suites and local combat regression.
+- [x] Email/code form in four viewports; no overlapping skip control.
+- [x] Local current-candidate live owner OTP, cloud loading, reload/new-tab retention, reversible autosave and avatar upload/reload/reset; Free self-test only. Final save/record unchanged (revision 6 to 8).
+- [x] Current-candidate final live matrix: session-only/remembered, reload/new-tab, logout cancel/confirm, OTP relogin and guest isolation. Isolated real-Auth run exit 0; final save/record unchanged, revision 6 to 22.
+- [x] Exact d136ca5 Preview READY; 20 payload hashes, four UI viewports, combat and rolled-back live SQL isolation passed.
+- [ ] Exact new Preview deployment/payload and authenticated acceptance.
+- [ ] Physical devices/owner creative acceptance and exact production approval. No paid or domain work authorized.
+
 Apply to every milestone; use PASS / FAIL / NOT VERIFIED and record commit, browser/device, viewport, DPR, quality and scenario. Current scope evidence is in stage25/QA.md; a measured software run is not a physical-device benchmark.
 
 | Gate | Acceptance and verification |
@@ -38,3 +48,16 @@ A release may explicitly accept known unverified hardware/creative limits, as St
 - [x] No build, remote push or deployment performed.
 - [ ] Browser gameplay and mobile touch QA.
 - [ ] GPU performance and device audio QA.
+# Stage 3 acceptance (2026-10-25)
+
+- [x] 26 Node suites, approved boss change and exact preserved authority/art/economy checks.
+- [x] Four viewport guest/profile/share/entry/pause/retire browser checks; full M5.2 browser combat regression.
+- [x] Player storage failure/account isolation/retry/conflict tests; live rolled-back SQL owner isolation/projection.
+- [x] Same-crowd draw-call comparison; screenshots inspected; no physical FPS claim.
+- [x] Real login email transport accepted and owner confirmed receipt.
+- [x] Exact Preview Auth redirect and 23-hour review-link permission/configuration.
+- [x] Real session restoration/cloud conflict/logout and fresh-email relogin; conflict uses controlled remote revision injection, not two physical devices.
+- [x] Real authenticated private avatar upload/reload/reset; 256x256 WebP and public URL denied (404).
+- [x] Preview exact commit, 18 asset hashes, guest runtime/save/reload, four viewports; screenshot comparison evidence.
+- [ ] Physical Android/iPhone, listening and owner visual/play acceptance.
+- [ ] Explicit production promotion approval; main remains ee0e835.
