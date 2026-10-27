@@ -2,6 +2,7 @@
 
 ## 2026-10-27 — Free-only continuation
 - First Checkpoint A Preview failed because Vercel's shallow clone omitted historical commit 990b3f9 required by existing preservation tests. Added a pretest history check/fetch; no assertions skipped and no authored output build.
+- Vercel also strips the origin remote in this build. The history loader now falls back to the canonical public repository read URL, without credentials or changes to remote configuration.
 - Owner explicitly excludes paid services and domain purchase. Resend Free SMTP is now saved; both OTP templates retain code and link compatibility. Real owner email OTP, automatic cloud loading, reload/new-tab restore, reversible autosave and private avatar upload/reload/reset passed locally. Final save/record match the pre-test snapshot, revision 6 to 8. No general-public delivery claim; signout dialog transport interrupted, further acceptance pending.
 - Added a revoked-session regression and fixed offline fallback so explicit server denial cannot restore an authenticated account from cache. Network-only failures retain the safe offline path. No player cloud data or production changed.
 - Independent review exposed the offline navigator plus 401 edge case; reproduced failing then fixed and passed. Remember-device isolation now also prevents another tab's opt-in from promoting a private session or replacing an unrelated remembered account. All 27 suites and real-SDK storage fixtures passed.

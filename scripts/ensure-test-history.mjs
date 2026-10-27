@@ -5,5 +5,9 @@ import {execFileSync} from 'node:child_process';
 const shallow=execFileSync('git',['rev-parse','--is-shallow-repository'],{encoding:'utf8'}).trim();
 if(shallow==='true'){
  console.log('Fetching complete Git history required by preservation tests.');
- execFileSync('git',['fetch','--unshallow','--no-tags','origin'],{stdio:'inherit',timeout:120000});
+ const remotes=execFileSync('git',['remote'],{encoding:'utf8'}).trim().split(/\s+/);
+ // Vercel can strip remote configuration from its checkout. This repository's
+ // canonical public read URL needs no credentials and changes no remote setting.
+ const source=remotes.includes('origin')?'origin':'https://github.com/supermansg/emberhold.git';
+ execFileSync('git',['fetch','--unshallow','--no-tags',source,'+refs/heads/*:refs/remotes/qa-history/*'],{stdio:'inherit',timeout:120000});
 }
