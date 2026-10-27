@@ -14,6 +14,8 @@ Stage 3 account QA update: real cloud load/reload, repeated sync, controlled liv
 
 ### Last production release (Stage 2.6; historical status below)
 
+Checkpoint A deployment note: `npm test` fills missing Git history only in shallow checkouts, because preservation tests compare historical source. Full local checkouts do not fetch. A failed history fetch blocks deployment; the suite is not bypassed.
+
 
 Current release: **Stage 2.5, published and verified during Stage 2.6 (2026-10-23)**. Open the public game at **https://emberhold-five.vercel.app/** on desktop/mobile. Runtime release candidate: `d8556d6fea02d7f42de2fcddad44d6094cf4f293`, integrated into main by fast-forward. Later Stage 2.6 documentation/QA commits preserve the same game files.
 
