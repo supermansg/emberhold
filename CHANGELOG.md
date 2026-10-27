@@ -1,6 +1,7 @@
 # Changelog
 
 ## 2026-10-27 — Free-only continuation
+- Exact runtime d136ca5 Preview READY; all 27 build-time suites, 20 deployed hashes, four-view UI and combat passed. Final isolated live OTP/account matrix passed exit 0, including logout cancellation/confirmation, relogin and both persistence modes. Restored final save/record exactly to baseline, sync revision 6 to 22. Cleaned both email templates and verified real sign-in mail has no old English header. Owner approved one 23-hour share link for this deployment; token excluded from Git. Main/production remain ee0e835. New-user/public-delivery, physical devices/two-device and owner acceptance remain; no Checkpoint B.
 - First Checkpoint A Preview failed because Vercel's shallow clone omitted historical commit 990b3f9 required by existing preservation tests. Added a pretest history check/fetch; no assertions skipped and no authored output build.
 - Vercel also strips the origin remote in this build. The history loader now falls back to the canonical public repository read URL, without credentials or changes to remote configuration.
 - Owner explicitly excludes paid services and domain purchase. Resend Free SMTP is now saved; both OTP templates retain code and link compatibility. Real owner email OTP, automatic cloud loading, reload/new-tab restore, reversible autosave and private avatar upload/reload/reset passed locally. Final save/record match the pre-test snapshot, revision 6 to 8. No general-public delivery claim; signout dialog transport interrupted, further acceptance pending.

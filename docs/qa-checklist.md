@@ -5,7 +5,8 @@
 - [x] Actual SDK remembered/session storage matrix with fixture transport; 27 Node suites and local combat regression.
 - [x] Email/code form in four viewports; no overlapping skip control.
 - [x] Local current-candidate live owner OTP, cloud loading, reload/new-tab retention, reversible autosave and avatar upload/reload/reset; Free self-test only. Final save/record unchanged (revision 6 to 8).
-- [ ] Current-candidate live session-only/signout/relogin and exact Preview; browser dialog interrupted control, not a passing cancellation result.
+- [x] Current-candidate final live matrix: session-only/remembered, reload/new-tab, logout cancel/confirm, OTP relogin and guest isolation. Isolated real-Auth run exit 0; final save/record unchanged, revision 6 to 22.
+- [x] Exact d136ca5 Preview READY; 20 payload hashes, four UI viewports, combat and rolled-back live SQL isolation passed.
 - [ ] Exact new Preview deployment/payload and authenticated acceptance.
 - [ ] Physical devices/owner creative acceptance and exact production approval. No paid or domain work authorized.
 

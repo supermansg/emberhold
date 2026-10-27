@@ -1,12 +1,13 @@
 {
   "date": "2026-10-27",
-  "environment": "local authored candidate, real Supabase and Resend Free, authorized owner mailbox only",
+  "environment": "local and exact d136ca5 Preview, real Supabase and Resend Free, authorized owner mailbox only",
   "branch": "codex/stage35-account-first",
   "smtpEnabledVerified": true,
   "templatesReloadVerified": ["magic-link-or-otp", "confirm-sign-up"],
-  "passed": ["real OTP sent and received", "code verified through game UI", "automatic cloud loading", "reload retained session", "new tab retained session", "reversible profile autosave acknowledged in database", "profile persisted after reload", "avatar upload", "avatar persisted after reload", "hero avatar reset"],
-  "snapshotComparison": {"beforeRevision":6,"afterRevision":8,"saveUnchanged":true,"recordUnchanged":true},
-  "remaining": ["live session-only and signout/relogin", "new-user mailbox", "general public email delivery", "exact new Preview acceptance", "physical devices", "owner release acceptance"],
-  "limits": "Resend provider sender allows owner-only testing without a verified domain. No paid service/domain authorized. Signout confirmation interrupted browser transport; no cancellation success claimed. Private QA avatar object is retained unreferenced, not deleted. No production game release.",
+  "passed": ["real OTP sent and received", "code verified through game UI", "automatic cloud loading", "reload retained session", "new tab retained session", "reversible profile autosave acknowledged in database", "profile persisted after reload", "avatar upload", "avatar persisted after reload", "hero avatar reset", "logout confirmation cancelled", "confirmed local logout and guest isolation", "fresh OTP relogin", "session-only reload", "session-only fresh tab has no account", "complete isolated live Preview account matrix", "rolled-back synthetic-owner live SQL isolation/projection"],
+  "snapshotComparison": {"beforeRevision":6,"afterRevision":22,"saveUnchanged":true,"recordUnchanged":true},
+  "remaining": ["new-user mailbox", "general public email delivery", "physical devices and true two-device conflict", "owner release acceptance"],
+  "limits": "Resend provider sender allows owner-only testing without a verified domain. No paid service/domain authorized. Earlier Chrome-extension and QA-selector/timing failures were inconclusive; final isolated live matrix passed exit 0 after fixing test waits. Private QA avatar object is retained unreferenced, not deleted. No production game release.",
+  "emailTemplate": {"cleanHebrewPreviewVerified":true,"actualMailHasBrand":true,"actualMailHasOldEnglishHeader":false,"signupDeliveryUnverified":true},
   "secretsRecorded": false
 }

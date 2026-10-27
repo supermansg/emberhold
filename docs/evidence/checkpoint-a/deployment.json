@@ -1,0 +1,14 @@
+{
+  "deploymentId": "dpl_EcBupptyfSRuGo3Zfjbd253VikUL",
+  "url": "https://emberhold-k80o389bl-dudi1710-gmailcoms-projects.vercel.app/",
+  "commit": "d136ca5b98d98c6c5d9c04d9e5ed9cdda27aaff3",
+  "state": "READY",
+  "environment": "preview",
+  "nodeSuites": 27,
+  "payloadFilesMatched": 20,
+  "uiViewportsPassed": [[320,740],[390,844],[844,390],[1365,900]],
+  "combatPassed": true,
+  "sharing": {"ownerApproved":true,"ttlSeconds":82800,"expiresUnix":1793163206,"tokenRecorded":false},
+  "productionCommitUnchanged": "ee0e8359c32544cae5bfa06782d51a728180bebb",
+  "limits": ["browser emulation is not physical-device acceptance", "self-only email sender", "owner release approval pending"]
+}

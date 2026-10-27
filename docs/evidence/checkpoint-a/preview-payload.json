@@ -1,0 +1,105 @@
+{
+  "base": "https://emberhold-k80o389bl-dudi1710-gmailcoms-projects.vercel.app/",
+  "results": [
+    {
+      "file": "index.html",
+      "status": 200,
+      "sha256": "807724d4f87bd50a592539eb4ed6f9f8534feca3d517d61620fd527f9f5aef7d"
+    },
+    {
+      "file": "app.js",
+      "status": 200,
+      "sha256": "b88e589040b20c76f013263e7d382116c43cc9a882476c24d3ab354aa362817a"
+    },
+    {
+      "file": "account-ui.js",
+      "status": 200,
+      "sha256": "ede9856e5e7345c7c78975faaa771f97b413a2f77588115a7f589ef240125eaa"
+    },
+    {
+      "file": "account-session.js",
+      "status": 200,
+      "sha256": "d3731f16ee6507677f0daedd53d0eeaf8a455eb401a2d14ecbb159ca78358ecf"
+    },
+    {
+      "file": "account-sync.js",
+      "status": 200,
+      "sha256": "d115751c90942069a82a05ed875f01087bdc55fa70f513e9415fe096d2985396"
+    },
+    {
+      "file": "cloud-save.js",
+      "status": 200,
+      "sha256": "907daf17a3d922dd5038189aa70ec05bfa016073c725891b1183fcff724fb62e"
+    },
+    {
+      "file": "player-storage.js",
+      "status": 200,
+      "sha256": "9eec70f51462ac1586a3fffaa19e3c7f1a1ed08a3899b7be23174afbdb798d90"
+    },
+    {
+      "file": "player-record.js",
+      "status": 200,
+      "sha256": "da0cee10df56a278857aee2f42bb1559b8a69580ba46612b24b77bd0b93ba542"
+    },
+    {
+      "file": "player-avatar.js",
+      "status": 200,
+      "sha256": "633b76b6f8a8fb6211125db561491b8ad5ef241d8ac063373dcba4b921137e68"
+    },
+    {
+      "file": "premium-ui.js",
+      "status": 200,
+      "sha256": "f168e8fd4b3c61e086cfb2cfcf29d99c71a62ad630e87a6638ff76fc8c952c77"
+    },
+    {
+      "file": "premium-ui.css",
+      "status": 200,
+      "sha256": "036fbe5be56ec19703ec71b99a76f5527bddcaf18dde05075906b1e487184e8c"
+    },
+    {
+      "file": "engine.js",
+      "status": 200,
+      "sha256": "a6afcdb74a8dc6361a7e5288e5ed40724096d81f5cce4e0bcfc243f0275a6bf5"
+    },
+    {
+      "file": "render3d.js",
+      "status": 200,
+      "sha256": "9ccb82db54a38b561c0f90f12f70d757064c123546d25d6e36e43629147d2047"
+    },
+    {
+      "file": "boss-behavior.js",
+      "status": 200,
+      "sha256": "3d184217bf149a0d8285299993022e537b72034c4201095d5bea598a29d8e095"
+    },
+    {
+      "file": "brass-animation.js",
+      "status": 200,
+      "sha256": "35cf5f27c0e33f6a57eabf46ec59a4d1b4f2464ad5cdc913fecd046f6a112926"
+    },
+    {
+      "file": "brass-asset.js",
+      "status": 200,
+      "sha256": "320d154d52f40a5024d78f07172e91860b9e6a7e3ed5470f65df22194ff46f5e"
+    },
+    {
+      "file": "vendor/supabase/supabase.js",
+      "status": 200,
+      "sha256": "ee3be8de192b97cb1d73d1e95d6b82bb1f6b658c0f97c4ef757fc331996ed3d3"
+    },
+    {
+      "file": "assets/emberhold-icon.svg",
+      "status": 200,
+      "sha256": "15b5453e3d1fcc2e984c8c9f996a47420e19ebb261e2631e2db3a10ede053be4"
+    },
+    {
+      "file": "assets/models/brass-stage3.glb",
+      "status": 200,
+      "sha256": "a919dd16cab0a744c8b73065993a9791f2e3f32d61e8591f1f30ec818e7b6b6c"
+    },
+    {
+      "file": "assets/models/brass.glb",
+      "status": 200,
+      "sha256": "47ea4d0c10dc901f84f3b8f8eaee9a343c85d21e1b09f9351d4cddc53393acba"
+    }
+  ]
+}
